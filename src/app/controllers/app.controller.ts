@@ -20,6 +20,16 @@ export class AppController {
         this.log.error(err);
       }
     });
+
+    // Serve the calendar page
+    this.router.get("/calendar", (req: Request, res: Response) => {
+      try {
+        // Render the "home" template as HTML
+        res.render("calendar");
+      } catch (err) {
+        this.log.error(err);
+      }
+    });
     
   }
 }
