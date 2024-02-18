@@ -7,6 +7,9 @@ import { AppController } from "./controllers/app.controller";
 import { ErrorMiddleware } from "./middleware/error.middleware";
 import { HandlebarsMiddleware } from "./middleware/handlebars.middleware";
 
+const { initializeApp, applicationDefault, cert } = require('firebase-admin/app');
+const { getFirestore, Timestamp, FieldValue, Filter } = require('firebase-admin/firestore');
+
 class App {
   // Create an instance of express, called "app"
   public app: Application = express();
@@ -33,6 +36,12 @@ class App {
     // Tell express what to do when our routes are visited
     this.app.use(this.appController.router);
     this.app.use(this.errorMiddleware.router);
+
+    initializeApp({
+      credential: applicationDefault()
+    });
+    
+    const db = getFirestore();
   }
 
   public listen() {
