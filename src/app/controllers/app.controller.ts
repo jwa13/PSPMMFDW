@@ -1,5 +1,8 @@
-import { Request, Response, Router } from "express";
+import { Request, Response, Router, request } from "express";
 import { pino } from 'pino';
+const passport = require('passport');
+const cookieSession = require('cookie-session');
+require('./passport');
 
 export class AppController {
   public router: Router = Router();
@@ -11,6 +14,13 @@ export class AppController {
 
   private initializeRouter() {
 
+    this.router.use(cookieSession({
+      name: 'google-auth-session',
+      keys: ['key1', 'key2']
+    }))
+    
+    this.router.use(passport.initialize());
+    this.router.use(passport.session());
     // Serve the home page
     this.router.get("/", (req: Request, res: Response) => {
       try {
@@ -29,6 +39,24 @@ export class AppController {
       } catch (err) {
         this.log.error(err);
       }
+    });
+        
+    this.router.get("/failed", (req: Request, res: Response) => {
+        res.send("Failed")
+    })
+
+    this.router.get("/profile", (req: Request, res: Response) => {
+        res.send(`Welcomes`)
+    })
+    
+    this.router.get('/google',
+    passport.authenticate('google', { scope: ['email', 'profile'] }));
+    
+    this.router.get('/google/callback', 
+      passport.authenticate('google', { failureRedirect: '/login' }),
+      function(req: Request, res: Response) {
+      // Successful authentication, redirect to profile.
+        res.redirect('/');
     });
     
   }
