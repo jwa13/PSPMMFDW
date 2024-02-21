@@ -1,14 +1,23 @@
 // Import the express and pino (logger) libraries
 import express, { Application } from "express";
-import { pino } from 'pino';
+import { pino } from "pino";
 
 // Import our code (controllers and middleware)
 import { AppController } from "./controllers/app.controller";
 import { ErrorMiddleware } from "./middleware/error.middleware";
 import { HandlebarsMiddleware } from "./middleware/handlebars.middleware";
 
-const { initializeApp, applicationDefault, cert } = require('firebase-admin/app');
-const { getFirestore, Timestamp, FieldValue, Filter } = require('firebase-admin/firestore');
+const {
+  initializeApp,
+  applicationDefault,
+  cert,
+} = require("firebase-admin/app");
+const {
+  getFirestore,
+  Timestamp,
+  FieldValue,
+  Filter,
+} = require("firebase-admin/firestore");
 
 class App {
   // Create an instance of express, called "app"
@@ -44,7 +53,7 @@ class App {
       storageBucket: "pspmmfdw-6586b.appspot.com",
       messagingSenderId: "949890250152",
       appId: "1:949890250152:web:81bb4fac772a0cc547d99d",
-      measurementId: "G-CX84FKXHHK"
+      measurementId: "G-CX84FKXHHK",
     };
     const app = initializeApp(firebaseConfig);
 
