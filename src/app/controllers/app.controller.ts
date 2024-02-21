@@ -52,7 +52,7 @@ export class AppController {
 
     this.router.get(
       "/google",
-      passport.authenticate("google", { scope: ["email", "profile"] })
+      passport.authenticate("google", { scope: ["email", "profile", "openid"] })
     );
 
     this.router.get(

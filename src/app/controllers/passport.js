@@ -21,21 +21,38 @@ passport.use(
       clientSecret: GOOGLE_CLIENT_SECRET,
       callbackURL: "http://localhost:3000/google/callback",
     },
-    function (profile, cb) {
-      const userRef = db.collection("users").doc(`${profile.displayName}`);
-      userRef.get().then((doc) => {
-        if (!doc.exists) {
-          const newUser = {
-            profile,
-          };
-          userRef
-            .set(newUser)
-            .then(() => cb(null, newUser))
-            .catch((err) => cb(err));
-        } else {
-          cb(null, doc.data());
-        }
-      });
+    async function (accessToken, refreshToken, profile, email, openid, cb) {
+      const userRef = db.collection("users").doc(`${profile}`);
+      const doc = await userRef.get();
+      if (!doc.exists) {
+        console.log("No such document!");
+        const newUser = {
+          profileId: profile.id,
+          name: profile.displayName,
+          email: profile.emails[0],
+        };
+        userRef
+          .set(newUser)
+          .then(() => cb(null, newUser))
+          .catch((err) => cb(err));
+      } else {
+        console.log("Document data:", doc.data());
+        cb(null, doc.data());
+      }
     }
   )
 );
+
+// userRef.get().then((doc) => {
+//   if (!doc.exists) {
+//     const newUser = {
+//       profile: profile.id,
+//     };
+//     userRef
+//       .set(newUser)
+//       .then(() => cb(null, newUser))
+//       .catch((err) => cb(err));
+//   } else {
+//     cb(null, doc.data());
+//   }
+// });
