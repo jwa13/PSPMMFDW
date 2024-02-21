@@ -37,10 +37,17 @@ class App {
     this.app.use(this.appController.router);
     this.app.use(this.errorMiddleware.router);
 
-    initializeApp({
-      credential: applicationDefault()
-    });
-    
+    const firebaseConfig = {
+      apiKey: "AIzaSyC2EVM2_4lOG83k3kf_2XkylX-hOLc7Pfc",
+      authDomain: "pspmmfdw-6586b.firebaseapp.com",
+      projectId: "pspmmfdw-6586b",
+      storageBucket: "pspmmfdw-6586b.appspot.com",
+      messagingSenderId: "949890250152",
+      appId: "1:949890250152:web:81bb4fac772a0cc547d99d",
+      measurementId: "G-CX84FKXHHK"
+    };
+    const app = initializeApp(firebaseConfig);
+
     const db = getFirestore();
   }
 
