@@ -6,12 +6,12 @@ const GOOGLE_CLIENT_SECRET = "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";
 import * as App from "../app.ts";
 import db from "../firebase.ts";
 
-passport.serializeUser(function (user, done) {
-  done(null, user);
+passport.serializeUser(function (user, cb) {
+  cb(null, user);
 });
 
-passport.deserializeUser(function (user, done) {
-  done(null, user);
+passport.deserializeUser(function (user, cb) {
+  cb(null, user);
 });
 
 passport.use(
@@ -22,12 +22,11 @@ passport.use(
       callbackURL: "http://localhost:3000/google/callback",
     },
     function (profile, cb) {
-      const userRef = db.collection("users").doc(profile.id);
+      const userRef = db.collection("users").doc(`${profile.displayName}`);
       userRef.get().then((doc) => {
         if (!doc.exists) {
           const newUser = {
-            googleID: profile.id,
-            googleEmail: profile.emails[0].value,
+            profile,
           };
           userRef
             .set(newUser)
