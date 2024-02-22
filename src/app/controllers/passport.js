@@ -22,7 +22,7 @@ passport.use(
       callbackURL: "http://localhost:3000/google/callback",
     },
     async function (accessToken, refreshToken, profile, email, openid, cb) {
-      const userRef = db.collection("users").doc(`${profile}`);
+      const userRef = db.collection("users").doc(`${profile.displayName}`);
       const doc = await userRef.get();
       if (!doc.exists) {
         console.log("No such document!");
@@ -42,17 +42,3 @@ passport.use(
     }
   )
 );
-
-// userRef.get().then((doc) => {
-//   if (!doc.exists) {
-//     const newUser = {
-//       profile: profile.id,
-//     };
-//     userRef
-//       .set(newUser)
-//       .then(() => cb(null, newUser))
-//       .catch((err) => cb(err));
-//   } else {
-//     cb(null, doc.data());
-//   }
-// });
