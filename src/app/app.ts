@@ -7,18 +7,6 @@ import { AppController } from "./controllers/app.controller";
 import { ErrorMiddleware } from "./middleware/error.middleware";
 import { HandlebarsMiddleware } from "./middleware/handlebars.middleware";
 
-// const {
-//   initializeApp,
-//   applicationDefault,
-//   cert,
-// } = require("firebase-admin/app");
-// const {
-//   getFirestore,
-//   Timestamp,
-//   FieldValue,
-//   Filter,
-// } = require("firebase-admin/firestore");
-
 class App {
   // Create an instance of express, called "app"
   public app: Application = express();

@@ -1,8 +1,8 @@
 const passport = require("passport");
 var GoogleStrategy = require("passport-google-oauth20").Strategy;
 const GOOGLE_CLIENT_ID =
-  "701590633897-s9qh400b2vmubcv0611vjl0ns3qn31p5.apps.googleusercontent.com";
-const GOOGLE_CLIENT_SECRET = "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";
+  "949890250152-b3cffqki491rr7nc1s11d27t0of58opl.apps.googleusercontent.com";
+const GOOGLE_CLIENT_SECRET = "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";
 import * as App from "../app.ts";
 import db from "../firebase.ts";
 
