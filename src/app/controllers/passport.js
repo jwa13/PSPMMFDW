@@ -7,11 +7,11 @@ import * as App from "../app.ts";
 import db from "../firebase.ts";
 
 passport.serializeUser(function (user, cb) {
-  cb(null, user);
+  // cb(null, user);
 });
 
 passport.deserializeUser(function (user, cb) {
-  cb(null, user);
+  // cb(null, user);
 });
 
 passport.use(
@@ -33,13 +33,12 @@ passport.use(
           name: profile.displayName,
           email: profile.emails[0],
         };
-        userRef
-          .set(newUser)
-          .then(() => cb(null, newUser))
-          .catch((err) => cb(err));
+        userRef.set(newUser);
+        // .then(() => cb(null, newUser));
+        // .catch((err) => cb(err));
       } else {
         console.log("Document data:", doc.data());
-        cb(null, doc.data());
+        // cb(null, doc.data());
       }
     }
   )
