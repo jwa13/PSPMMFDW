@@ -23,7 +23,9 @@ passport.use(
     },
     async function (accessToken, refreshToken, profile, email, openid, cb) {
       const userRef = db.collection("users").doc(`${profile.displayName}`);
+      console.log("User Ref working");
       const doc = await userRef.get();
+      console.log("Doc working");
       if (!doc.exists) {
         console.log("No such document!");
         const newUser = {

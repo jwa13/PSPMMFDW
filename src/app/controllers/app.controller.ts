@@ -52,6 +52,10 @@ export class AppController {
 
     this.router.get(
       "/google",
+      (req: Request, res: Response, next: any) => {
+        console.log("Google");
+        next();
+      },
       passport.authenticate("google", { scope: ["email", "profile", "openid"] })
     );
 
@@ -60,6 +64,7 @@ export class AppController {
       passport.authenticate("google", { failureRedirect: "/login" }),
       function (req: Request, res: Response) {
         // Successful authentication, redirect to profile.
+        console.log("Authentication Called");
         res.redirect("/");
       }
     );
