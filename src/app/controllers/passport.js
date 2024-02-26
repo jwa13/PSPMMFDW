@@ -1,10 +1,10 @@
-const passport = require("passport");
-var GoogleStrategy = require("passport-google-oauth20").Strategy;
-const GOOGLE_CLIENT_ID =
-  "949890250152-b3cffqki491rr7nc1s11d27t0of58opl.apps.googleusercontent.com";
-const GOOGLE_CLIENT_SECRET = "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";
-import * as App from "../app.ts";
+import passport from "passport";
+import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import db from "../firebase.ts";
+
+// These need to be changed to environment variables
+const GOOGLE_CLIENT_ID = "949890250152-b3cffqki491rr7nc1s11d27t0of58opl.apps.googleusercontent.com";
+const GOOGLE_CLIENT_SECRET = "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";
 
 passport.serializeUser(function (user, cb) {
   // cb(null, user);
