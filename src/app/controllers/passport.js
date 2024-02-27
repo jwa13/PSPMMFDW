@@ -3,23 +3,16 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import db from "../firebase.ts";
 
 // These need to be changed to environment variables
-const GOOGLE_CLIENT_ID = "949890250152-b3cffqki491rr7nc1s11d27t0of58opl.apps.googleusercontent.com";
+const GOOGLE_CLIENT_ID =
+  "949890250152-b3cffqki491rr7nc1s11d27t0of58opl.apps.googleusercontent.com";
 const GOOGLE_CLIENT_SECRET = "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";
-
-passport.serializeUser(function (user, cb) {
-  // cb(null, user);
-});
-
-passport.deserializeUser(function (user, cb) {
-  // cb(null, user);
-});
 
 passport.use(
   new GoogleStrategy(
     {
       clientID: GOOGLE_CLIENT_ID,
       clientSecret: GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:3000/google/callback",
+      callbackURL: "/google/callback",
     },
     async function (accessToken, refreshToken, profile, email, openid, cb) {
       const userRef = db.collection("users").doc(`${profile.displayName}`);
@@ -27,19 +20,32 @@ passport.use(
       const doc = await userRef.get();
       console.log("Doc working");
       if (!doc.exists) {
-        console.log("No such document!");
+        console.log("user does not exist");
         const newUser = {
           profileId: profile.id,
           name: profile.displayName,
           email: profile.emails[0],
         };
-        userRef.set(newUser);
-        // .then(() => cb(null, newUser));
-        // .catch((err) => cb(err));
+        userRef.set(newUser).then(() => {
+          console.log("user created");
+          cb(null, newUser);
+        });
       } else {
-        console.log("Document data:", doc.data());
-        // cb(null, doc.data());
+        console.log("User already exists.\nDocument data:", doc.data());
+        cb(null, doc);
       }
     }
   )
 );
+
+passport.serializeUser(function (profile, cb) {
+  console.log("Serialized user");
+  cb(null, profile.id);
+});
+
+passport.deserializeUser(function (id, cb) {
+  userRef.where("profileId", "==", id).then((profile) => {
+    console.log("deserialized user");
+    cb(null, profile);
+  });
+});

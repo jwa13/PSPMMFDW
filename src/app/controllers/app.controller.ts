@@ -2,6 +2,7 @@ import { Request, Response, Router, request } from "express";
 import { pino } from "pino";
 const passport = require("passport");
 const cookieSession = require("cookie-session");
+import db from "../firebase";
 require("./passport");
 
 export class AppController {
@@ -22,6 +23,7 @@ export class AppController {
 
     this.router.use(passport.initialize());
     this.router.use(passport.session());
+
     // Serve the home page
     this.router.get("/", (req: Request, res: Response) => {
       try {
@@ -35,25 +37,26 @@ export class AppController {
     // Serve the calendar page
     this.router.get("/calendar", (req: Request, res: Response) => {
       try {
-        // Render the "home" template as HTML
+        // Render the "calendar" template as HTML
         res.render("calendar");
       } catch (err) {
         this.log.error(err);
       }
     });
 
-    this.router.get("/failed", (req: Request, res: Response) => {
-      res.send("Failed");
-    });
-
     this.router.get("/profile", (req: Request, res: Response) => {
-      res.send(`Welcomes`);
+      try {
+        // Render the "profile" template as HTML
+        res.render("profile");
+      } catch (err) {
+        this.log.error(err);
+      }
     });
 
     this.router.get(
       "/google",
       (req: Request, res: Response, next: any) => {
-        console.log("Google");
+        console.log("Google route working");
         next();
       },
       passport.authenticate("google", { scope: ["email", "profile", "openid"] })
@@ -61,11 +64,11 @@ export class AppController {
 
     this.router.get(
       "/google/callback",
-      passport.authenticate("google", { failureRedirect: "/login" }),
-      function (req: Request, res: Response) {
+      passport.authenticate("google", { failureRedirect: "/" }),
+      (req: Request, res: Response) => {
         // Successful authentication, redirect to profile.
-        console.log("Authentication Called");
-        res.redirect("/");
+        console.log("google callback working");
+        res.redirect("/profile");
       }
     );
   }
