@@ -1,17 +1,13 @@
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import db from "../firebase.ts";
-
-// These need to be changed to environment variables
-const GOOGLE_CLIENT_ID =
-  "949890250152-b3cffqki491rr7nc1s11d27t0of58opl.apps.googleusercontent.com";
-const GOOGLE_CLIENT_SECRET = "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";
+import keys from "./keys.js";
 
 passport.use(
   new GoogleStrategy(
     {
-      clientID: GOOGLE_CLIENT_ID,
-      clientSecret: GOOGLE_CLIENT_SECRET,
+      clientID: keys.google.clientID,
+      clientSecret: keys.google.clientSecret,
       callbackURL: "/google/callback",
     },
     async function (accessToken, refreshToken, profile, email, openid, cb) {

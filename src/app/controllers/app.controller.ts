@@ -53,23 +53,53 @@ export class AppController {
       }
     });
 
-    this.router.get(
-      "/google",
-      (req: Request, res: Response, next: any) => {
-        console.log("Google route working");
-        next();
-      },
-      passport.authenticate("google", { scope: ["email", "profile", "openid"] })
-    );
-
-    this.router.get(
-      "/google/callback",
-      passport.authenticate("google", { failureRedirect: "/" }),
-      (req: Request, res: Response) => {
-        // Successful authentication, redirect to profile.
-        console.log("google callback working");
-        res.redirect("/profile");
+    // auth login
+    this.router.get("/login", (req: Request, res: Response) => {
+      try {
+        // Render the "login" template as HTML
+        res.render("login");
+      } catch (err) {
+        this.log.error(err);
       }
-    );
+    });
+
+    // auth logout
+    this.router.get("/logout", (req: Request, res: Response) => {
+      try {
+        // handle with passport
+        res.send("logging out");
+      } catch (err) {
+        this.log.error(err);
+      }
+    });
+
+    // auth logout
+    this.router.get("/google", (req: Request, res: Response) => {
+      try {
+        // handle with passport
+        res.send("logging in with google");
+      } catch (err) {
+        this.log.error(err);
+      }
+    });
+
+    // this.router.get(
+    //   "/google",
+    //   (req: Request, res: Response, next: any) => {
+    //     console.log("Google route working");
+    //     next();
+    //   },
+    //   passport.authenticate("google", { scope: ["email", "profile", "openid"] })
+    // );
+
+    // this.router.get(
+    //   "/google/callback",
+    //   passport.authenticate("google", { failureRedirect: "/" }),
+    //   (req: Request, res: Response) => {
+    //     // Successful authentication, redirect to profile.
+    //     console.log("google callback working");
+    //     res.redirect("/profile");
+    //   }
+    // );
   }
 }
