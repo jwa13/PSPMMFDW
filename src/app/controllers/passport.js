@@ -10,7 +10,7 @@ passport.use(
       clientSecret: keys.google.clientSecret,
       callbackURL: "/google/callback",
     },
-    async function (accessToken, refreshToken, profile, email, openid, cb) {
+    async function (accessToken, refreshToken, profile, cb) {
       const userRef = db.collection("users").doc(`${profile.displayName}`);
       console.log("User Ref working");
       const doc = await userRef.get();
@@ -35,13 +35,19 @@ passport.use(
 );
 
 passport.serializeUser(function (profile, cb) {
-  console.log("Serialized user");
-  cb(null, profile.id);
+  process.nextTick(function () {
+    return cb(null, {
+      id: profile.id,
+      username: profile.displayName,
+    });
+  });
 });
 
 passport.deserializeUser(function (id, cb) {
-  userRef.where("profileId", "==", id).then((profile) => {
-    console.log("deserialized user");
-    cb(null, profile);
+  process.nextTick(function () {
+    userRef.where("profileId", "==", id).then((profile) => {
+      console.log("deserialized user");
+      cb(null, profile);
+    });
   });
 });

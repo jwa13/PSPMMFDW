@@ -1,8 +1,7 @@
 import { Request, Response, Router, request } from "express";
 import { pino } from "pino";
 const passport = require("passport");
-const cookieSession = require("cookie-session");
-import db from "../firebase";
+const session = require("express-session");
 require("./passport");
 
 export class AppController {
@@ -14,15 +13,16 @@ export class AppController {
   }
 
   private initializeRouter() {
+    this.router.use(passport.initialize());
     this.router.use(
-      cookieSession({
-        name: "google-auth-session",
-        keys: ["key1", "key2"],
+      session({
+        secret: "orange icecream",
+        resave: false,
+        saveUninitialized: false,
+        cookie: { secure: true },
       })
     );
-
-    this.router.use(passport.initialize());
-    this.router.use(passport.session());
+    this.router.use(passport.authenticate("session"));
 
     // Serve the home page
     this.router.get("/", (req: Request, res: Response) => {
@@ -73,33 +73,23 @@ export class AppController {
       }
     });
 
-    // auth logout
-    this.router.get("/google", (req: Request, res: Response) => {
-      try {
-        // handle with passport
-        res.send("logging in with google");
-      } catch (err) {
-        this.log.error(err);
+    this.router.get(
+      "/google",
+      (req: Request, res: Response, next: any) => {
+        console.log("Google route working");
+        next();
+      },
+      passport.authenticate("google", { scope: ["email", "profile", "openid"] })
+    );
+
+    this.router.get(
+      "/google/callback",
+      passport.authenticate("google", { failureRedirect: "/" }),
+      (req: Request, res: Response) => {
+        // Successful authentication, redirect to profile.
+        console.log("google callback working");
+        res.redirect("/profile");
       }
-    });
-
-    // this.router.get(
-    //   "/google",
-    //   (req: Request, res: Response, next: any) => {
-    //     console.log("Google route working");
-    //     next();
-    //   },
-    //   passport.authenticate("google", { scope: ["email", "profile", "openid"] })
-    // );
-
-    // this.router.get(
-    //   "/google/callback",
-    //   passport.authenticate("google", { failureRedirect: "/" }),
-    //   (req: Request, res: Response) => {
-    //     // Successful authentication, redirect to profile.
-    //     console.log("google callback working");
-    //     res.redirect("/profile");
-    //   }
-    // );
+    );
   }
 }
