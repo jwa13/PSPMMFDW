@@ -1,8 +1,12 @@
-import { Request, Response, Router, request } from "express";
+import express, { Request, Response, Router, request } from "express";
+import flash from "express-flash";
 import { pino } from "pino";
-const passport = require("passport");
-const session = require("express-session");
+import passport from "passport";
+import session from "express-session";
+import middleware from "../middleware/router.middleware";
+import keys from "./keys.js";
 require("./passport");
+import cookieParser from "cookie-parser";
 
 export class AppController {
   public router: Router = Router();
@@ -13,83 +17,51 @@ export class AppController {
   }
 
   private initializeRouter() {
-    this.router.use(passport.initialize());
+    this.router.use(cookieParser());
     this.router.use(
       session({
+        name: "test",
         secret: "orange icecream",
         resave: false,
         saveUninitialized: false,
-        cookie: { secure: true },
+        cookie: {
+          secure: true,
+          maxAge: 60000,
+        },
       })
     );
-    this.router.use(passport.authenticate("session"));
+    this.router.use(express.urlencoded({ extended: true }));
+    this.router.use(flash());
+    this.router.use(passport.initialize());
+    this.router.use(passport.session());
+    this.router.use(middleware.flashMessages);
 
     // Serve the home page
-    this.router.get("/", (req: Request, res: Response) => {
-      try {
-        // Render the "home" template as HTML
-        res.render("home");
-      } catch (err) {
-        this.log.error(err);
-      }
-    });
+    this.router.get("/", middleware.home);
 
     // Serve the calendar page
-    this.router.get("/calendar", (req: Request, res: Response) => {
-      try {
-        // Render the "calendar" template as HTML
-        res.render("calendar");
-      } catch (err) {
-        this.log.error(err);
-      }
-    });
+    this.router.get("/calendar", middleware.calendar);
 
-    this.router.get("/profile", (req: Request, res: Response) => {
-      try {
-        // Render the "profile" template as HTML
-        res.render("profile");
-      } catch (err) {
-        this.log.error(err);
-      }
-    });
+    this.router.get("/profile", middleware.profile);
 
     // auth login
-    this.router.get("/login", (req: Request, res: Response) => {
-      try {
-        // Render the "login" template as HTML
-        res.render("login");
-      } catch (err) {
-        this.log.error(err);
-      }
-    });
+    this.router.get("/login", middleware.login);
 
     // auth logout
-    this.router.get("/logout", (req: Request, res: Response) => {
-      try {
-        // handle with passport
-        res.send("logging out");
-      } catch (err) {
-        this.log.error(err);
-      }
-    });
+    this.router.get("/logout", middleware.home);
 
     this.router.get(
       "/google",
-      (req: Request, res: Response, next: any) => {
-        console.log("Google route working");
-        next();
-      },
-      passport.authenticate("google", { scope: ["email", "profile", "openid"] })
+      middleware.google,
+      passport.authenticate("google", {
+        scope: ["email", "profile", "openid"],
+      })
     );
 
     this.router.get(
       "/google/callback",
       passport.authenticate("google", { failureRedirect: "/" }),
-      (req: Request, res: Response) => {
-        // Successful authentication, redirect to profile.
-        console.log("google callback working");
-        res.redirect("/profile");
-      }
+      middleware.googleCallback
     );
   }
 }
