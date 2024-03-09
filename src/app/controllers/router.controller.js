@@ -1,23 +1,6 @@
-require("../controllers/passport");
+require("./passport");
 
 module.exports = {
-  loginCheck: (req, res, next) => {
-    let user = req.user;
-    if (user) {
-      next();
-    } else {
-      res.redirect("/login");
-    }
-  },
-
-  flashMessages: function (req, res, next) {
-    // if there's a flash message, transfer
-    // it to the context, then clear it
-    res.locals.flash = req.session.flash;
-    delete req.session.flash;
-    next();
-  },
-
   home: async (req, res) => {
     try {
       // Render the "home" template as HTML
@@ -41,7 +24,6 @@ module.exports = {
   profile: (req, res) => {
     try {
       // Render the "profile" template as HTML
-      console.log(req.session);
       res.render("profile");
       console.log("profile middleware working");
     } catch (err) {
@@ -65,9 +47,13 @@ module.exports = {
     next();
   },
 
-  googleCallback: (req, res) => {
+  gCallback: (req, res) => {
     // Successful authentication, redirect to profile.
     console.log("google callback middleware working");
     res.redirect("/profile");
+  },
+
+  googleCallback: (req, res) => {
+    console.log(req.user + " : Signed in.");
   },
 };

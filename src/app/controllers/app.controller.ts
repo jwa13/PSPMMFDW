@@ -3,7 +3,8 @@ import flash from "express-flash";
 import { pino } from "pino";
 import passport from "passport";
 import session from "express-session";
-import middleware from "../middleware/router.middleware";
+import controller from "./router.controller";
+import middleware from "../middleware/middleware";
 import keys from "./keys.js";
 require("./passport");
 import cookieParser from "cookie-parser";
@@ -37,22 +38,22 @@ export class AppController {
     this.router.use(middleware.flashMessages);
 
     // Serve the home page
-    this.router.get("/", middleware.home);
+    this.router.get("/", controller.home);
 
     // Serve the calendar page
-    this.router.get("/calendar", middleware.calendar);
+    this.router.get("/calendar", controller.calendar);
 
-    this.router.get("/profile", middleware.profile);
+    this.router.get("/profile", controller.profile);
 
     // auth login
-    this.router.get("/login", middleware.login);
+    this.router.get("/login", controller.login);
 
     // auth logout
-    this.router.get("/logout", middleware.home);
+    this.router.get("/logout", middleware.loginCheck, controller.home);
 
     this.router.get(
       "/google",
-      middleware.google,
+      controller.google,
       passport.authenticate("google", {
         scope: ["email", "profile", "openid"],
       })
@@ -60,8 +61,14 @@ export class AppController {
 
     this.router.get(
       "/google/callback",
-      passport.authenticate("google", { failureRedirect: "/" }),
-      middleware.googleCallback
+      passport.authenticate("google", { failureRedirect: "/login" }),
+      controller.gCallback
+    );
+
+    this.router.post(
+      "/google/callback",
+      passport.authenticate("google", { failureRedirect: "/login" }),
+      controller.googleCallback
     );
   }
 }

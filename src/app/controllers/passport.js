@@ -2,7 +2,7 @@ import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import db from "../firebase.ts";
 import keys from "./keys.js";
-
+var User = "";
 passport.use(
   new GoogleStrategy(
     {
@@ -11,40 +11,47 @@ passport.use(
       callbackURL: "/google/callback",
     },
     async function (accessToken, refreshToken, profile, cb) {
-      const userRef = db.collection("users").doc(`${profile.displayName}`);
+      console.log(profile);
+      const userRef = db.collection("users").doc(`${profile._json.email}`);
       console.log("User Ref working");
       const doc = await userRef.get();
       console.log("Doc working");
       if (!doc.exists) {
         console.log("user does not exist");
-        const newUser = {
-          profileId: profile.id,
-          name: profile.displayName,
-          email: profile.emails[0],
+        User = {
+          profileId: profile._json.sub,
+          name: profile._json.name,
+          email: profile._json.email,
         };
-        userRef.set(newUser).then(() => {
+        userRef.set(User).then(() => {
           console.log("user created");
-          cb(null, newUser);
+          cb(null, User);
         });
       } else {
-        console.log("User already exists.\nDocument data:", doc.data());
-        cb(null, doc);
+        User = doc.data();
+        console.log(
+          `User already exists.\nDocument data for ${User.name}:`,
+          User
+        );
+        cb(null, User);
       }
     }
   )
 );
 
-passport.serializeUser(function (profile, cb) {
+passport.serializeUser(function (user, cb) {
+  console.log(user);
   process.nextTick(function () {
     return cb(null, {
-      id: profile.id,
-      username: profile.displayName,
+      id: user.profileId,
+      username: user.name,
     });
   });
 });
 
 passport.deserializeUser(function (id, cb) {
   process.nextTick(function () {
+    console.log(id);
     userRef.where("profileId", "==", id).then((profile) => {
       console.log("deserialized user");
       cb(null, profile);
