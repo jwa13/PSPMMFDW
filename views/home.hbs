@@ -1,1 +1,57 @@
-<h1>Welcome to My Website</h1>
+<div>
+  <div>
+    <div className="container container-fluid">
+      <div className="row">
+        <div className="col-1 col-md-4 "></div>
+        <div className="col-10 col-md-4 card  text-center">
+          <h1>Please sign-in:</h1>
+          <h1><a class="btn btn-primary" href="/google" role="button"><i
+                class="bi bi-google"
+              ></i>
+              Sign in with Google</a></h1>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div>
+    {{#if player}}
+      <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+          <h3 class="accordion-header">
+            <button
+              class="accordion-button"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseOne"
+              aria-expanded="true"
+              aria-controls="collapseOne"
+            >
+              First Dropdown Item
+            </button>
+          </h3>
+          <div
+            id="collapseOne"
+            class="accordion-collapse collapse show"
+            data-bs-parent="#accordionExample"
+          >
+            <div class="accordion-body">
+              {{#each subitem}}
+                <div class="card">
+                  <div class="card-body">
+                    {{! In here would go all of the stuff for that card }}
+                    You really need to get to work!
+                  </div>
+                </div>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+      </div>
+    {{/if}}
+
+    {{#if coach}}{{/if}}
+
+    {{#if parent}}{{/if}}
+  </div>
+</div>
