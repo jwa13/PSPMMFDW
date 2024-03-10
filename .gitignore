@@ -54,3 +54,6 @@ $RECYCLE.BIN/
 
 # VS Code history plugin
 .history
+
+# Specific files to ignore
+keys.js

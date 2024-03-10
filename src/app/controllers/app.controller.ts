@@ -1,72 +1,56 @@
-import { Request, Response, Router, request } from "express";
-import { pino } from "pino";
-const passport = require("passport");
-const cookieSession = require("cookie-session");
-require("./passport");
+import { Request, Response, Router, request } from 'express';
+import { pino } from 'pino';
+import passport from 'passport';
+import controller from './router.controller';
+import middleware from '../middleware/middleware';
+
+require('./passport');
 
 export class AppController {
-  public router: Router = Router();
-  private log: pino.Logger = pino();
+	public router: Router = Router();
+	private log: pino.Logger = pino();
 
-  constructor() {
-    this.initializeRouter();
-  }
+	constructor() {
+		this.initializeRouter();
+	}
 
-  private initializeRouter() {
-    this.router.use(
-      cookieSession({
-        name: "google-auth-session",
-        keys: ["key1", "key2"],
-      })
-    );
+	private initializeRouter() {
+		this.router.use(passport.initialize());
+		this.router.use(passport.session());
+		this.router.use(middleware.flashMessages);
 
-    this.router.use(passport.initialize());
-    this.router.use(passport.session());
-    // Serve the home page
-    this.router.get("/", (req: Request, res: Response) => {
-      try {
-        // Render the "home" template as HTML
-        res.render("home");
-      } catch (err) {
-        this.log.error(err);
-      }
-    });
+		// Serve the home page
+		this.router.get('/', controller.home);
 
-    // Serve the calendar page
-    this.router.get("/calendar", (req: Request, res: Response) => {
-      try {
-        // Render the "home" template as HTML
-        res.render("calendar");
-      } catch (err) {
-        this.log.error(err);
-      }
-    });
+		// Serve the calendar page
+		this.router.get('/calendar', controller.calendar);
 
-    this.router.get("/failed", (req: Request, res: Response) => {
-      res.send("Failed");
-    });
+		this.router.get('/profile', middleware.loginCheck, controller.profile);
 
-    this.router.get("/profile", (req: Request, res: Response) => {
-      res.send(`Welcomes`);
-    });
+		// auth login
+		this.router.get('/login', controller.login);
 
-    this.router.get(
-      "/google",
-      (req: Request, res: Response, next: any) => {
-        console.log("Google");
-        next();
-      },
-      passport.authenticate("google", { scope: ["email", "profile", "openid"] })
-    );
+		// auth logout
+		this.router.get('/logout', middleware.loginCheck, controller.home);
 
-    this.router.get(
-      "/google/callback",
-      passport.authenticate("google", { failureRedirect: "/login" }),
-      function (req: Request, res: Response) {
-        // Successful authentication, redirect to profile.
-        console.log("Authentication Called");
-        res.redirect("/");
-      }
-    );
-  }
+		this.router.get(
+			'/google',
+			controller.google,
+			passport.authenticate('google', {
+				scope: ['email', 'profile', 'openid'],
+			})
+		);
+
+		this.router.get(
+			'/google/callback',
+			passport.authenticate('google', { failureRedirect: '/login' }),
+			controller.gCallback
+		);
+
+		this.router.post(
+			'/google/callback',
+			passport.authenticate('google', { failureRedirect: '/login' }),
+			controller.googleCallback
+		);
+	}
 }
