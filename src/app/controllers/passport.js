@@ -44,6 +44,7 @@ passport.serializeUser(function (user, cb) {
 			id: user.profileId,
 			username: user.name,
 			player: user.player,
+			email: user.email
 		});
 	});
 });

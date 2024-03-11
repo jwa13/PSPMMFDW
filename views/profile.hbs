@@ -1,5 +1,17 @@
 <div>
   <h1>{{ user.username }}'s Profile</h1>
+  <div class="card" id="my-info">
+  <div class="card-header">
+    My Info
+  </div>
+  <div class="card-body">
+      <p>Username: {{user.username}}</p>
+      <p>Email: {{user.email}}</p>
+      <p>Account Type: {{#if user.player}} Player{{/if}}</p>
+      <p>Teams: </p>
+      <p>Member Since: </p>
+  </div>
+</div>
   {{#if user.player}}
   <div class="accordion" id="accordionExample">
     <div class="accordion-item">

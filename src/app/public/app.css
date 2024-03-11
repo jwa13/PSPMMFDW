@@ -16,3 +16,7 @@ h1 {
 h3.card-title {
   text-align: center;
 }
+
+#my-info {
+  margin-bottom: 15px;
+}
