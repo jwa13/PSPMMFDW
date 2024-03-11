@@ -26,7 +26,7 @@ module.exports = {
 	profile: (req, res) => {
 		try {
 			// Render the "profile" template as HTML
-			res.render('profile');
+			res.render('profile', { user: req.session.passport.user, evaluations: req.session.evaluations });
 			console.log('profile middleware working');
 		} catch (err) {
 			this.log.error(err);

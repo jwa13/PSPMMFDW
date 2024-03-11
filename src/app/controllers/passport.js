@@ -43,6 +43,7 @@ passport.serializeUser(function (user, cb) {
 		return cb(null, {
 			id: user.profileId,
 			username: user.name,
+			player: user.player,
 		});
 	});
 });

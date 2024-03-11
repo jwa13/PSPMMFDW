@@ -3,6 +3,7 @@ import { pino } from 'pino';
 import passport from 'passport';
 import controller from './router.controller';
 import middleware from '../middleware/middleware';
+import profileMiddleware from '../middleware/profile.middleware'
 
 require('./passport');
 
@@ -25,7 +26,8 @@ export class AppController {
 		// Serve the calendar page
 		this.router.get('/calendar', controller.calendar);
 
-		this.router.get('/profile', middleware.loginCheck, controller.profile);
+		// Serve the profile page
+		this.router.get('/profile', middleware.loginCheck, profileMiddleware.evalGetter, controller.profile);
 
 		// auth login
 		this.router.get('/login', controller.login);
