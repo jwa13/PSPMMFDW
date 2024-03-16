@@ -63,8 +63,10 @@ module.exports = {
 	},
 
 	// Route to create evaluation
+	// Delete this route and handlebars template, using buttons and modals instead
 	evaluation: (req, res, next) => {
 		console.log('Evaluation route working');
+		console.log(req.session.passport.user.username);
 		res.render('evaluation');
 	}
 };

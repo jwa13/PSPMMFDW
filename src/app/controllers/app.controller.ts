@@ -57,7 +57,7 @@ export class AppController {
 
 		// Evaluation route
 		this.router.get( '/evaluation',
-			middleware.loginCheck,
+			middleware.loginCheck, controller.evaluation
 		 )
 	}
 }
