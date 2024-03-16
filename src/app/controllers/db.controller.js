@@ -17,7 +17,7 @@ const dbController = {
             return null;
         }
     },
-
+    
     createUser: async (userData) => {
         try {
             if (!await this.getUserByEmail(userData.email)) {                        //If User is not in DB 
@@ -46,7 +46,10 @@ const dbController = {
             return null;
         }
     },
-
+    // Admin User Method 
+    // used to update existing user datafields Validation need to be added to prevent google auth ID infor from being modified
+    // these validation methods will be added when danny creates the testing modules for database access. Though the Admin Profile 
+    // created yet the DB methods it will use and the testing / validation can be completed now.
     updateUser: async (userData) => {
         try {
             const userToUpdate = this.getUserByEmail(userData.email);
