@@ -2,9 +2,10 @@ require('passport');
 
 module.exports = {
 	loginCheck: (req, res, next) => {
-		let user = req.user;
 		//console.log(req.body);
-		if (user) {
+		if (req.session.passport.user) {
+			let user = req.session.passport.user;
+			console.log('login check');
 			console.log(user);
 			next();
 		} else {

@@ -4,12 +4,21 @@ module.exports = {
 	home: async (req, res) => {
 		try {
 			// Render the "home" template as HTML
+			const date = new Date();
+			let day = date.getDate();
+			let month = date.getMonth() + 1;
+			let year = date.getFullYear();
+			let currentDate = `${month}-${day}-${year}`;
 
 			req.session.viewed = true;
-			res.render('home');
+			if(req.session.passport) {
+				res.render('home', { user: req.session.passport.user, currentDate: currentDate });
+			} else {
+				res.render('home');
+			}
 			console.log('home middleware working');
 		} catch (err) {
-			this.log.error(err);
+			console.log(err);
 		}
 	},
 
@@ -52,10 +61,18 @@ module.exports = {
 	gCallback: (req, res) => {
 		// Successful authentication, redirect to profile.
 		console.log('google callback middleware working');
-		res.redirect('/profile');
+		res.redirect('/');
 	},
 
 	googleCallback: (req, res) => {
-		console.log(req.user + ' : Signed in.');
+		console.log(req.session.passport.user.username + ' : Signed in.');
 	},
+
+	// Route to create evaluation
+	// Delete this route and handlebars template, using buttons and modals instead
+	evaluation: (req, res, next) => {
+		console.log('Evaluation route working');
+		console.log(req.session.passport.user.username);
+		res.render('evaluation');
+	}
 };
