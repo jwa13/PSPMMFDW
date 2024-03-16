@@ -29,19 +29,26 @@
                       <input type="text" class="form-control" id="coachName" value='{{user.username}}' readonly="true">
                     </div>
                     <div class="mb-3">
-                      <label for="exampleInputPassword1" class="form-label">Password</label>
-                      <input type="password" class="form-control" id="exampleInputPassword1">
+                      <label for="moundVelo" class="form-label">Mound Velo</label>
+                      <input type="number" class="form-label" id="moundVelo" max="110" min="0">
                     </div>
-                    <div class="mb-3 form-check">
-                      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                      <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                    <div class="mb-3">
+                      <label for="pulldownVelo" class="form-label">Pulldown Velo</label>
+                      <input type="number" class="form-label" id="pulldownVelo" max="110" min="0">
+                    </div>
+                    <div class="mb-3">
+                      <label for="comments" class="form-label">Comments</label>
+                      <input type="text" class="form-control" id="comments">
+                    </div>
+                    <div class="mb-3">
+                      <label for="date" class="form-label">Date</label>
+                      <input type="text" class="form-control" id="date" readonly="true" value="{{currentDate}}">
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                   </form>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
               </div>
             </div>
@@ -57,30 +64,36 @@
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Hitting Evaluation</h1>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                   <form>
                     <div class="mb-3">
-                      <label for="exampleInputEmail1" class="form-label">Email address</label>
-                      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                      <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                      <label for="coachName" class="form-label">Coach</label>
+                      <input type="text" class="form-control" id="coachName" value='{{user.username}}' readonly="true">
                     </div>
                     <div class="mb-3">
-                      <label for="exampleInputPassword1" class="form-label">Password</label>
-                      <input type="password" class="form-control" id="exampleInputPassword1">
+                      <label for="exitVeloTee" class="form-label">Velo Toss</label>
+                      <input type="number" class="form-label" id="exitVeloTee" max="" min="">
                     </div>
-                    <div class="mb-3 form-check">
-                      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                      <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                    <div class="mb-3">
+                      <label for="exitVeloToss" class="form-label">Velo Tee</label>
+                      <input type="number" class="form-label" id="exitVeloToss" max="" min="">
+                    </div>
+                    <div class="mb-3">
+                      <label for="comments" class="form-label">Comments</label>
+                      <input type="text" class="form-control" id="comments">
+                    </div>
+                    <div class="mb-3">
+                      <label for="date" class="form-label">Date</label>
+                      <input type="text" class="form-control" id="date" readonly="true" value="{{currentDate}}">
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                   </form>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
               </div>
             </div>
@@ -96,30 +109,40 @@
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Stength Evaluation</h1>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                   <form>
                     <div class="mb-3">
-                      <label for="exampleInputEmail1" class="form-label">Email address</label>
-                      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                      <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                      <label for="coachName" class="form-label">Coach</label>
+                      <input type="text" class="form-control" id="coachName" value='{{user.username}}' readonly="true">
                     </div>
                     <div class="mb-3">
-                      <label for="exampleInputPassword1" class="form-label">Password</label>
-                      <input type="password" class="form-control" id="exampleInputPassword1">
+                      <label for="squat" class="form-label">Squat</label>
+                      <input type="number" class="form-label" id="squat" max="999" min="0">
                     </div>
-                    <div class="mb-3 form-check">
-                      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                      <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                    <div class="mb-3">
+                      <label for="bench" class="form-label">Bench</label>
+                      <input type="number" class="form-label" id="bench" max="999" min="0">
+                    </div>
+                    <div class="mb-3">
+                      <label for="deadlift" class="form-label">Deadlift</label>
+                      <input type="number" class="form-label" id="deadlift" max="999" min="0">
+                    </div>
+                    <div class="mb-3">
+                      <label for="comments" class="form-label">Comments</label>
+                      <input type="text" class="form-control" id="comments">
+                    </div>
+                    <div class="mb-3">
+                      <label for="date" class="form-label">Date</label>
+                      <input type="text" class="form-control" id="date" readonly="true" value="{{currentDate}}">
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                   </form>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
               </div>
             </div>

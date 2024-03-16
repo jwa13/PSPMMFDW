@@ -4,9 +4,16 @@ module.exports = {
 	home: async (req, res) => {
 		try {
 			// Render the "home" template as HTML
+			const date = new Date();
+			let day = date.getDate();
+			let month = date.getMonth() + 1;
+			let year = date.getFullYear();
+			let currentDate = `${month}-${day}-${year}`;
+
 			req.session.viewed = true;
 			if(req.session.passport) {
-				res.render('home', { user: req.session.passport.user });
+				res.render('home', { user: req.session.passport.user, currentDate: currentDate });
+				console.log(day);
 			} else {
 				res.render('home');
 			}
