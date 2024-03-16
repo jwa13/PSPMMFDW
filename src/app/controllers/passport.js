@@ -2,7 +2,7 @@ import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import db from '../firebase.ts';
 import keys from './keys.js';
-import dbController from '../controllers/db.controller.js';
+import dbController from './db.controller.js';
 
 var User = '';
 passport.use(
