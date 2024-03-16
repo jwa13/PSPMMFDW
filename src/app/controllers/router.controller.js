@@ -4,12 +4,15 @@ module.exports = {
 	home: async (req, res) => {
 		try {
 			// Render the "home" template as HTML
-
 			req.session.viewed = true;
-			res.render('home');
+			if(req.session.passport) {
+				res.render('home', { user: req.session.passport.user });
+			} else {
+				res.render('home');
+			}
 			console.log('home middleware working');
 		} catch (err) {
-			this.log.error(err);
+			console.log(err);
 		}
 	},
 
@@ -52,10 +55,16 @@ module.exports = {
 	gCallback: (req, res) => {
 		// Successful authentication, redirect to profile.
 		console.log('google callback middleware working');
-		res.redirect('/profile');
+		res.redirect('/');
 	},
 
 	googleCallback: (req, res) => {
-		console.log(req.user + ' : Signed in.');
+		console.log(req.session.passport.user.username + ' : Signed in.');
 	},
+
+	// Route to create evaluation
+	evaluation: (req, res, next) => {
+		console.log('Evaluation route working');
+		res.render('evaluation');
+	}
 };

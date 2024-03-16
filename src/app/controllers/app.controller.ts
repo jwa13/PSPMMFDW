@@ -54,5 +54,10 @@ export class AppController {
 			passport.authenticate('google', { failureRedirect: '/login' }),
 			controller.googleCallback
 		);
+
+		// Evaluation route
+		this.router.get( '/evaluation',
+			middleware.loginCheck,
+		 )
 	}
 }
