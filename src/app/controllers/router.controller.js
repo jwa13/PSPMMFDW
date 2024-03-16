@@ -13,7 +13,7 @@ module.exports = {
 			req.session.viewed = true;
 			if(req.session.passport) {
 				res.render('home', { user: req.session.passport.user, currentDate: currentDate });
-				console.log(day);
+				console.log(user);
 			} else {
 				res.render('home');
 			}

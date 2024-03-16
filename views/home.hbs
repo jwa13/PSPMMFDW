@@ -10,143 +10,145 @@
 
           {{!-- Form should only displayed when coach is logged in --}}
           {{!-- Pitching eval form inside of modal behind button --}}
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#pitchingModal">
-            Create Pitching Evaluation
-          </button>
-          <!-- Modal -->
-          <div class="modal fade" id="pitchingModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="exampleModalLabel">Pitching Evaluation</h1>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <form>
-                    <div class="mb-3">
-                      <label for="coachName" class="form-label">Coach</label>
-                      <input type="text" class="form-control" id="coachName" value='{{user.username}}' readonly="true">
-                    </div>
-                    <div class="mb-3">
-                      <label for="moundVelo" class="form-label">Mound Velo</label>
-                      <input type="number" class="form-label" id="moundVelo" max="110" min="0">
-                    </div>
-                    <div class="mb-3">
-                      <label for="pulldownVelo" class="form-label">Pulldown Velo</label>
-                      <input type="number" class="form-label" id="pulldownVelo" max="110" min="0">
-                    </div>
-                    <div class="mb-3">
-                      <label for="comments" class="form-label">Comments</label>
-                      <input type="text" class="form-control" id="comments">
-                    </div>
-                    <div class="mb-3">
-                      <label for="date" class="form-label">Date</label>
-                      <input type="text" class="form-control" id="date" readonly="true" value="{{currentDate}}">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                  </form>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          {{#if user.coach}}
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#pitchingModal">
+              Create Pitching Evaluation
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" id="pitchingModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Pitching Evaluation</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form>
+                      <div class="mb-3">
+                        <label for="coachName" class="form-label">Coach</label>
+                        <input type="text" class="form-control" id="coachName" value='{{user.username}}' readonly="true">
+                      </div>
+                      <div class="mb-3">
+                        <label for="moundVelo" class="form-label">Mound Velo</label>
+                        <input type="number" class="form-label" id="moundVelo" max="110" min="0">
+                      </div>
+                      <div class="mb-3">
+                        <label for="pulldownVelo" class="form-label">Pulldown Velo</label>
+                        <input type="number" class="form-label" id="pulldownVelo" max="110" min="0">
+                      </div>
+                      <div class="mb-3">
+                        <label for="comments" class="form-label">Comments</label>
+                        <input type="text" class="form-control" id="comments">
+                      </div>
+                      <div class="mb-3">
+                        <label for="date" class="form-label">Date</label>
+                        <input type="text" class="form-control" id="date" readonly="true" value="{{currentDate}}">
+                      </div>
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          {{!-- Hitting evaluation button and modal --}}
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#hittingModal">
-            Create Hitting Evaluation
-          </button>
-          <!-- Modal -->
-          <div class="modal fade" id="hittingModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="exampleModalLabel">Hitting Evaluation</h1>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <form>
-                    <div class="mb-3">
-                      <label for="coachName" class="form-label">Coach</label>
-                      <input type="text" class="form-control" id="coachName" value='{{user.username}}' readonly="true">
-                    </div>
-                    <div class="mb-3">
-                      <label for="exitVeloTee" class="form-label">Velo Toss</label>
-                      <input type="number" class="form-label" id="exitVeloTee" max="" min="">
-                    </div>
-                    <div class="mb-3">
-                      <label for="exitVeloToss" class="form-label">Velo Tee</label>
-                      <input type="number" class="form-label" id="exitVeloToss" max="" min="">
-                    </div>
-                    <div class="mb-3">
-                      <label for="comments" class="form-label">Comments</label>
-                      <input type="text" class="form-control" id="comments">
-                    </div>
-                    <div class="mb-3">
-                      <label for="date" class="form-label">Date</label>
-                      <input type="text" class="form-control" id="date" readonly="true" value="{{currentDate}}">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                  </form>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            {{!-- Hitting evaluation button and modal --}}
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#hittingModal">
+              Create Hitting Evaluation
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" id="hittingModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Hitting Evaluation</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form>
+                      <div class="mb-3">
+                        <label for="coachName" class="form-label">Coach</label>
+                        <input type="text" class="form-control" id="coachName" value='{{user.username}}' readonly="true">
+                      </div>
+                      <div class="mb-3">
+                        <label for="exitVeloTee" class="form-label">Velo Toss</label>
+                        <input type="number" class="form-label" id="exitVeloTee" max="" min="">
+                      </div>
+                      <div class="mb-3">
+                        <label for="exitVeloToss" class="form-label">Velo Tee</label>
+                        <input type="number" class="form-label" id="exitVeloToss" max="" min="">
+                      </div>
+                      <div class="mb-3">
+                        <label for="comments" class="form-label">Comments</label>
+                        <input type="text" class="form-control" id="comments">
+                      </div>
+                      <div class="mb-3">
+                        <label for="date" class="form-label">Date</label>
+                        <input type="text" class="form-control" id="date" readonly="true" value="{{currentDate}}">
+                      </div>
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          {{!-- Strength evaluation button and modal --}}
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#strengthModal">
-            Create Strength Evaluation
-          </button>
-          <!-- Modal -->
-          <div class="modal fade" id="strengthModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="exampleModalLabel">Stength Evaluation</h1>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <form>
-                    <div class="mb-3">
-                      <label for="coachName" class="form-label">Coach</label>
-                      <input type="text" class="form-control" id="coachName" value='{{user.username}}' readonly="true">
-                    </div>
-                    <div class="mb-3">
-                      <label for="squat" class="form-label">Squat</label>
-                      <input type="number" class="form-label" id="squat" max="999" min="0">
-                    </div>
-                    <div class="mb-3">
-                      <label for="bench" class="form-label">Bench</label>
-                      <input type="number" class="form-label" id="bench" max="999" min="0">
-                    </div>
-                    <div class="mb-3">
-                      <label for="deadlift" class="form-label">Deadlift</label>
-                      <input type="number" class="form-label" id="deadlift" max="999" min="0">
-                    </div>
-                    <div class="mb-3">
-                      <label for="comments" class="form-label">Comments</label>
-                      <input type="text" class="form-control" id="comments">
-                    </div>
-                    <div class="mb-3">
-                      <label for="date" class="form-label">Date</label>
-                      <input type="text" class="form-control" id="date" readonly="true" value="{{currentDate}}">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                  </form>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            {{!-- Strength evaluation button and modal --}}
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#strengthModal">
+              Create Strength Evaluation
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" id="strengthModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Stength Evaluation</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form>
+                      <div class="mb-3">
+                        <label for="coachName" class="form-label">Coach</label>
+                        <input type="text" class="form-control" id="coachName" value='{{user.username}}' readonly="true">
+                      </div>
+                      <div class="mb-3">
+                        <label for="squat" class="form-label">Squat</label>
+                        <input type="number" class="form-label" id="squat" max="999" min="0">
+                      </div>
+                      <div class="mb-3">
+                        <label for="bench" class="form-label">Bench</label>
+                        <input type="number" class="form-label" id="bench" max="999" min="0">
+                      </div>
+                      <div class="mb-3">
+                        <label for="deadlift" class="form-label">Deadlift</label>
+                        <input type="number" class="form-label" id="deadlift" max="999" min="0">
+                      </div>
+                      <div class="mb-3">
+                        <label for="comments" class="form-label">Comments</label>
+                        <input type="text" class="form-control" id="comments">
+                      </div>
+                      <div class="mb-3">
+                        <label for="date" class="form-label">Date</label>
+                        <input type="text" class="form-control" id="date" readonly="true" value="{{currentDate}}">
+                      </div>
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          {{/if}}
         </div>
       </div>
     </div>

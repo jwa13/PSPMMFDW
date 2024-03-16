@@ -43,8 +43,11 @@ passport.serializeUser(function (user, cb) {
 		return cb(null, {
 			id: user.profileId,
 			username: user.name,
+			email: user.email,
 			player: user.player,
-			email: user.email
+			coach: user.coach,
+			parent: user.parent,
+			admin: user.admin
 		});
 	});
 });
