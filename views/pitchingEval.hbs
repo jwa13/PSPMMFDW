@@ -5,7 +5,7 @@
 				<div className='col-10 col-md-4 card  text-center'>
 					{{#if user.coach}}
 						<h1 class='title fs-5' name='pitchingLabel'>Pitching Evaluation</h1>
-						<form>
+						<form  action='/pitchingEval' method='POST'>
 							<div class='mb-3'>
 								<label for='coachName' class='form-label'>Coach</label>
 								<input
@@ -97,7 +97,7 @@
 									value='{{currentDate}}'
 								/>
 							</div>
-							<button type='submit' class='btn btn-primary'>Submit</button>
+							<input type='submit' class='btn btn-primary'></input>
 						</form>
 					{{/if}}
 				</div>

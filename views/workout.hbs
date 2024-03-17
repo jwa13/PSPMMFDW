@@ -5,7 +5,7 @@
 				<div className='col-10 col-md-4 card  text-center'>
 					{{#if user.coach}}
 						<h1 class='title fs-5' name='workoutLabel'>Workout Plan Creation</h1>
-						<form>
+						<form  action='/workout' method='POST'>
 							<div class='mb-3'>
 								<label for='coachName' class='form-label'>Coach</label>
 								<input
@@ -82,11 +82,11 @@
 									class='form-control'
 									name='commentsWorkout'
 								/>
-								<label for='exampleVnameeo' class='form-label'>Example vnameeo
+								<label for='exampleVideo' class='form-label'>Example video
 									for Exercise</label>
-								<input type='text' class='form-control' name='exampleVnameeo' />
+								<input type='text' class='form-control' name='exampleVideo' />
 							</div>
-							<button type='submit' class='btn btn-primary'>New Exercise</button>
+							<input type='submit' class='btn btn-primary'>New Exercise</input>
 						</form>
 					{{/if}}
 				</div>
