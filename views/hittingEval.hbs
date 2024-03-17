@@ -1,0 +1,68 @@
+<div>
+	<div>
+		<div className='container container-fluname'>
+			<div className='row'>
+				<div className='col-10 col-md-4 card  text-center'>
+					{{#if user.coach}}
+					<h1 class='title fs-5' name='hittingTitle'>Hitting Evaluation</h1>
+					<form action='/hittingEval' method='POST'>
+						<div class='mb-3'>
+							<label for='coachName' class='form-label'>Coach</label>
+							<input type='text' class='form-control' name='coachName' value='{{user.username}}'
+								readonly='true' />
+						</div>
+						<div class='mb-3'>
+							<label for='teamName' class='form-label'>Team</label>
+							<div class='dropdown'>
+								<button class='btn btn-secondary dropdown-toggle' type='button' name='dropdownTeamButton'
+									data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+									Choose a Team
+								</button>
+								<div class='dropdown-menu' aria-labelledby='dropdownMenuButton'>
+									{{!-- will need to update upon adding teams {{#each user.teams}}
+									<a class="dropdown-item" href="#">{{this}}</a>
+									{{/each}} --}}
+								</div>
+							</div>
+						</div>
+						<div class='mb-3'>
+							<label for='playerName' class='form-label'>Player</label>
+							<div class='dropdown'>
+								<button class='btn btn-secondary dropdown-toggle' type='button'
+									name='dropdownPlayerButton' data-bs-toggle='dropdown' aria-haspopup='true'
+									aria-expanded='false'>
+									Choose a Player
+								</button>
+								<div class='dropdown-menu' aria-labelledby='dropdownMenuButton'>
+									{{!-- will need to update upon adding teams {{#each
+									user.teams.SPECIFIC_TEAM.SPECIFIC_PLAYER.name}}
+									<a class="dropdown-item" href="#">{{this}}</a>
+									{{/each}} --}}
+								</div>
+							</div>
+						</div>
+						<div class='mb-3'>
+							<label for='exitVeloTee' class='form-label'>Velo Toss</label>
+							<input type='number' class='form-label' name='exitVeloTee' max='' min='' />
+						</div>
+						<div class='mb-3'>
+							<label for='exitVeloToss' class='form-label'>Velo Tee</label>
+							<input type='number' class='form-label' name='exitVeloToss' max='' min='' />
+						</div>
+						<div class='mb-3'>
+							<label for='comments' class='form-label'>Comments</label>
+							<input type='text' class='form-control' name='comments' />
+						</div>
+						<div class='mb-3'>
+							<label for='date' class='form-label'>Date</label>
+							<input type='text' class='form-control' name='date' readonly='true' value='{{currentDate}}' />
+						</div>
+						<input type='submit' class='btn btn-primary'></input>
+					</form>
+					{{/if}}
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

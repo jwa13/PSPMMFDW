@@ -1,0 +1,97 @@
+<div>
+	<div>
+		<div className='container container-fluname'>
+			<div className='row'>
+				<div className='col-10 col-md-4 card  text-center'>
+					{{#if user.coach}}
+						<h1 class='title fs-5' name='workoutLabel'>Workout Plan Creation</h1>
+						<form>
+							<div class='mb-3'>
+								<label for='coachName' class='form-label'>Coach</label>
+								<input
+									type='text'
+									class='form-control'
+									name='coachName'
+									value='{{user.username}}'
+									readonly='true'
+								/>
+							</div>
+							<div class='mb-3'>
+								<label for='teamName' class='form-label'>Team</label>
+								<div class='dropdown'>
+									<button
+										class='btn btn-secondary dropdown-toggle'
+										type='button'
+										name='dropdownTeamButton'
+										data-bs-toggle='dropdown'
+										aria-haspopup='true'
+										aria-expanded='false'
+									>
+										Choose a Team
+									</button>
+									<div
+										class='dropdown-menu'
+										aria-labelledby='dropdownMenuButton'
+									>
+										{{!-- will need to update upon adding teams {{#each user.teams}}
+                                    <a class="dropdown-item" href="#">{{this}}</a>
+                                    {{/each}} --}}
+									</div>
+								</div>
+							</div>
+							<div class='mb-3'>
+								<label for='playerName' class='form-label'>Player</label>
+								<div class='dropdown'>
+									<button
+										class='btn btn-secondary dropdown-toggle'
+										type='button'
+										name='dropdownPlayerButton'
+										data-bs-toggle='dropdown'
+										aria-haspopup='true'
+										aria-expanded='false'
+									>
+										Choose a Player
+									</button>
+									<div
+										class='dropdown-menu'
+										aria-labelledby='dropdownMenuButton'
+									>
+										{{!-- will need to update upon adding teams {{#each
+                                    user.teams.SPECIFIC_TEAM.SPECIFIC_PLAYER.name}}
+                                    <a class="dropdown-item" href="#">{{this}}</a>
+                                    {{/each}} --}}
+									</div>
+								</div>
+							</div>
+							<div class='mb-3'>
+								<label for='exercise' class='form-label'>Exercise</label>
+								<input type='text' class='form-label' name='exercise' />
+							</div>
+							<div class='mb-3'>
+								<label for='sets' class='form-label'>Total Sets for Exercise</label>
+								<input type='number' class='form-control' name='sets' />
+								<label for='reps' class='form-label'>Total Reps per Set</label>
+								<input type='number' class='form-control' name='reps' />
+								<label for='weight' class='form-label'>Weight per Exercise</label>
+								<input type='number' class='form-control' name='weight' />
+							</div>
+							<div class='mb-3'>
+								<label for='comments' class='form-label'>Comments</label>
+								<input
+									type='text'
+									class='form-control'
+									name='commentsWorkout'
+								/>
+								<label for='exampleVnameeo' class='form-label'>Example vnameeo
+									for Exercise</label>
+								<input type='text' class='form-control' name='exampleVnameeo' />
+							</div>
+							<button type='submit' class='btn btn-primary'>New Exercise</button>
+						</form>
+					{{/if}}
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>

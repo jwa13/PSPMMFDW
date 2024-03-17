@@ -3,7 +3,8 @@ import { pino } from 'pino';
 import passport from 'passport';
 import controller from './router.controller';
 import middleware from '../middleware/middleware';
-import profileMiddleware from '../middleware/profile.middleware'
+import profileMiddleware from '../middleware/profile.middleware';
+import processData from './dataController';
 
 require('./passport');
 
@@ -23,11 +24,28 @@ export class AppController {
 		// Serve the home page
 		this.router.get('/', controller.home);
 
+		this.router.get('/pitchingEval', controller.pitchingEval);
+		this.router.post('/pitchingEval', processData.processPitching);
+
+		this.router.get('/hittingEval', controller.hittingEval);
+		this.router.post('/hittingEval', processData.processHitting);
+
+		this.router.get('/strengthEval', controller.strengthEval);
+		this.router.post('/strengthEval', processData.processStrength);
+
+		this.router.get('/workout', controller.workout);
+		this.router.post('/workout', processData.processWorkout);
+
 		// Serve the calendar page
 		this.router.get('/calendar', controller.calendar);
 
 		// Serve the profile page
-		this.router.get('/profile', middleware.loginCheck, profileMiddleware.evalGetter, controller.profile);
+		this.router.get(
+			'/profile',
+			middleware.loginCheck,
+			profileMiddleware.evalGetter,
+			controller.profile
+		);
 
 		// auth login
 		this.router.get('/login', controller.login);
@@ -56,8 +74,10 @@ export class AppController {
 		);
 
 		// Evaluation route
-		this.router.get( '/evaluation',
-			middleware.loginCheck, controller.evaluation
-		 )
+		this.router.get(
+			'/evaluation',
+			middleware.loginCheck,
+			controller.evaluation
+		);
 	}
 }
