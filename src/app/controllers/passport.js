@@ -24,6 +24,7 @@ passport.use(
 				};
 				userRef.set(User).then(() => {
 					console.log('user created');
+					console.log(User);
 					cb(null, User);
 				});
 			} else {

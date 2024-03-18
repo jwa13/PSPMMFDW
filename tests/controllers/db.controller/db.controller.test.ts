@@ -6,8 +6,8 @@ import dbController from '../../../src/app/controllers/db.controller';
 const playerEmail = "test_player@pspmmfdw.gmail.com";
 const coachEmail = "test_coach@pspmmfdw.gmail.com";
 const adminEmail = "test_admin@pspmmfdw.gmail.com";
-const newUserEmail = "test_admin@pspmmfdw.gmail.com";
-const deleteUserEmail = "test_admin@pspmmfdw.gmail.com";
+const newUserEmail = "test_newUserEmail@pspmmfdw.gmail.com";
+const deleteUserEmail = "test_deleteUserEmail@pspmmfdw.gmail.com";
 const badUserEmail = "bad@pspmmfdw.gmail.com";
 
 interface MockData {
@@ -25,7 +25,7 @@ interface MockData {
 const mockData: MockData = {
     'test_player@pspmmfdw.gmail.com': {
         email: playerEmail,
-        profileId: '000000000000000000000',
+        profileId: '0000000000000000000000',
         name: 'Player User',
         team: 'Player Team',
         admin: false,
@@ -71,7 +71,8 @@ jest.mock('../../../src/app/firebase.ts', () => {
                 get: jest.fn().mockResolvedValue({
                     exists: mockData[email] !== undefined,
                     data: () => mockData[email]
-                })
+                }),
+                set: jest.fn().mockResolvedValue(true), 
             };
         })
     };
@@ -81,52 +82,24 @@ describe('dbController.getUserByEmail', () => {
     // Test for retrieving the Player existing user
     it('should retrieve an existing user by email', async () => {
         const user = await dbController.getUserByEmail(playerEmail);
-
-        expect(user).toEqual({
-            email: playerEmail,
-            profileId: '000000000000000000000',
-            name: 'Player User',
-            team: 'Player Team',
-            admin: false,
-            coach: false,
-            player: true
-        });
+        expect(user).toEqual((mockData['test_player@pspmmfdw.gmail.com']));
     });
 
     // Test for retrieving the coach existing user
     it('should retrieve another existing user by email', async () => {
         const user = await dbController.getUserByEmail(coachEmail);
-
-        expect(user).toEqual({
-            email: coachEmail,
-            profileId: '111111111111111111111',
-            name: 'Coach User',
-            team: 'Coach Team',
-            admin: false,
-            coach: true,
-            player: false
-        });
+        expect(user).toEqual((mockData['test_coach@pspmmfdw.gmail.com']));
     });
 
     // Test for retrieving the Admin existing user
     it('should retrieve admin existing user by email', async () => {
         const user = await dbController.getUserByEmail(adminEmail);
-
-        expect(user).toEqual({
-            email: adminEmail,
-            profileId: '3333333333333333333333',
-            name: 'Admin User',
-            team: '',
-            admin: true,
-            coach: false,
-            player: false
-        });
+        expect(user).toEqual((mockData['test_admin@pspmmfdw.gmail.com']));
     });
 
     // Test for attempting to retrieve a user that does not exist
     it('should return null for a non-existing user', async () => {
         const user = await dbController.getUserByEmail(badUserEmail);
-
         expect(user).toBeNull();
     });
 
@@ -139,10 +112,6 @@ describe('dbController.getUserByEmail', () => {
                 email: 'new_user@pspmmfdw.gmail.com',
                 profileId: '4444444444444444444444',
                 name: 'New User',
-                team: 'New Team',
-                admin: false,
-                coach: false,
-                player: true
         };
         it('should return false when attempting to create a user with an email that already exists', async () => {
             const createUserResult = await dbController.createUser(mockData['test_player@pspmmfdw.gmail.com']);

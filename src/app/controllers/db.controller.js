@@ -1,4 +1,3 @@
-import { use } from 'passport';
 import db from '../firebase.ts';
 
 const dbController = {
@@ -23,13 +22,12 @@ const dbController = {
         let newUser = await dbController.getUserByEmail(userData.email);
         try {
             if (!newUser) {
-                newUser = { profileID: userData.profileID, email: userData.email, name: userData.name };
-                await db.collection('users').doc(newUser.email).set(newUser);
-                console.log(`[dbController:createUser:] User created with email: ${newUser.email}`);
+                await db.collection('users').doc(userData.email).set(userData);
+                console.log(`[dbController:createUser:] User created with email: ${userData.email}`);
                 return userData;
             }
             else
-                return null; // if user is in DB
+                return null;
         } catch (error) {
             console.log(`[dbController:createUser:] Error creating user ${userData.email}:`, error);
             return null;
