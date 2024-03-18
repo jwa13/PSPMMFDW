@@ -89,7 +89,7 @@ const routerController = {
 						// Extract the "player name" field from each document
 						// Extract the "team name" field from each document
 						players.push({ player: doc.data() });
-						teams.push({ team: doc });
+						teams.push({ team: doc.id });
 					});
 				})
 				.catch((error) => {

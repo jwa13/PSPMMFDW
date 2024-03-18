@@ -25,6 +25,7 @@ module.exports = {
 		}
 	},
 
+	// check if we need
 	populateFormData: (req, res, next) => {
 		res.locals.pitchingActive = req.path === '/pitchingEval';
 		res.locals.hittingActive = req.path === '/hittingEval';
