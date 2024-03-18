@@ -1,7 +1,5 @@
-import { describe, expect, test } from '@jest/globals';
+import { describe, expect, it } from '@jest/globals';
 import dbController from '../../../src/app/controllers/db.controller';
-
-
 
 const playerEmail = "test_player@pspmmfdw.gmail.com";
 const coachEmail = "test_coach@pspmmfdw.gmail.com";
@@ -63,16 +61,16 @@ const mockData: MockData = {
 
 // Setup for mock Firebase database
 jest.mock('../../../src/app/firebase.ts', () => {
-    
     return {
         collection: jest.fn().mockReturnThis(),
         doc: jest.fn().mockImplementation((email) => {
             return {
-                get: jest.fn().mockResolvedValue({
-                    exists: mockData[email] !== undefined,
+                get: jest.fn().mockResolvedValue({ // this need to be better defined
+                    exists: mockData[email] !== undefined, 
                     data: () => mockData[email]
                 }),
-                set: jest.fn().mockResolvedValue(true), 
+                set: jest.fn().mockResolvedValue(true), //userdata is passed with isfalsey propery
+                delete: jest.fn().mockResolvedValue(true), //userdata is passed with isfalsey propery
             };
         })
     };
@@ -100,28 +98,40 @@ describe('dbController.getUserByEmail', () => {
     // Test for attempting to retrieve a user that does not exist
     it('should return null for a non-existing user', async () => {
         const user = await dbController.getUserByEmail(badUserEmail);
-        expect(user).toBeNull();
-    });
-
-// db.controller.test.ts
-
-// Refined tests for the createUser method
-
-    describe('dbController.createUser', () => {
-        const newUser = {
-                email: 'new_user@pspmmfdw.gmail.com',
-                profileId: '4444444444444444444444',
-                name: 'New User',
-        };
-        it('should return false when attempting to create a user with an email that already exists', async () => {
-            const createUserResult = await dbController.createUser(mockData['test_player@pspmmfdw.gmail.com']);
-            expect(createUserResult).toBeFalsy();
-        });
-        it('should successfully create a new user when the email does not exist in the database', async () => {
-            const createUserResult = await dbController.createUser(newUser);
-            console.log(newUser);
-            console.log(createUserResult);
-            expect(createUserResult).toEqual(newUser);
-        });
+        expect(user).toBeFalsy();
     });
 });
+describe('dbController.createUser', () => {
+    const newUser = {
+        email: newUserEmail,
+        profileId: '4444444444444444444444',
+        name: 'New User',
+    };
+    it('should return false when attempting to create a user with an email that already exists', async () => {
+        const createUserResult = await dbController.createUser(mockData['test_player@pspmmfdw.gmail.com']);
+        expect(createUserResult).toBeFalsy();
+    });
+    it('should successfully create a new user when the email does not exist in the database', async () => {
+        const createUserResult = await dbController.createUser(newUser);
+        console.log(newUser);
+        console.log(createUserResult);
+        expect(createUserResult).toEqual(newUser);
+    });
+});
+
+describe('dbController.removeUser', () => {
+    it('removeUser should remove an existing user and return their data', async () => {
+        const removeUserResult = await dbController.removeUser(mockData['test_deleteUser@pspmmfdw.gmail.com']);
+        console.log(removeUserResult);
+        expect(await dbController.getUserByEmail(mockData['test_deleteUser@pspmmfdw.gmail.com'])).toBeFalsy();
+    });
+    it('removeUser should return false for a non-existing user', async () => {
+        const baduser = { email: badUserEmail }; // Use an email not present in mockData
+        const removeUserResult = await dbController.removeUser(baduser);
+        console.log(removeUserResult);
+        console.log(baduser);
+        expect(removeUserResult).toBeFalsy();
+    });
+
+});
+

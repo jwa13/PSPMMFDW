@@ -36,11 +36,11 @@ const dbController = {
     
     removeUser: async (userData) => {
         try {
-            let userToRemove = dbController.getUserByEmail(userData.email);
-            if (userToRemove) {                        //If User is in DB 
+            let userToRemove = await dbController.getUserByEmail(userData.email);
+            if (userToRemove) {                        
                 await db.collection('users').doc(userData.email).delete();
-                console.log(`[dbController:removeUser:] Removed user with email: ${userData.email}`);
-                return userData.data();
+                console.log(`[dbController:removeUser:] Removed user with email: ${userToRemove.email}`);
+                return userToRemove;
             }
             return false; // if user is not in DB
         } catch (error) {
