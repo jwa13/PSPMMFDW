@@ -8,18 +8,19 @@
                         <input type='text' class='form-control' name='newTeam' />
                     </div>
                     <input type='submit' class='btn btn-primary'></input>
+
+                    <ul class="teams_list">
+                        {{#each teams}}
+                        <li>
+                            {{this.team}}
+                            {{!-- Make team details route --}}
+                            <a class='btn btn-primary' href='/teamDetails' role='button'>
+                                Get More Details
+                            </a>
+                        </li>
+                        {{/each}}
+                    </ul>
                 </form>
-                <ul class="teams_list">
-                    {{#each teams}}
-                    <li>
-                        {{this.team}}
-                        {{!-- Make team details route --}}
-                        <a class='btn btn-primary' href='/teamDetails' role='button'>
-                            Get More Details
-                        </a>
-                    </li>
-                    {{/each}}
-                </ul>
                 {{!-- "switch" get more details button. off: list teams on: list players --}}
                 {{!-- OR seperate view for get more details and copy players (easier option) --}}
             </div>

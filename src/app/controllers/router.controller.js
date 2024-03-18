@@ -1,5 +1,5 @@
 require('./passport');
-import db from "../firebase";
+import db from '../firebase';
 
 const routerController = {
 	home: async (req, res) => {
@@ -57,7 +57,8 @@ const routerController = {
 		try {
 			const usersRef = db.collection('users');
 			const emails = [];
-			await usersRef.get()
+			await usersRef
+				.get()
 				.then((querySnapshot) => {
 					querySnapshot.forEach((doc) => {
 						// Extract the "name" field from each document
@@ -70,7 +71,7 @@ const routerController = {
 				});
 			// Render the "admin" template as HTML
 			res.render('admin', {
-				emails: emails
+				emails: emails,
 			});
 			console.log('admin middleware working');
 		} catch (err) {
@@ -80,14 +81,16 @@ const routerController = {
 
 	teams: async (req, res) => {
 		try {
-			const players =[];
-			const teams =[];
+			const players = [];
+			var teams = [];
 			const teamRef = db.collection('team');
-			await teamRef.get()
+			await teamRef
+				.get()
 				.then((querySnapshot) => {
 					querySnapshot.forEach((doc) => {
 						// Extract the "player name" field from each document
 						// Extract the "team name" field from each document
+						console.log(doc.data());
 						players.push({ player: doc.data() });
 						teams.push({ team: doc.id });
 					});
@@ -95,13 +98,13 @@ const routerController = {
 				.catch((error) => {
 					console.error('Error fetching documents: ', error);
 				});
+			console.log(teams);
 			// Render the "teamsViewer" template as HTML
 			res.render('teamsViewer', {
 				teams: teams,
-				players: players
+				players: players,
 			});
 			console.log('teams viewer middleware working');
-			console.log(teams);
 		} catch (err) {
 			this.log.error(err);
 		}

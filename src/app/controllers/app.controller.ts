@@ -54,12 +54,17 @@ export class AppController {
 		this.router.get('/logout', middleware.loginCheck, controller.home);
 
 		// Serve the admin page
-		this.router.get('/admin', middleware.loginCheck, middleware.adminLoginCheck, controller.admin);
+		this.router.get(
+			'/admin',
+			middleware.loginCheck,
+			middleware.adminLoginCheck,
+			controller.admin
+		);
 		this.router.post('/admin', processData.processAdmin);
 
 		// Serve the teamsViewer page
 		this.router.get('/teams', middleware.loginCheck, controller.teams);
-		this.router.post('/teams');
+		this.router.post('/teams', processData.processTeam);
 
 		this.router.get(
 			'/google',

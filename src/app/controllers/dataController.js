@@ -111,10 +111,23 @@ const dataController = {
 			admin: req.body.adminCheck,
 		};
 		console.log(req.body);
-		adminRef.set(userStatus, { merge:true }).then(() => {
+		adminRef.set(userStatus, { merge: true }).then(() => {
 			console.log('user assigned role');
 		});
 		res.redirect('/');
+	},
+
+	processTeam: async (req, res) => {
+		const teamsRef = db.collection('team').doc(`${req.body.newTeam}`);
+		const doc = await teamsRef.get();
+		var newTeam = {
+			teamName: req.body.newTeam,
+		};
+		console.log(req.body.newTeam);
+		teamsRef.set(newTeam, { merge: true }).then(() => {
+			console.log('new team created');
+		});
+		res.redirect('/teams');
 	},
 
 	// make processTeam and processPlayer
