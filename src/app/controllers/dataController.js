@@ -102,18 +102,18 @@ const dataController = {
 	},
 
 	processAdmin: async (req, res) => {
-		const adminRef = db.collection('users');
-		const doc = await adminRef.doc().get();
-		var userStatus = {
-			coach: req.body.coachCheck,
-			player: req.body.playerCheck,
-			parent: req.body.parentCheck,
-			admin: req.body.adminCheck,
-		};
-		console.log(userStatus);
-		adminRef.set(userStatus).then(() => {
-			console.log('user assigned role');
-		});
+		// const adminRef = db.collection('users');
+		// const doc = await adminRef.doc(`${req.body}`).get();
+		// var userStatus = {
+		// 	coach: req.body.coachCheck,
+		// 	player: req.body.playerCheck,
+		// 	parent: req.body.parentCheck,
+		// 	admin: req.body.adminCheck,
+		// };
+		console.log(req.body);
+		// adminRef.set(userStatus).then(() => {
+		// 	console.log('user assigned role');
+		// });
 		res.redirect('/');
 	},
 };
