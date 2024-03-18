@@ -6,10 +6,16 @@ module.exports = {
 			// Render the "home" template as HTML
 
 			req.session.viewed = true;
-			res.render('home');
+			if (req.session.passport) {
+				res.render('home', {
+					user: req.session.passport.user,
+				});
+			} else {
+				res.render('home');
+			}
 			console.log('home middleware working');
 		} catch (err) {
-			this.log.error(err);
+			console.log(err);
 		}
 	},
 
@@ -26,7 +32,10 @@ module.exports = {
 	profile: (req, res) => {
 		try {
 			// Render the "profile" template as HTML
-			res.render('profile');
+			res.render('profile', {
+				user: req.session.passport.user,
+				evaluations: req.session.evaluations,
+			});
 			console.log('profile middleware working');
 		} catch (err) {
 			this.log.error(err);
@@ -52,10 +61,90 @@ module.exports = {
 	gCallback: (req, res) => {
 		// Successful authentication, redirect to profile.
 		console.log('google callback middleware working');
-		res.redirect('/profile');
+		res.redirect('/');
 	},
 
 	googleCallback: (req, res) => {
-		console.log(req.user + ' : Signed in.');
+		console.log(req.session.passport.user.username + ' : Signed in.');
+	},
+
+	// Route to create evaluation
+	// Delete this route and handlebars template, using buttons and modals instead
+	evaluation: (req, res, next) => {
+		console.log('Evaluation route working');
+		console.log(req.session.passport.user.username);
+		res.render('evaluation');
+	},
+
+	pitchingEval: (req, res, next) => {
+		try {
+			const date = new Date();
+			let day = date.getDate();
+			let month = date.getMonth() + 1;
+			let year = date.getFullYear();
+			let currentDate = `${month}-${day}-${year}`;
+			// Render the "calendar" template as HTML
+			res.render('pitchingEval', {
+				user: req.session.passport.user,
+				currentDate: currentDate,
+			});
+			console.log('pitchingEval middleware working');
+		} catch (err) {
+			this.log.error(err);
+		}
+	},
+
+	hittingEval: (req, res, next) => {
+		try {
+			const date = new Date();
+			let day = date.getDate();
+			let month = date.getMonth() + 1;
+			let year = date.getFullYear();
+			let currentDate = `${month}-${day}-${year}`;
+			// Render the "calendar" template as HTML
+			res.render('hittingEval', {
+				user: req.session.passport.user,
+				currentDate: currentDate,
+			});
+			console.log('hittingEval middleware working');
+		} catch (err) {
+			this.log.error(err);
+		}
+	},
+
+	strengthEval: (req, res, next) => {
+		try {
+			const date = new Date();
+			let day = date.getDate();
+			let month = date.getMonth() + 1;
+			let year = date.getFullYear();
+			let currentDate = `${month}-${day}-${year}`;
+			// Render the "calendar" template as HTML
+			res.render('strengthEval', {
+				user: req.session.passport.user,
+				currentDate: currentDate,
+			});
+			console.log('strengthEval middleware working');
+		} catch (err) {
+			this.log.error(err);
+		}
+	},
+
+	workout: (req, res, next) => {
+		try {
+			const date = new Date();
+			let day = date.getDate();
+			let month = date.getMonth() + 1;
+			let year = date.getFullYear();
+			let currentDate = `${month}-${day}-${year}`;
+			// Render the "calendar" template as HTML
+			res.render('workout', {
+				user: req.session.passport.user,
+				currentDate: currentDate,
+			});
+			console.log('workout middleware working');
+		} catch (err) {
+			this.log.error(err);
+		}
 	},
 };

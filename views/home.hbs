@@ -1,13 +1,29 @@
 <div>
-  <div>
-    <div className="container container-fluid">
-      <div className="row">
-        <div className="col-1 col-md-4 "></div>
-        <div className="col-10 col-md-4 card  text-center">
-          <h1 class="user-select-none fs-1">This is the Pipeline Sports Performance Member Management and Facility Data Warehouse</h1>
-          <p class="user-select-all">NEED A WALKTHROUGH FOR HOW TO USE APP</p>
-        </div>
-      </div>
-    </div>
+	<div className='container container-fluid'>
+		<div className='row'>
+			<div className='col-1 col-md-4 '></div>
+			<div className='col-10 col-md-4 card  text-center'>
+				<h1 class='user-select-none fs-1'>This is the Pipeline Sports
+					Performance Member Management and Facility Data Warehouse</h1>
+				<p class='user-select-all'>NEED A WALKTHROUGH FOR HOW TO USE APP</p>
 
-  </div>
+				{{! Form should only displayed when coach is logged in }}
+				{{#if user.coach}}
+					<a class='btn btn-primary' href='/pitchingEval' role='button'>
+						Create Pitching Evaluation
+					</a>
+					<a class='btn btn-primary' href='/hittingEval' role='button'>
+						Create Hitting Evaluation
+					</a>
+					<a class='btn btn-primary' href='/strengthEval' role='button'>
+						Create Strength Evaluation
+					</a>
+					<a class='btn btn-primary' href='/workout' role='button'>
+						Create Workout
+					</a>
+				{{/if}}
+			</div>
+		</div>
+	</div>
+
+</div>

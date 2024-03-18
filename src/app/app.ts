@@ -4,11 +4,13 @@ import { pino } from 'pino';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import keys from './controllers/keys';
+import bodyParser from 'body-parser';
 
 // Import our code (controllers and middleware)
 import { AppController } from './controllers/app.controller';
 import { ErrorMiddleware } from './middleware/error.middleware';
 import { HandlebarsMiddleware } from './middleware/handlebars.middleware';
+import middleware from './middleware/middleware';
 
 class App {
 	// Create an instance of express, called "app"
@@ -26,6 +28,9 @@ class App {
 		// Init the middlware and controllers
 		this.errorMiddleware = new ErrorMiddleware();
 		this.appController = new AppController();
+
+		this.app.use(express.json());
+		this.app.use(express.urlencoded({ extended: false }));
 
 		// Serve all static resources from the public directory
 		this.app.use(express.static(__dirname + '/public'));
@@ -48,6 +53,7 @@ class App {
 		// Tell express what to do when our routes are visited
 		this.app.use(this.appController.router);
 		this.app.use(this.errorMiddleware.router);
+		this.app.use(middleware.populateFormData);
 	}
 
 	public listen() {

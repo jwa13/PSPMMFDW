@@ -9,6 +9,18 @@ h1 {
   text-align: center;
 }
 
-div.accordion {
-  color: lightgoldenrodyellow;
+.accordion-button:not(.collapsed) {
+  background-color: hsla(54.03, 85.53%, 53.92%, 1);
+}
+
+h3.card-title {
+  text-align: center;
+}
+
+#my-info {
+  margin-bottom: 15px;
+}
+
+#eval-card {
+  margin-bottom: 10px;
 }
