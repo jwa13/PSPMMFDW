@@ -102,7 +102,7 @@ const dataController = {
 	},
 
 	processAdmin: async (req, res) => {
-		const adminRef = db.collection('users').doc(`${req.body.userName}`);
+		const adminRef = db.collection('users').doc(`${req.body.email}`);
 		const doc = await adminRef.get();
 		var userStatus = {
 			coach: req.body.coachCheck,

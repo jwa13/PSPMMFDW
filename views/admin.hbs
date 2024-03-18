@@ -3,14 +3,13 @@
         <div className='row'>
             <div className='col-1 col-md-4 '></div>
             <div className='col-10 col-md-4 card  text-center'>
-                <h1>This is the admin page</h1>
                 <ul class="admin_list">
-                    {{#each names}}
+                    {{#each emails}}
                     <li>
-                        {{this.name}}
+                        {{this.email}}
                         <form action="/admin" method="POST">
-                            {{!-- We need some form of hidden input type where the name gets sent as well --}}
-                            <input type="text" name="userName" value="{{this.name}}" hidden="true">
+                            {{!-- We need some form of hidden input type where the email gets sent as well --}}
+                            <input type="text" name="email" value="{{this.email}}" hidden="true">
                             <input class="form-check-input" type="checkbox" name="adminCheck" value="true">
                             <label class="form-check-label" for="adminCheck">
                                 Admin

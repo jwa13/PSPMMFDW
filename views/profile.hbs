@@ -1,17 +1,17 @@
 <div>
   <h1>{{ user.username }}'s Profile</h1>
   <div class="card" id="my-info">
-  <div class="card-header">
-    My Info
-  </div>
-  <div class="card-body">
+    <div class="card-header">
+      My Info
+    </div>
+    <div class="card-body">
       <p>Username: {{user.username}}</p>
       <p>Email: {{user.email}}</p>
       <p>Account Type: {{#if user.player}} Player{{/if}}</p>
       <p>Teams: </p>
       <p>Member Since: </p>
+    </div>
   </div>
-</div>
   {{#if user.player}}
   <div class="accordion" id="accordionExample">
     <div class="accordion-item">
@@ -92,12 +92,17 @@
 
   {{#if user.admin}}
   <a class='btn btn-primary' href='/admin' role='button'>
-						admin button
-					</a>
+    admin button
+  </a>
+  <a class='btn btn-primary' href='/teams' role='button'>
+    team options
+  </a>
+
+  {{else user.coach}}
+  <a class='btn btn-primary' href='/teams' role='button'>
+    team options
+  </a>
   {{/if}}
 
-  {{#if coach}}{{/if}}
-
-  {{#if parent}}{{/if}}
 </div>
 </div>
