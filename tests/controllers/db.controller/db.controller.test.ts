@@ -6,6 +6,8 @@ import dbController from '../../../src/app/controllers/db.controller';
 const playerEmail = "test_player@pspmmfdw.gmail.com";
 const coachEmail = "test_coach@pspmmfdw.gmail.com";
 const adminEmail = "test_admin@pspmmfdw.gmail.com";
+const newUserEmail = "test_admin@pspmmfdw.gmail.com";
+const deleteUserEmail = "test_admin@pspmmfdw.gmail.com";
 const badUserEmail = "bad@pspmmfdw.gmail.com";
 
 interface MockData {
@@ -47,6 +49,15 @@ const mockData: MockData = {
         admin: true,
         coach: false,
         player: false
+    },
+    'test_deleteUser@pspmmfdw.gmail.com': {
+        email: deleteUserEmail,
+        profileId: '5555555555555555555555',
+        name: 'Delete User',
+        team: 'Delete Team',
+        admin: false,
+        coach: false,
+        player: true
     }
 };
 
@@ -67,7 +78,7 @@ jest.mock('../../../src/app/firebase.ts', () => {
 });
 
 describe('dbController.getUserByEmail', () => {
-    // Test for retrieving the first existing user
+    // Test for retrieving the Player existing user
     it('should retrieve an existing user by email', async () => {
         const user = await dbController.getUserByEmail(playerEmail);
 
@@ -118,5 +129,30 @@ describe('dbController.getUserByEmail', () => {
 
         expect(user).toBeNull();
     });
-});
 
+// db.controller.test.ts
+
+// Refined tests for the createUser method
+
+    describe('dbController.createUser', () => {
+        const newUser = {
+                email: 'new_user@pspmmfdw.gmail.com',
+                profileId: '4444444444444444444444',
+                name: 'New User',
+                team: 'New Team',
+                admin: false,
+                coach: false,
+                player: true
+        };
+        it('should return false when attempting to create a user with an email that already exists', async () => {
+            const createUserResult = await dbController.createUser(mockData['test_player@pspmmfdw.gmail.com']);
+            expect(createUserResult).toBeFalsy();
+        });
+        it('should successfully create a new user when the email does not exist in the database', async () => {
+            const createUserResult = await dbController.createUser(newUser);
+            console.log(newUser);
+            console.log(createUserResult);
+            expect(createUserResult).toEqual(newUser);
+        });
+    });
+});

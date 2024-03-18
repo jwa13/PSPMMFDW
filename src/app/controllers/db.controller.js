@@ -1,3 +1,4 @@
+import { use } from 'passport';
 import db from '../firebase.ts';
 
 const dbController = {
@@ -13,28 +14,31 @@ const dbController = {
                 return userDoc.data();
             }
         } catch (error) {
-            console.error(`[dbController:getUserByEmail:] Error getting user ${email}:`, error);
+            console.log(`[dbController:getUserByEmail:] Error getting user ${email}:`, error);
             return null;
         }
     },
     
     createUser: async (userData) => {
+        let newUser = await dbController.getUserByEmail(userData.email);
         try {
-            if (!await this.getUserByEmail(userData.email)) {                        //If User is not in DB 
-                await db.collection('users').doc(userData.email).set(userData); //attempt creating user doc
-                console.log(`[dbController:createUser:] User created with email: ${userData.email}`);
-                return newUser.data();
+            if (!newUser) {
+                newUser = { profileID: userData.profileID, email: userData.email, name: userData.name };
+                await db.collection('users').doc(newUser.email).set(newUser);
+                console.log(`[dbController:createUser:] User created with email: ${newUser.email}`);
+                return userData;
             }
-            return false; // if user is in DB
+            else
+                return null; // if user is in DB
         } catch (error) {
-            console.error(`[dbController:createUser:] Error creating user ${userData.email}:`, error);
+            console.log(`[dbController:createUser:] Error creating user ${userData.email}:`, error);
             return null;
         }
     },
     
     removeUser: async (userData) => {
         try {
-            const userToRemove = this.getUserByEmail(userData.email);
+            let userToRemove = dbController.getUserByEmail(userData.email);
             if (userToRemove) {                        //If User is in DB 
                 await db.collection('users').doc(userData.email).delete();
                 console.log(`[dbController:removeUser:] Removed user with email: ${userData.email}`);
@@ -42,7 +46,7 @@ const dbController = {
             }
             return false; // if user is not in DB
         } catch (error) {
-            console.error(`[dbController:removeUser:] Error deleting user ${userData.email}:`, error);
+            console.log(`[dbController:removeUser:] Error deleting user ${userData.email}:`, error);
             return null;
         }
     },
@@ -52,7 +56,7 @@ const dbController = {
     // created yet the DB methods it will use and the testing / validation can be completed now.
     updateUser: async (userData) => {
         try {
-            const userToUpdate = this.getUserByEmail(userData.email);
+            const userToUpdate = dbController.getUserByEmail(userData.email);
             userData.profileID = userToUpdate.profileID;// temporary assignment to prevent google auth info from being modified - should be moved to validation middleware
             if (userToUpdate) {                        
                 await db.collection('users').doc(userData.email).update(userData);
@@ -61,7 +65,7 @@ const dbController = {
             }
             return false; 
         } catch (error) {
-            console.error(`[dbController:updateUser:] Error updating user ${email}:`, error);
+            console.log(`[dbController:updateUser:] Error updating user ${email}:`, error);
             return null;
         }
     },
@@ -83,7 +87,7 @@ const dbController = {
             });
             return evaluations;
         } catch {
-            console.error('[dbController:getPlayerEvaluations] Error creating user:', error);
+            console.log('[dbController:getPlayerEvaluations] Error creating user:', error);
             return null;
         }
     }
