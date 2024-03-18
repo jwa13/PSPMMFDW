@@ -5,7 +5,7 @@ const profileMiddleware = {
     async evalGetter(req, res, next) {
         if (req.session.passport.user.player) {
             console.log(`[profileMiddleware]: calling getPlayerEvaluations(${req.session.passport.user.id})`);
-            req.session.evaluations = await dbController.getPlayerEvaluations(req.session.passport.user.id);
+            req.session.evaluations = await dbController.getPlayerEvaluationsByProfileID(req.session.passport.user.id);
             console.log(`[profileMiddleware]: req.session.evaluations = ${req.session.evaluations}`);
             next();
         } else {

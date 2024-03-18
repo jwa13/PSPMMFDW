@@ -53,19 +53,20 @@ const dbController = {
     updateUser: async (userData) => {
         try {
             const userToUpdate = this.getUserByEmail(userData.email);
-            if (userToUpdate) {                        //If User is in DB 
+            userData.profileID = userToUpdate.profileID;// temporary assignment to prevent google auth info from being modified - should be moved to validation middleware
+            if (userToUpdate) {                        
                 await db.collection('users').doc(userData.email).update(userData);
                 console.log(`[dbController:updateUser:] Updated User with email: ${email}`);
                 return userData.data();
             }
-            return false; // if user is not in DB
+            return false; 
         } catch (error) {
             console.error(`[dbController:updateUser:] Error updating user ${email}:`, error);
             return null;
         }
     },
 
-    getPlayerEvaluations: async (sessionUserID) => {
+    getPlayerEvaluationsByProfileID: async (sessionUserID) => {
         try {
             const playerEvaluations = await db.collection('evaluations')
                 .where('userId', '==', sessionUserID)
