@@ -53,6 +53,9 @@ export class AppController {
 		// auth logout
 		this.router.get('/logout', middleware.loginCheck, controller.home);
 
+		// Serve the admin page
+		this.router.get('/admin', middleware.loginCheck, middleware.adminLoginCheck, controller.admin);
+
 		this.router.get(
 			'/google',
 			controller.google,

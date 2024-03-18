@@ -90,6 +90,12 @@
   </div>
   {{/if}}
 
+  {{#if user.admin}}
+  <a class='btn btn-primary' href='/admin' role='button'>
+						admin button
+					</a>
+  {{/if}}
+
   {{#if coach}}{{/if}}
 
   {{#if parent}}{{/if}}

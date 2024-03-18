@@ -1,6 +1,7 @@
 require('./passport');
+import db from "../firebase";
 
-module.exports = {
+const routerController = {
 	home: async (req, res) => {
 		try {
 			// Render the "home" template as HTML
@@ -49,6 +50,32 @@ module.exports = {
 			console.log('login middleware working');
 		} catch (err) {
 			this.log.error(err);
+		}
+	},
+
+	admin: async (req, res) => {
+		try {
+			const usersRef = db.collection('users');
+			const names = [];
+			usersRef.get()
+        	.then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                // Extract the "name" field from each document
+                const name = doc.data().name;
+                names.push(name);
+            });
+            console.log('Names:', names); // Do whatever you want with the names here
+        })
+        .catch((error) => {
+            console.error('Error fetching documents: ', error);
+        });
+			// Render the "admin" template as HTML
+			res.render('admin', {
+				users: names
+			});
+			console.log('admin middleware working');
+		} catch (err) {
+			console.log(err);
 		}
 	},
 
@@ -148,3 +175,5 @@ module.exports = {
 		}
 	},
 };
+
+export default routerController;
