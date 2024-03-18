@@ -100,6 +100,21 @@ const dataController = {
 		});
 		res.redirect('/');
 	},
+
+	processAdmin: async (req, res) => {
+		const adminRef = db.collection('users');
+		const doc = await adminRef.get();
+		userStatus = {
+			coach: req.body.coachCheck,
+			player: req.body.playerCheck,
+			parent: req.body.parentCheck,
+			admin: req.body.adminCheck
+		}
+		adminRef.set(userStatus).then(() => {
+			console.log('user assigned role');
+		});
+		res.redirect('/');
+	}
 };
 
 export default dataController;

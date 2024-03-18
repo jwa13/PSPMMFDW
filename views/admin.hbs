@@ -4,9 +4,29 @@
             <div className='col-1 col-md-4 '></div>
             <div className='col-10 col-md-4 card  text-center'>
                 <h1>This is the admin page</h1>
-                <ul class="">
+                <ul class="admin_list">
                     {{#each names}}
-                        <li>{{this.name}}</li>
+                    <li>{{this.name}}<div class="form-check" action="/admin" method="POST">
+                            <input class="form-check-input" type="checkbox" value="" id="adminCheck" name="adminCheck">
+                            <label class="form-check-label" for="adminCheck">
+                                Admin
+                            </label>
+                            <div class="form-check" action="/admin" method="POST">
+                            <input class="form-check-input" type="checkbox" value="" name="coachCheck">
+                            <label class="form-check-label" for="coachCheck">
+                                Coach
+                            </label>
+                            </div>
+                            <input class="form-check-input" type="checkbox" value="" name="playerCheck">
+                            <label class="form-check-label" for="playerCheck">
+                                Player
+                            </label>
+                            <input class="form-check-input" type="checkbox" value="" name="parentCheck">
+                            <label class="form-check-label" for="parentCheck">
+                                Parent
+                            </label>
+                        </div>
+                    </li>
                     {{/each}}
                 </ul>
             </div>

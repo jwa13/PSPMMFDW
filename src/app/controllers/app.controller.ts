@@ -55,6 +55,7 @@ export class AppController {
 
 		// Serve the admin page
 		this.router.get('/admin', middleware.loginCheck, middleware.adminLoginCheck, controller.admin);
+		this.router.post('/admin', processData.processAdmin);
 
 		this.router.get(
 			'/google',
