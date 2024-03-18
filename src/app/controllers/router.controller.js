@@ -61,7 +61,7 @@ const routerController = {
 				.then((querySnapshot) => {
 					querySnapshot.forEach((doc) => {
 						// Extract the "name" field from each document
-						names.push({ name: doc.data().name });
+						names.push({ name: doc.data().email });
 					});
 					// Do whatever you want with the names here
 				})

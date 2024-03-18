@@ -48,13 +48,15 @@
           </div>
           <div class="offcanvas-body">
             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-              <li class="nav-item">
-                <a class="nav-link active" href="/login">Login</a>
-              </li>
-              {{! need if statement for if user is logged in }}
-              {{! <li class="nav-item">
-                <a class="nav-link" href="/logout">Logout</a>
-              </li> }}
+              {{#if user}}
+                <li class="nav-item">
+                  <a class="nav-link" href="/logout">Logout</a>
+                </li>
+              {{else}}
+                <li class="nav-item">
+                  <a class="nav-link active" href="/login">Login</a>
+                </li>
+              {{/if}}
               <li class="nav-item">
                 <a class="nav-link" href="/profile">Profile</a>
               </li>

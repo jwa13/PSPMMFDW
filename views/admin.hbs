@@ -9,19 +9,21 @@
                     <li>
                         {{this.name}}
                         <form action="/admin" method="POST">
-                            <input class="form-check-input" type="checkbox" name="adminCheck">
+                            {{!-- We need some form of hidden input type where the name gets sent as well --}}
+                            <input type="text" name="userName" value="{{this.name}}" hidden="true">
+                            <input class="form-check-input" type="checkbox" name="adminCheck" value="true">
                             <label class="form-check-label" for="adminCheck">
                                 Admin
                             </label>
-                            <input class="form-check-input" type="checkbox" name="coachCheck">
+                            <input class="form-check-input" type="checkbox" name="coachCheck" value="true">
                             <label class="form-check-label" for="coachCheck">
                                 Coach
                             </label>
-                            <input class="form-check-input" type="checkbox" name="playerCheck">
+                            <input class="form-check-input" type="checkbox" name="playerCheck" value="true">
                             <label class="form-check-label" for="playerCheck">
                                 Player
                             </label>
-                            <input class="form-check-input" type="checkbox" name="parentCheck">
+                            <input class="form-check-input" type="checkbox" name="parentCheck" value="true">
                             <label class="form-check-label" for="parentCheck">
                                 Parent
                             </label>
