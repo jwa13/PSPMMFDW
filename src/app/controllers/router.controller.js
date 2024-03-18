@@ -57,21 +57,20 @@ const routerController = {
 		try {
 			const usersRef = db.collection('users');
 			const names = [];
-			usersRef.get()
-        	.then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                // Extract the "name" field from each document
-                const name = doc.data().name;
-                names.push(name);
-            });
-            console.log('Names:', names); // Do whatever you want with the names here
-        })
-        .catch((error) => {
-            console.error('Error fetching documents: ', error);
-        });
+			await usersRef.get()
+				.then((querySnapshot) => {
+					querySnapshot.forEach((doc) => {
+						// Extract the "name" field from each document
+						names.push({ name: doc.data().name });
+					});
+					// Do whatever you want with the names here
+				})
+				.catch((error) => {
+					console.error('Error fetching documents: ', error);
+				});
 			// Render the "admin" template as HTML
 			res.render('admin', {
-				users: names
+				names: names
 			});
 			console.log('admin middleware working');
 		} catch (err) {
