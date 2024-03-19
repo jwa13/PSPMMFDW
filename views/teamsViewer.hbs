@@ -7,6 +7,10 @@
                         <label for='newTeam' class='form-label'>Add New Team</label>
                         <input type='text' class='form-control' name='newTeam' />
                     </div>
+                    <div class='mb-3'>
+                        <label for='headCoach' class='form-label'>Add Head Coach for New Team</label>
+                        <input type='text' class='form-control' name='headCoach' />
+                    </div>
                     <input type='submit' class='btn btn-primary'></input>
 
                     <ul class="teams_list">
@@ -14,7 +18,7 @@
                         <li>
                             {{this.team}}
                             {{!-- Make team details route --}}
-                            <a class='btn btn-primary' href='/teamDetails' role='button'>
+                            <a class='btn btn-primary' href='/teamDetails' name='{{this.team}}' role='button'>
                                 Get More Details
                             </a>
                         </li>

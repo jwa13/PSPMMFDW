@@ -81,7 +81,7 @@ const routerController = {
 
 	teams: async (req, res) => {
 		try {
-			const players = [];
+			var players = [];
 			var teams = [];
 			const teamRef = db.collection('team');
 			await teamRef
@@ -90,7 +90,7 @@ const routerController = {
 					querySnapshot.forEach((doc) => {
 						// Extract the "player name" field from each document
 						// Extract the "team name" field from each document
-						console.log(doc.data());
+
 						players.push({ player: doc.data() });
 						teams.push({ team: doc.id });
 					});
@@ -101,6 +101,36 @@ const routerController = {
 			console.log(teams);
 			// Render the "teamsViewer" template as HTML
 			res.render('teamsViewer', {
+				teams: teams,
+				players: players,
+			});
+			console.log('teams viewer middleware working');
+		} catch (err) {
+			this.log.error(err);
+		}
+	},
+
+	teamDetails: async (req, res, next) => {
+		try {
+			var players = [];
+			const teams = [];
+			const teamDetailsRef = db.collection('team');
+			await teamDetailsRef
+				.get()
+				.then((querySnapshot) => {
+					querySnapshot.forEach((doc) => {
+						// Extract the "player name" field from each document
+						// Extract the "team name" field from each document
+
+						players.push({ player: doc.data() });
+						teams.push({ team: doc.id });
+					});
+				})
+				.catch((error) => {
+					console.error('Error fetching documents: ', error);
+				});
+			// Render the "teamDetails" template as HTML
+			res.render('teamDetails', {
 				teams: teams,
 				players: players,
 			});

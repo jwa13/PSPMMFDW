@@ -121,7 +121,7 @@ const dataController = {
 		const teamsRef = db.collection('team').doc(`${req.body.newTeam}`);
 		const doc = await teamsRef.get();
 		var newTeam = {
-			teamName: req.body.newTeam,
+			coach: req.body.headCoach,
 		};
 		console.log(req.body.newTeam);
 		teamsRef.set(newTeam, { merge: true }).then(() => {
@@ -130,7 +130,7 @@ const dataController = {
 		res.redirect('/teams');
 	},
 
-	// make processTeam and processPlayer
+	// make processPlayer
 };
 
 export default dataController;
