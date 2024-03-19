@@ -7,6 +7,7 @@ const adminEmail = "test_admin@pspmmfdw.gmail.com";
 const newUserEmail = "test_newUserEmail@pspmmfdw.gmail.com";
 const deleteUserEmail = "test_deleteUserEmail@pspmmfdw.gmail.com";
 const badUserEmail = "bad@pspmmfdw.gmail.com";
+const updateUserEmail = 'test_UpdateUser@pspmmfdw.gmail.com';
 
 interface MockData {
     [email: string]: {
@@ -56,6 +57,15 @@ const mockData: MockData = {
         admin: false,
         coach: false,
         player: true
+    },
+    'test_UpdateUser@pspmmfdw.gmail.com': {
+        email: updateUserEmail,
+        profileId: '6666666666666666666666',
+        name: 'Update User',
+        team: 'Update Team',
+        admin: false,
+        coach: false,
+        player: true
     }
 };
 
@@ -71,31 +81,28 @@ jest.mock('../../../src/app/firebase.ts', () => {
                 }),
                 set: jest.fn().mockResolvedValue(true), //userdata is passed with isfalsey propery
                 delete: jest.fn().mockResolvedValue(true), //userdata is passed with isfalsey propery
+                update: jest.fn().mockResolvedValue(true), //userdata is passed with isfalsey propery
             };
         })
     };
 });
 
 describe('dbController.getUserByEmail', () => {
-    // Test for retrieving the Player existing user
     it('should retrieve an existing user by email', async () => {
         const user = await dbController.getUserByEmail(playerEmail);
         expect(user).toEqual((mockData['test_player@pspmmfdw.gmail.com']));
     });
 
-    // Test for retrieving the coach existing user
     it('should retrieve another existing user by email', async () => {
         const user = await dbController.getUserByEmail(coachEmail);
         expect(user).toEqual((mockData['test_coach@pspmmfdw.gmail.com']));
     });
 
-    // Test for retrieving the Admin existing user
     it('should retrieve admin existing user by email', async () => {
         const user = await dbController.getUserByEmail(adminEmail);
         expect(user).toEqual((mockData['test_admin@pspmmfdw.gmail.com']));
     });
 
-    // Test for attempting to retrieve a user that does not exist
     it('should return null for a non-existing user', async () => {
         const user = await dbController.getUserByEmail(badUserEmail);
         expect(user).toBeFalsy();
@@ -118,7 +125,6 @@ describe('dbController.createUser', () => {
         expect(createUserResult).toEqual(newUser);
     });
 });
-
 describe('dbController.removeUser', () => {
     it('removeUser should remove an existing user and return their data', async () => {
         const removeUserResult = await dbController.removeUser(mockData['test_deleteUser@pspmmfdw.gmail.com']);
@@ -126,12 +132,54 @@ describe('dbController.removeUser', () => {
         expect(await dbController.getUserByEmail(mockData['test_deleteUser@pspmmfdw.gmail.com'])).toBeFalsy();
     });
     it('removeUser should return false for a non-existing user', async () => {
-        const baduser = { email: badUserEmail }; // Use an email not present in mockData
+        const baduser = { email: badUserEmail };
         const removeUserResult = await dbController.removeUser(baduser);
         console.log(removeUserResult);
         console.log(baduser);
         expect(removeUserResult).toBeFalsy();
     });
-
+});
+describe('dbController.updateUser', () => {
+    const userProfileUpdate = {
+        email: updateUserEmail,
+        profileId: '6666666666666666666666',
+        name: 'Updated User',
+        team: 'Updated Team',
+        admin: false,
+        coach: false,
+        player: true
+    };
+    const ilegalUserProfileUpdate = {
+        email: updateUserEmail,
+        profileId: '4156456456415648465146',
+        name: 'illegal User',
+        team: 'illegal Team',
+        admin: true,
+        coach: false,
+        player: false
+    };
+    const badUser = {
+        email: badUserEmail,
+        profileId: '4444444444444444444444',
+        name: 'Bad User',
+    };
+    it('updateUser should update the profile of an existing user and return their data', async () => {
+        const updateUserResult = await dbController.updateUser(userProfileUpdate);
+        console.log(updateUserResult);
+        console.log(userProfileUpdate);
+        expect(updateUserResult).toEqual(userProfileUpdate);
+    });
+    it('updateUser should return false for a non-existing user', async () => {
+        const updateUserResult = await dbController.updateUser(badUser);
+        console.log(updateUserResult);
+        console.log(badUser);
+        expect(updateUserResult).toBeFalsy();
+    });
+//    it('updateUser should return false for an existing user but an attempt to modify restricted data fields', async () => {
+//        const updateUserResult = await dbController.updateUser(ilegalUserProfileUpdate);
+//        console.log(updateUserResult);
+//        console.log(ilegalUserProfileUpdate);
+//        expect(updateUserResult).toBeFalsy();
+//    });
 });
 

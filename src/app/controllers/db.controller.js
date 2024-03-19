@@ -48,22 +48,18 @@ const dbController = {
             return null;
         }
     },
-    // Admin User Method 
-    // used to update existing user datafields Validation need to be added to prevent google auth ID infor from being modified
-    // these validation methods will be added when danny creates the testing modules for database access. Though the Admin Profile 
-    // created yet the DB methods it will use and the testing / validation can be completed now.
+
     updateUser: async (userData) => {
         try {
-            const userToUpdate = dbController.getUserByEmail(userData.email);
-            userData.profileID = userToUpdate.profileID;// temporary assignment to prevent google auth info from being modified - should be moved to validation middleware
-            if (userToUpdate) {                        
+            const userToUpdate = await dbController.getUserByEmail(userData.email);
+            if (userData.profileID == userToUpdate.profileID) {                                
                 await db.collection('users').doc(userData.email).update(userData);
-                console.log(`[dbController:updateUser:] Updated User with email: ${email}`);
-                return userData.data();
+                console.log(`[dbController:updateUser:] Updated User with email: ${userData.email}`);
+                return userData;
             }
             return false; 
         } catch (error) {
-            console.log(`[dbController:updateUser:] Error updating user ${email}:`, error);
+            console.log(`[dbController:updateUser:] Error updating user ${userData.email}:`, error);
             return null;
         }
     },
