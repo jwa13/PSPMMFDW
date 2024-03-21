@@ -1,4 +1,4 @@
-<div>
+<div>toggle
     <div className='container container-fluid'>
         <div className='row'>
             <div className='col-10 col-md-4 card  text-center'>
@@ -16,15 +16,59 @@
                     <ul class="teams_list">
                         {{#each teams}}
                         <li>
-                            {{this.team}}
-                            {{!-- Make team details route --}}
-                            <a class='btn btn-primary' href='/teamDetails' name='{{this.team}}' role='button'>
-                                Get More Details
-                            </a>
+
+                            <!-- Button trigger modal -->
+                            {{!-- need button to give name of team in order to display appropriate team based players --}}
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#exampleModalLong">
+                                {{this}}
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">{{this}}</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class='mb-3'>
+                                                <label for='newPlayer' class='form-label'>Add New Player</label>
+                                                <input type='text' class='form-control' name='newPlayer' />
+                                            </div>
+                                            <div class='mb-3'>
+                                                <label for='newCoach' class='form-label'>Add Coach</label>
+                                                <input type='text' class='form-control' name='newCoach' />
+                                            </div>
+                                            <input type='submit' class='btn btn-primary'></input>
+                                            <ul class="players_list">
+                                                {{#each players}}
+                                                <li>
+                                                    {{this}}
+                                                    <input type='submit' class='btn btn-primary'>Remove Player</input>
+                                                </li>
+                                                {{/each}}
+                                            </ul>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Close</button>
+                                            {{!-- will need a submit button to submit it to the process to add or remove the player --}}
+                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </li>
                         {{/each}}
                     </ul>
                 </form>
+
                 {{!-- "switch" get more details button. off: list teams on: list players --}}
                 {{!-- OR seperate view for get more details and copy players (easier option) --}}
             </div>

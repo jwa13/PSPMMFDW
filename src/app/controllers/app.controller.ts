@@ -66,9 +66,6 @@ export class AppController {
 		this.router.get('/teams', middleware.loginCheck, controller.teams);
 		this.router.post('/teams', processData.processTeam);
 
-		// this.router.get('/teamDeatails', middleware.loginCheck, controller.teamDetails);
-		// this.router.post('/teamDetails', processData.processTeamDetails);
-
 		this.router.get(
 			'/google',
 			controller.google,

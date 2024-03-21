@@ -6,7 +6,6 @@ module.exports = {
 		if (req.session.passport) {
 			let user = req.session.passport.user;
 			console.log('login check');
-			console.log(user);
 			next();
 		} else {
 			console.log(req.session);

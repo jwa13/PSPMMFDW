@@ -120,10 +120,13 @@ const dataController = {
 	processTeam: async (req, res) => {
 		const teamsRef = db.collection('team').doc(`${req.body.newTeam}`);
 		const doc = await teamsRef.get();
+		const UserRef = db.collection('users');
+		const Userdoc = await UserRef.get();
 		var newTeam = {
+			teamName: req.body.newTeam,
 			coach: req.body.headCoach,
 		};
-		console.log(req.body.newTeam);
+
 		teamsRef.set(newTeam, { merge: true }).then(() => {
 			console.log('new team created');
 		});
