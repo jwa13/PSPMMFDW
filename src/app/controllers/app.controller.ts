@@ -5,6 +5,7 @@ import controller from './router.controller';
 import middleware from '../middleware/middleware';
 import profileMiddleware from '../middleware/profile.middleware';
 import processData from './dataController';
+import evaluationMiddleware from '../middleware/evaluation.middleware'
 
 require('./passport');
 
@@ -24,13 +25,13 @@ export class AppController {
 		// Serve the home page
 		this.router.get('/', controller.home);
 
-		this.router.get('/pitchingEval', controller.pitchingEval);
+		this.router.get('/pitchingEval',  evaluationMiddleware.getAllPlayers, controller.pitchingEval);
 		this.router.post('/pitchingEval', processData.processPitching);
 
-		this.router.get('/hittingEval', controller.hittingEval);
+		this.router.get('/hittingEval', evaluationMiddleware.getAllPlayers, controller.hittingEval);
 		this.router.post('/hittingEval', processData.processHitting);
 
-		this.router.get('/strengthEval', controller.strengthEval);
+		this.router.get('/strengthEval', evaluationMiddleware.getAllPlayers, controller.strengthEval);
 		this.router.post('/strengthEval', processData.processStrength);
 
 		this.router.get('/workout', controller.workout);
