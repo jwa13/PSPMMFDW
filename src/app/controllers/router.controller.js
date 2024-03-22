@@ -6,7 +6,6 @@ const routerController = {
 	home: async (req, res) => {
 		try {
 			// Render the "home" template as HTML
-
 			req.session.viewed = true;
 			if (req.session.passport) {
 				res.render('home', {
@@ -83,7 +82,8 @@ const routerController = {
 	teams: async (req, res, next) => {
 		try {
 			var teams = [];
-			var temp = [];
+			var tempTeams = [];
+			var players = [];
 			const UserRef = db.collection('users');
 			const snapshot = await UserRef.where('team', '!=', null).get();
 			if (snapshot.empty) {
@@ -91,20 +91,22 @@ const routerController = {
 			}
 
 			snapshot.forEach((doc) => {
-				temp.push(doc.data().team);
-				// need to compare teams within players to seperate players based on team
+				tempTeams.push(doc.data().team);
+				if (doc.data().player == true) {
+					players.push(doc.data());
+				}
 			});
 
-			for (let i = 0; i < temp.length; i++) {
-				if (temp[i] != temp[i - 1]) {
-					teams.push(temp[i]);
+			for (let i = 0; i < tempTeams.length; i++) {
+				if (tempTeams[i] != tempTeams[i - 1]) {
+					teams.push(tempTeams[i]);
 				}
 			}
-			console.log(teams);
+
 			// Render the "teamsViewer" template as HTML
 			res.render('teamsViewer', {
-				teams: temp,
-				// players: teams,
+				teams: teams,
+				players: players,
 			});
 			console.log('teams viewer middleware working');
 		} catch (err) {
@@ -132,7 +134,6 @@ const routerController = {
 	// Delete this route and handlebars template, using buttons and modals instead
 	evaluation: (req, res, next) => {
 		console.log('Evaluation route working');
-		console.log(req.session.passport.user.username);
 		res.render('evaluation');
 	},
 

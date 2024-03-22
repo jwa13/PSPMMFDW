@@ -1,76 +1,80 @@
-<div>toggle
+<div>
     <div className='container container-fluid'>
         <div className='row'>
             <div className='col-10 col-md-4 card  text-center'>
                 <form action='/teams' method='POST'>
                     <div class='mb-3'>
                         <label for='newTeam' class='form-label'>Add New Team</label>
-                        <input type='text' class='form-control' name='newTeam' />
+                        <input type='text' class='form-control' name='newTeam' placeholder="New Team" />
                     </div>
                     <div class='mb-3'>
-                        <label for='headCoach' class='form-label'>Add Head Coach for New Team</label>
-                        <input type='text' class='form-control' name='headCoach' />
+                        <label for='headCoach' class='form-label'>Enter the Email of the Head Coach for New Team</label>
+                        <input type='text' class='form-control' name='headCoach' placeholder="example@mail.com" />
                     </div>
                     <input type='submit' class='btn btn-primary'></input>
+                    <div class='mb-3'>
+                        <ul class="teams_list">
+                            {{#each teams}}
+                            <li>
+                                <!-- Button trigger modal -->
+                                {{!-- need button to give name of team in order to display appropriate team based
+                                players --}}
+                                <div class='mb-3'>
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#{{this}}">
+                                        {{this}}
+                                    </button>
+                                </div>
 
-                    <ul class="teams_list">
-                        {{#each teams}}
-                        <li>
-
-                            <!-- Button trigger modal -->
-                            {{!-- need button to give name of team in order to display appropriate team based players --}}
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#exampleModalLong">
-                                {{this}}
-                            </button>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
-                                aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLongTitle">{{this}}</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class='mb-3'>
-                                                <label for='newPlayer' class='form-label'>Add New Player</label>
-                                                <input type='text' class='form-control' name='newPlayer' />
+                                <!-- Modal -->
+                                <div class="modal fade" id="{{this}}" tabindex="-1" role="dialog"
+                                    aria-labelledby="{{this}}Title" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <input type="text" name="team" value="{{this}}" hidden="true">
+                                                <h5 class="modal-title" id="{{this}}Title" name="{{this}}" value="{{this}}">{{this}}</h5>
+                                                <button type="button" class="close" data-bs-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true" >&times;</span>
+                                                </button>
                                             </div>
-                                            <div class='mb-3'>
-                                                <label for='newCoach' class='form-label'>Add Coach</label>
-                                                <input type='text' class='form-control' name='newCoach' />
+                                            <div class="modal-body">
+                                                {{!-- moving to new view handling this seperately as problems arise in finding the team value --}}
+                                                {{!-- <div class='mb-3'>
+                                                    <label for='newPlayer' class='form-label'>Enter the email of the player you would like to add.</label>
+                                                    <input type='text' class='form-control' name='newPlayer' placeholder="example@mail.com"/>
+                                                </div>
+                                                <div class='mb-3'>
+                                                    <label for='newCoach' class='form-label'>Enter the email of the coach you would like to add.</label>
+                                                    <input type='text' class='form-control' name='newCoach' placeholder="example@mail.com"/>
+                                                </div> --}}
+                                                <input type='submit' class='btn btn-primary'></input>
+                                                <div class='mb-3'>
+                                                    <ul class="players_list">
+                                                        {{#each ../players}}
+                                                        {{#if (isEqual ../this this.team)}}
+                                                        <div class='mb-3'>
+                                                            {{this.name}}
+                                                        </div>
+                                                        {{/if}}
+                                                        {{/each}}
+                                                    </ul>
+                                                </div>
                                             </div>
-                                            <input type='submit' class='btn btn-primary'></input>
-                                            <ul class="players_list">
-                                                {{#each players}}
-                                                <li>
-                                                    {{this}}
-                                                    <input type='submit' class='btn btn-primary'>Remove Player</input>
-                                                </li>
-                                                {{/each}}
-                                            </ul>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">Close</button>
-                                            {{!-- will need a submit button to submit it to the process to add or remove the player --}}
-                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Save changes</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
-                        </li>
-                        {{/each}}
-                    </ul>
+                            </li>
+                            {{/each}}
+                        </ul>
+                    </div>
                 </form>
-
-                {{!-- "switch" get more details button. off: list teams on: list players --}}
-                {{!-- OR seperate view for get more details and copy players (easier option) --}}
             </div>
         </div>
     </div>

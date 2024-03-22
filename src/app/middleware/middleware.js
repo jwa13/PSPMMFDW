@@ -31,7 +31,6 @@ module.exports = {
 		res.locals.strengthActive = req.path === '/strengthEval';
 		res.locals.workoutActive = req.path === '/workout';
 		res.locals.user = req.session.passport.user;
-		console.log(res.locals);
 		next();
 	},
 

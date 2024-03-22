@@ -104,34 +104,55 @@ const dataController = {
 	processAdmin: async (req, res) => {
 		const adminRef = db.collection('users').doc(`${req.body.email}`);
 		const doc = await adminRef.get();
+		let coachCheck = false;
+		let playerCheck = false;
+		let parentCheck = false;
+		let adminCheck = false;
+
+		if (req.body.coachCheck == 'true') {
+			coachCheck = true;
+		}
+		if (req.body.playerCheck == 'true') {
+			playerCheck = true;
+		}
+		if (req.body.parentCheck == 'true') {
+			coachCheck = true;
+		}
+		if (req.body.adminCheck == 'true') {
+			parentCheck = true;
+		}
 		var userStatus = {
-			coach: req.body.coachCheck,
-			player: req.body.playerCheck,
-			parent: req.body.parentCheck,
-			admin: req.body.adminCheck,
+			coach: coachCheck,
+			player: playerCheck,
+			parent: parentCheck,
+			admin: adminCheck,
 		};
-		console.log(req.body);
 		adminRef.set(userStatus, { merge: true }).then(() => {
 			console.log('user assigned role');
 		});
 		res.redirect('/');
 	},
 
-	processTeam: async (req, res) => {
-		const teamsRef = db.collection('team').doc(`${req.body.newTeam}`);
-		const doc = await teamsRef.get();
-		const UserRef = db.collection('users');
-		const Userdoc = await UserRef.get();
-		var newTeam = {
-			teamName: req.body.newTeam,
-			coach: req.body.headCoach,
-		};
-
-		teamsRef.set(newTeam, { merge: true }).then(() => {
-			console.log('new team created');
-		});
-		res.redirect('/teams');
+	processHeadCoach: async (req, res, next) => {
+		if (req.body.headCoach) {
+			const teamRef = db.collection('users').doc(`${req.body.headCoach}`);
+			const doc = await teamRef.get();
+			var newTeam = {
+				team: req.body.newTeam,
+				headCoach: true,
+			};
+			teamRef.set(newTeam, { merge: true }).then(() => {
+				console.log('team Created and head coach assigned');
+			});
+			res.redirect('/teams');
+		} else {
+			next();
+		}
 	},
+	//will be hosted on a new view and will only be allowed to work if the user is a player and is not in a team
+	processNewPlayer: async (req, res) => {},
+	//will be hosted on a new view and will only be allowed to work if the user is an assistant coach and is not on a team
+	processNewCoach: async (req, res) => {},
 
 	// make processPlayer
 };

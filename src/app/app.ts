@@ -9,7 +9,7 @@ import bodyParser from 'body-parser';
 // Import our code (controllers and middleware)
 import { AppController } from './controllers/app.controller';
 import { ErrorMiddleware } from './middleware/error.middleware';
-import { HandlebarsMiddleware } from './middleware/handlebars.middleware';
+import HandlebarsMiddleware from './middleware/handlebars.middleware';
 import middleware from './middleware/middleware';
 
 class App {

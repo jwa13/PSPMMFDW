@@ -3,6 +3,7 @@ import { pino } from 'pino';
 import passport from 'passport';
 import controller from './router.controller';
 import middleware from '../middleware/middleware';
+import hbs from '../middleware/handlebars.middleware';
 import profileMiddleware from '../middleware/profile.middleware';
 import processData from './dataController';
 
@@ -64,7 +65,9 @@ export class AppController {
 
 		// Serve the teamsViewer page
 		this.router.get('/teams', middleware.loginCheck, controller.teams);
-		this.router.post('/teams', processData.processTeam);
+		this.router.post('/teams', processData.processHeadCoach);
+
+		//need to add a router for adding and removing a player or assistant coach to a team
 
 		this.router.get(
 			'/google',
