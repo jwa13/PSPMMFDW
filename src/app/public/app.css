@@ -24,3 +24,13 @@ h3.card-title {
 #eval-card {
   margin-bottom: 10px;
 }
+
+.profile-info {
+  position: relative;
+}
+
+#edit-profile {
+  position: absolute;
+  bottom: 15px;
+  right: 25px;
+}
