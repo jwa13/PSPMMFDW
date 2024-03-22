@@ -67,6 +67,17 @@ export class AppController {
 		this.router.get('/teams', middleware.loginCheck, controller.teams);
 		this.router.post('/teams', processData.processHeadCoach);
 
+		this.router.get(
+			'/teamOptions',
+			middleware.loginCheck,
+			controller.teamOptions
+		);
+		this.router.post(
+			'/teamOptions',
+			processData.processNewPlayer,
+			processData.processNewCoach
+		);
+
 		//need to add a router for adding and removing a player or assistant coach to a team
 
 		this.router.get(

@@ -150,9 +150,38 @@ const dataController = {
 		}
 	},
 	//will be hosted on a new view and will only be allowed to work if the user is a player and is not in a team
-	processNewPlayer: async (req, res) => {},
+	processNewPlayer: async (req, res) => {
+		if (req.body.newPlayer) {
+			const teamRef = db.collection('users').doc(`${req.body.newPlayer}`);
+			const doc = await teamRef.get();
+			var newTeam = {
+				team: req.body.teamOption,
+			};
+			teamRef.set(newTeam, { merge: true }).then(() => {
+				console.log('team Created and head coach assigned');
+			});
+			res.redirect('/teamOptions');
+		} else {
+			next();
+		}
+	},
 	//will be hosted on a new view and will only be allowed to work if the user is an assistant coach and is not on a team
-	processNewCoach: async (req, res) => {},
+	processNewCoach: async (req, res) => {
+		if (req.body.newCoach) {
+			const teamRef = db.collection('users').doc(`${req.body.newCoach}`);
+			const doc = await teamRef.get();
+			var newTeam = {
+				team: req.body.teamOption,
+				assistantCoach: true,
+			};
+			teamRef.set(newTeam, { merge: true }).then(() => {
+				console.log('team Created and head coach assigned');
+			});
+			res.redirect('/teamOptions');
+		} else {
+			next();
+		}
+	},
 
 	// make processPlayer
 };

@@ -85,18 +85,17 @@ const routerController = {
 			var tempTeams = [];
 			var players = [];
 			const UserRef = db.collection('users');
-			const snapshot = await UserRef.where('team', '!=', null).get();
+			const snapshot = await UserRef.where('player', '!=', false).get();
 			if (snapshot.empty) {
 				console.log('No matching documents.');
 			}
-
 			snapshot.forEach((doc) => {
 				tempTeams.push(doc.data().team);
-				if (doc.data().player == true) {
+				if (doc.data().team == null) {
 					players.push(doc.data());
 				}
 			});
-
+			console.log(players);
 			for (let i = 0; i < tempTeams.length; i++) {
 				if (tempTeams[i] != tempTeams[i - 1]) {
 					teams.push(tempTeams[i]);
@@ -109,6 +108,40 @@ const routerController = {
 				players: players,
 			});
 			console.log('teams viewer middleware working');
+		} catch (err) {
+			console.log(err);
+		}
+	},
+
+	teamOptions: async (req, res, next) => {
+		try {
+			var players = [];
+			var coaches = [];
+			const UserRef = db.collection('users');
+			const snapshotPlayers = await UserRef.where('player', '!=', false).get();
+			const snapshotCoaches = await UserRef.where('coach', '!=', false).get();
+			if (snapshotPlayers.empty) {
+				console.log('No matching documents.');
+			}
+			snapshotPlayers.forEach((doc) => {
+				if (doc.data().team == null) {
+					players.push(doc.data());
+				}
+			});
+			if (snapshotCoaches.empty) {
+				console.log('No matching documents.');
+			}
+			snapshotCoaches.forEach((doc) => {
+				if (doc.data().team == null) {
+					coaches.push(doc.data());
+				}
+			});
+			// console.log(players);
+			console.log(coaches);
+			res.render('teamOptions', {
+				players: players,
+				coaches: coaches,
+			});
 		} catch (err) {
 			console.log(err);
 		}
@@ -210,10 +243,12 @@ const routerController = {
 	},
 
 	logout: (req, res, next) => {
-		req.logout(function(err) {
-			if (err) { return next(err); }
+		req.logout(function (err) {
+			if (err) {
+				return next(err);
+			}
 			res.redirect('/login');
-		  });
+		});
 	},
 };
 

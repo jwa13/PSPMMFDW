@@ -17,8 +17,6 @@
                             {{#each teams}}
                             <li>
                                 <!-- Button trigger modal -->
-                                {{!-- need button to give name of team in order to display appropriate team based
-                                players --}}
                                 <div class='mb-3'>
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                         data-bs-target="#{{this}}">
@@ -33,23 +31,14 @@
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <input type="text" name="team" value="{{this}}" hidden="true">
-                                                <h5 class="modal-title" id="{{this}}Title" name="{{this}}" value="{{this}}">{{this}}</h5>
+                                                <h5 class="modal-title" id="{{this}}Title" name="{{this}}"
+                                                    value="{{this}}">{{this}}</h5>
                                                 <button type="button" class="close" data-bs-dismiss="modal"
                                                     aria-label="Close">
-                                                    <span aria-hidden="true" >&times;</span>
+                                                    <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                {{!-- moving to new view handling this seperately as problems arise in finding the team value --}}
-                                                {{!-- <div class='mb-3'>
-                                                    <label for='newPlayer' class='form-label'>Enter the email of the player you would like to add.</label>
-                                                    <input type='text' class='form-control' name='newPlayer' placeholder="example@mail.com"/>
-                                                </div>
-                                                <div class='mb-3'>
-                                                    <label for='newCoach' class='form-label'>Enter the email of the coach you would like to add.</label>
-                                                    <input type='text' class='form-control' name='newCoach' placeholder="example@mail.com"/>
-                                                </div> --}}
-                                                <input type='submit' class='btn btn-primary'></input>
                                                 <div class='mb-3'>
                                                     <ul class="players_list">
                                                         {{#each ../players}}
@@ -65,7 +54,6 @@
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
                                                     data-bs-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary">Save changes</button>
                                             </div>
                                         </div>
                                     </div>
@@ -76,6 +64,7 @@
                     </div>
                 </form>
             </div>
+            <a class='btn btn-primary' href='/profile' role='button'>Back</a>
         </div>
     </div>
 </div>

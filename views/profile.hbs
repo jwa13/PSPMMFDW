@@ -94,14 +94,31 @@
   <a class='btn btn-primary' href='/admin' role='button'>
     admin button
   </a>
-  <a class='btn btn-primary' href='/teams' role='button'>
-    team options
-  </a>
+  <div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuTeamOptions"
+      data-bs-toggle="dropdown" aria-expanded="false">
+      Team Options
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuTeamOptionsButton">
+      <li><a class='dropdown-item' href='/teams' role='button'>Team Viewer</a></li>
+      <li><hr class="dropdown-divider"></li>
+      <li><a class="dropdown-item" href="/teamOptions">Add or Remove a Team Member</a></li>
+    </ul>
+  </div>
+
 
   {{else user.coach}}
-  <a class='btn btn-primary' href='/teams' role='button'>
-    team options
-  </a>
+  <div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuTeamOptions"
+      data-bs-toggle="dropdown" aria-expanded="false">
+      Team Options
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuTeamOptionsButton">
+      <li><a class='dropdown-item' href='/teams' role='button'>Team Viewer</a></li>
+      <li><hr class="dropdown-divider"></li>
+      <li><a class="dropdown-item" href="/teamOptions">Add or Remove a Team Member</a></li>
+    </ul>
+  </div>
   {{/if}}
 
 </div>
