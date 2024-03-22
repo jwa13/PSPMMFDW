@@ -52,7 +52,7 @@ export class AppController {
 		this.router.get('/login', controller.login);
 
 		// auth logout
-		this.router.get('/logout', middleware.loginCheck, controller.home);
+		this.router.get('/logout', controller.logout);
 
 		// Serve the admin page
 		this.router.get(
