@@ -190,6 +190,7 @@ const routerController = {
 			res.render('pitchingEval', {
 				user: req.session.passport.user,
 				currentDate: currentDate,
+				players: req.session.players
 			});
 			console.log('pitchingEval middleware working');
 		} catch (err) {
@@ -208,6 +209,7 @@ const routerController = {
 			res.render('hittingEval', {
 				user: req.session.passport.user,
 				currentDate: currentDate,
+				players: req.session.players
 			});
 			console.log('hittingEval middleware working');
 		} catch (err) {
@@ -226,6 +228,7 @@ const routerController = {
 			res.render('strengthEval', {
 				user: req.session.passport.user,
 				currentDate: currentDate,
+				players: req.session.players
 			});
 			console.log('strengthEval middleware working');
 		} catch (err) {

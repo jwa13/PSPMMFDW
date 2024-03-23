@@ -2,77 +2,52 @@ import db from '../firebase';
 require('./passport');
 
 const dataController = {
-	processPitching: async (req, res) => {
-		console.log(req.body);
-		var userEval = '';
-		const evalRef = db
-			.collection('evaluations')
-			.doc(`${req.body.coachName}`)
-			.collection(`${req.body.playerName}`)
-			.doc('PitchingEval');
-		const doc = await evalRef.get();
-		console.log('Doc for Pitching Eval working');
-		userEval = {
-			teamName: req.body.teamName,
-			playerName: req.body.playerName,
+	processPitching: async(req, res) => {
+		console.log(req.body)
+		const currentDate = Date();
+		const evalRef = db.collection('evaluations')
+		evalRef.add({
+			coach: req.body.coachName,
+			userId: req.body.selectedPlayer,
 			moundVelo: req.body.moundVelo,
 			pulldownVelo: req.body.pulldownVelo,
 			comments: req.body.comments,
-			date: req.body.date,
-		};
-		evalRef.set(userEval).then(() => {
-			console.log('user created');
+			date: currentDate,
+			pitching: true
 		});
 		res.redirect('/');
 	},
 
 	processHitting: async (req, res) => {
-		console.log(req.body);
-		var userEval = '';
-		const evalRef = db
-			.collection('evaluations')
-			.doc(`${req.body.coachName}`)
-			.collection(`${req.body.playerName}`)
-			.doc('PitchingEval');
-		const doc = await evalRef.get();
-		console.log('Doc for Pitching Eval working');
-		userEval = {
-			teamName: req.body.teamName,
-			playerName: req.body.playerName,
+		console.log(req.body)
+		const currentDate = Date();
+		const evalRef = db.collection('evaluations')
+		evalRef.add({
+			coach: req.body.coachName,
+			userId: req.body.selectedPlayer,
 			exitVeloTee: req.body.exitVeloTee,
 			exitVeloToss: req.body.exitVeloToss,
 			comments: req.body.comments,
-			date: req.body.date,
-		};
-		evalRef.set(userEval).then(() => {
-			console.log('user created');
+			date: currentDate,
+			hitting: true
 		});
 		res.redirect('/');
 	},
 
 	processStrength: async (req, res) => {
-		console.log(req.body);
-		var userEval = '';
-		const evalRef = db
-			.collection('evaluations')
-			.doc(`${req.body.coachName}`)
-			.collection(`${req.body.playerName}`)
-			.doc('PitchingEval');
-		const doc = await evalRef.get();
-		console.log('Doc for Pitching Eval working');
-		userEval = {
-			teamName: req.body.teamName,
-			playerName: req.body.playerName,
+		console.log(req.body)
+		const currentDate = Date();
+		const evalRef = db.collection('evaluations')
+		evalRef.add({
+			coach: req.body.coachName,
+			userId: req.body.selectedPlayer,
 			squat: req.body.squat,
 			bench: req.body.bench,
 			deadlift: req.body.deadlift,
 			comments: req.body.comments,
-			date: req.body.date,
-		};
-		evalRef.set(userEval).then(() => {
-			console.log('user created');
+			date: currentDate,
+			hitting: true
 		});
-		res.redirect('/');
 	},
 
 	processWorkout: async (req, res) => {

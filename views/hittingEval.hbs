@@ -12,20 +12,6 @@
 								readonly='true' />
 						</div>
 						<div class='mb-3'>
-							<label for='teamName' class='form-label'>Team</label>
-							<div class='dropdown'>
-								<button class='btn btn-secondary dropdown-toggle' type='button' name='dropdownTeamButton'
-									data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
-									Choose a Team
-								</button>
-								<div class='dropdown-menu' aria-labelledby='dropdownMenuButton'>
-									{{!-- will need to update upon adding teams {{#each user.teams}}
-									<a class="dropdown-item" href="#">{{this}}</a>
-									{{/each}} --}}
-								</div>
-							</div>
-						</div>
-						<div class='mb-3'>
 							<label for='playerName' class='form-label'>Player</label>
 							<div class='dropdown'>
 								<button class='btn btn-secondary dropdown-toggle' type='button'
@@ -34,24 +20,29 @@
 									Choose a Player
 								</button>
 								<div class='dropdown-menu' aria-labelledby='dropdownMenuButton'>
-									{{!-- will need to update upon adding teams {{#each
-									user.teams.SPECIFIC_TEAM.SPECIFIC_PLAYER.name}}
-									<a class="dropdown-item" href="#">{{this}}</a>
-									{{/each}} --}}
+									{{#each players}}
+									<button class="dropdown-item select-player" type="button"
+										onclick="selectPlayer('{{this.id}}')">{{this.name}} <hidden hidden="true">{{this.id}}</hidden></button>
+									{{/each}}
 								</div>
 							</div>
+							<input type="hidden" id="selectedPlayerInput" name="selectedPlayer" required="true">
+							<script>function selectPlayer(playerId) {
+									document.getElementById('selectedPlayerInput').value = playerId;
+								}
+							</script>
 						</div>
 						<div class='mb-3'>
 							<label for='exitVeloTee' class='form-label'>Velo Toss</label>
-							<input type='number' class='form-label' name='exitVeloTee' max='' min='' />
+							<input type='number' class='form-label' name='exitVeloTee' max='' min='' required="true"/>
 						</div>
 						<div class='mb-3'>
 							<label for='exitVeloToss' class='form-label'>Velo Tee</label>
-							<input type='number' class='form-label' name='exitVeloToss' max='' min='' />
+							<input type='number' class='form-label' name='exitVeloToss' max='' min='' required="true"/>
 						</div>
 						<div class='mb-3'>
 							<label for='comments' class='form-label'>Comments</label>
-							<input type='text' class='form-control' name='comments' />
+							<input type='text' class='form-control' name='comments' required="true"/>
 						</div>
 						<div class='mb-3'>
 							<label for='date' class='form-label'>Date</label>
