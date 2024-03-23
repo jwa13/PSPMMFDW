@@ -86,33 +86,47 @@ const routerController = {
 			var players = [];
 			var playersAssigned = [];
 			const UserRef = db.collection('users');
-			const snapshot = await UserRef.where('player', '!=', false).get();
-			if (snapshot.empty) {
+			const snapshotPlayer = await UserRef.where('player', '!=', false).get();
+			const snapshotCoach = await UserRef.where('headCoach', '!=', false).get();
+			if (snapshotPlayer.empty) {
 				console.log('No matching documents.');
 			}
-			snapshot.forEach((doc) => {
-				if (doc.data().team != null) {
-					tempTeams.push(doc.data().team);
-				}
-
+			snapshotPlayer.forEach((doc) => {
 				if (doc.data().team == null) {
 					players.push(doc.data());
 				} else {
 					playersAssigned.push(doc.data());
 				}
 			});
-			console.log(players);
+
+			if (snapshotCoach.empty) {
+				console.log('No matching documents.');
+			}
+			snapshotCoach.forEach((doc) => {
+				if (doc.data().team) {
+					tempTeams.push(doc.data().team);
+				}
+			});
+			console.log(playersAssigned);
+
+			let duplicate;
 			for (let i = 0; i < tempTeams.length; i++) {
-				if (tempTeams[i] != tempTeams[i - 1]) {
+				duplicate = false;
+				for (let j = 0; j < teams.length; j++) {
+					if (tempTeams[i] === teams[j]) {
+						duplicate = true;
+					}
+				}
+				if (!duplicate) {
 					teams.push(tempTeams[i]);
 				}
 			}
 
-			console.log(teams);
+			console.log(teams.sort());
 
 			// Render the "teamsViewer" template as HTML
 			res.render('teamsViewer', {
-				teams: teams,
+				teams: teams.sort(),
 				players: playersAssigned,
 			});
 
