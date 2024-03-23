@@ -5,10 +5,25 @@
       My Info
     </div>
     <div class="card-body">
-      <p>Username: {{user.username}}</p>
-      <p>Email: {{user.email}}</p>
-      <p>Account Type: {{#if user.player}} Player{{/if}}</p>
-      <p>Teams: </p>
+      <p>
+        Username: {{user.username}}
+        </p>
+      <p
+      >Email: {{user.email}}
+      </p>
+      <p>
+        Account Type: 
+        {{#if user.player}}
+        Player
+        {{else if user.admin}}
+        Admin
+        {{else if user.coach}}
+        Coach
+        {{else if user.parent}}
+        Parent
+        {{/if}}
+        </p>
+      <p>Teams: {{user.team}}</p>
       <p>Member Since: </p>
     </div>
   </div>

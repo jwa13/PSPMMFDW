@@ -5,6 +5,10 @@ var register = function (Handlebars) {
 			//console.log(`${a} is equal to ${b}: ${a === b}`);
 			return a === b;
 		},
+
+		isNotNull: function (a) {
+			return a !== null;
+		},
 	};
 
 	if (Handlebars && typeof Handlebars.registerHelper === 'function') {

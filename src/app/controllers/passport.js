@@ -49,6 +49,7 @@ passport.serializeUser(function (user, cb) {
 			coach: user.coach,
 			parent: user.parent,
 			admin: user.admin,
+			team: user.team,
 		});
 	});
 });
