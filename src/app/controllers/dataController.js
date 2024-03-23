@@ -158,9 +158,10 @@ const dataController = {
 				team: req.body.teamOption,
 			};
 			teamRef.set(newTeam, { merge: true }).then(() => {
+				console.log(newTeam);
 				console.log('team Created and head coach assigned');
 			});
-			res.redirect('/teamOptions');
+			res.redirect('/teamAdd');
 		} else {
 			next();
 		}
@@ -177,7 +178,7 @@ const dataController = {
 			teamRef.set(newTeam, { merge: true }).then(() => {
 				console.log('team Created and head coach assigned');
 			});
-			res.redirect('/teamOptions');
+			res.redirect('/teamAdd');
 		} else {
 			next();
 		}

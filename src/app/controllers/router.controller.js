@@ -84,15 +84,21 @@ const routerController = {
 			var teams = [];
 			var tempTeams = [];
 			var players = [];
+			var playersAssigned = [];
 			const UserRef = db.collection('users');
 			const snapshot = await UserRef.where('player', '!=', false).get();
 			if (snapshot.empty) {
 				console.log('No matching documents.');
 			}
 			snapshot.forEach((doc) => {
-				tempTeams.push(doc.data().team);
+				if (doc.data().team != null) {
+					tempTeams.push(doc.data().team);
+				}
+
 				if (doc.data().team == null) {
 					players.push(doc.data());
+				} else {
+					playersAssigned.push(doc.data());
 				}
 			});
 			console.log(players);
@@ -102,11 +108,14 @@ const routerController = {
 				}
 			}
 
+			console.log(teams);
+
 			// Render the "teamsViewer" template as HTML
 			res.render('teamsViewer', {
 				teams: teams,
-				players: players,
+				players: playersAssigned,
 			});
+
 			console.log('teams viewer middleware working');
 		} catch (err) {
 			console.log(err);

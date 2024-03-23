@@ -67,13 +67,9 @@ export class AppController {
 		this.router.get('/teams', middleware.loginCheck, controller.teams);
 		this.router.post('/teams', processData.processHeadCoach);
 
-		this.router.get(
-			'/teamOptions',
-			middleware.loginCheck,
-			controller.teamOptions
-		);
+		this.router.get('/teamAdd', middleware.loginCheck, controller.teamOptions);
 		this.router.post(
-			'/teamOptions',
+			'/teamAdd',
 			processData.processNewPlayer,
 			processData.processNewCoach
 		);
