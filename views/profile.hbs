@@ -1,17 +1,17 @@
 <div>
   <h1>{{ user.username }}'s Profile</h1>
   <div class="card" id="my-info">
-  <div class="card-header">
-    My Info
-  </div>
-  <div class="card-body">
+    <div class="card-header">
+      My Info
+    </div>
+    <div class="card-body">
       <p>Username: {{user.username}}</p>
       <p>Email: {{user.email}}</p>
       <p>Account Type: {{#if user.player}} Player{{/if}}</p>
       <p>Teams: </p>
       <p>Member Since: </p>
+    </div>
   </div>
-</div>
   {{#if user.player}}
   <div class="accordion" id="accordionExample">
     <div class="accordion-item">
@@ -90,8 +90,38 @@
   </div>
   {{/if}}
 
-  {{#if coach}}{{/if}}
+  {{#if user.admin}}
+  <a class='btn btn-primary' href='/admin' role='button'>
+    admin button
+  </a>
+  <div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuTeamOptions"
+      data-bs-toggle="dropdown" aria-expanded="false">
+      Team Options
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuTeamOptionsButton">
+      <li><a class='dropdown-item' href='/teams' role='button'>Team Viewer</a></li>
+      <li><hr class="dropdown-divider"></li>
+      <li><a class="dropdown-item" href="/teamAdd">Add a Team Member</a></li>
+      <li><hr class="dropdown-divider"></li>
+      <li><a class="dropdown-item" href="/teamOptions">Remove a Team Member</a></li>
+    </ul>
+  </div>
 
-  {{#if parent}}{{/if}}
+
+  {{else user.coach}}
+  <div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuTeamOptions"
+      data-bs-toggle="dropdown" aria-expanded="false">
+      Team Options
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuTeamOptionsButton">
+      <li><a class='dropdown-item' href='/teams' role='button'>Team Viewer</a></li>
+      <li><hr class="dropdown-divider"></li>
+      <li><a class="dropdown-item" href="/teamOptions">Add or Remove a Team Member</a></li>
+    </ul>
+  </div>
+  {{/if}}
+
 </div>
 </div>

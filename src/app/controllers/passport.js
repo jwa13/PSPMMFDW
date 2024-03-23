@@ -21,6 +21,7 @@ passport.use(
 					profileId: profile._json.sub,
 					name: profile._json.name,
 					email: profile._json.email,
+					team: null,
 				};
 				userRef.set(User).then(() => {
 					console.log('user created');
@@ -47,7 +48,7 @@ passport.serializeUser(function (user, cb) {
 			player: user.player,
 			coach: user.coach,
 			parent: user.parent,
-			admin: user.admin
+			admin: user.admin,
 		});
 	});
 });

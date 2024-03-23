@@ -3,10 +3,9 @@ require('passport');
 module.exports = {
 	loginCheck: (req, res, next) => {
 		//console.log(req.body);
-		if (req.session.passport.user) {
+		if (req.session.passport) {
 			let user = req.session.passport.user;
 			console.log('login check');
-			console.log(user);
 			next();
 		} else {
 			console.log(req.session);
@@ -14,13 +13,24 @@ module.exports = {
 		}
 	},
 
+	adminLoginCheck: (req, res, next) => {
+		//console.log(req.body);
+		if (req.session.passport.user.admin) {
+			console.log('admin login check');
+			next();
+		} else {
+			console.log(req.session);
+			res.redirect('/');
+		}
+	},
+
+	// check if we need
 	populateFormData: (req, res, next) => {
 		res.locals.pitchingActive = req.path === '/pitchingEval';
 		res.locals.hittingActive = req.path === '/hittingEval';
 		res.locals.strengthActive = req.path === '/strengthEval';
 		res.locals.workoutActive = req.path === '/workout';
 		res.locals.user = req.session.passport.user;
-		console.log(res.locals);
 		next();
 	},
 

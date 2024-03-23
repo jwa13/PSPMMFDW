@@ -1,0 +1,39 @@
+<div>
+    <div className='container container-fluid'>
+        <div className='row'>
+            <div className='col-1 col-md-4 '></div>
+            <div className='col-10 col-md-4 card  text-center'>
+                <ul class="admin_list">
+                    {{#each emails}}
+                    <li>
+                        {{this.email}}
+                        <form action="/admin" method="POST">
+                            {{!-- We need some form of hidden input type where the email gets sent as well --}}
+                            <input type="text" name="email" value="{{this.email}}" hidden="true">
+                            <input class="form-check-input" type="checkbox" name="adminCheck" value="true">
+                            <label class="form-check-label" for="adminCheck">
+                                Admin
+                            </label>
+                            <input class="form-check-input" type="checkbox" name="coachCheck" value="true">
+                            <label class="form-check-label" for="coachCheck">
+                                Coach
+                            </label>
+                            <input class="form-check-input" type="checkbox" name="playerCheck" value="true">
+                            <label class="form-check-label" for="playerCheck">
+                                Player
+                            </label>
+                            <input class="form-check-input" type="checkbox" name="parentCheck" value="true">
+                            <label class="form-check-label" for="parentCheck">
+                                Parent
+                            </label>
+                            <input type='submit' class='btn btn-primary'></input>
+                        </form>
+
+                    </li>
+                    {{/each}}
+                </ul>
+            </div>
+            <a class='btn btn-primary' href='/profile' role='button'>Back</a>
+        </div>
+    </div>
+</div>
