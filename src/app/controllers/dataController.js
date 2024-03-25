@@ -163,9 +163,12 @@ const dataController = {
 		if (req.body.removePlayer) {
 			const teamRef = db.collection('users').doc(`${req.body.removePlayer}`);
 			const doc = await teamRef.get();
-			var newTeam = {
-				team: null,
-			};
+			var newTeam = {};
+			if (doc.data().team == req.session.passport.user.team) {
+				newTeam = {
+					team: null,
+				};
+			}
 			teamRef.set(newTeam, { merge: true }).then(() => {
 				console.log(newTeam);
 				console.log('Player Removed from Team');
@@ -180,10 +183,13 @@ const dataController = {
 		if (req.body.removeCoach) {
 			const teamRef = db.collection('users').doc(`${req.body.removeCoach}`);
 			const doc = await teamRef.get();
-			var newTeam = {
-				team: null,
-				assistantCoach: false,
-			};
+			var newTeam = {};
+			if (doc.data().team == req.session.passport.user.team) {
+				newTeam = {
+					team: null,
+					assistantCoach: false,
+				};
+			}
 			teamRef.set(newTeam, { merge: true }).then(() => {
 				console.log('Coach Removed from Team');
 			});
