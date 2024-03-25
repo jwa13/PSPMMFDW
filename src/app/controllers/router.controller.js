@@ -195,7 +195,7 @@ const routerController = {
 			});
 			// console.log(players);
 			console.log(coaches);
-			res.render('teamOptions', {
+			res.render('teamRemove', {
 				players: players,
 				coaches: coaches,
 			});

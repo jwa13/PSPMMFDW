@@ -161,16 +161,16 @@ const dataController = {
 
 	processRemovePlayer: async (req, res) => {
 		if (req.body.removePlayer) {
-			const teamRef = db.collection('users').doc(`${req.body.newPlayer}`);
+			const teamRef = db.collection('users').doc(`${req.body.removePlayer}`);
 			const doc = await teamRef.get();
 			var newTeam = {
 				team: null,
 			};
 			teamRef.set(newTeam, { merge: true }).then(() => {
 				console.log(newTeam);
-				console.log('team Created and head coach assigned');
+				console.log('Player Removed from Team');
 			});
-			res.redirect('/teamAdd');
+			res.redirect('/teamRemove');
 		} else {
 			next();
 		}
@@ -178,16 +178,16 @@ const dataController = {
 	//will be hosted on a new view and will only be allowed to work if the user is an assistant coach and is not on a team
 	processRemoveCoach: async (req, res) => {
 		if (req.body.removeCoach) {
-			const teamRef = db.collection('users').doc(`${req.body.newCoach}`);
+			const teamRef = db.collection('users').doc(`${req.body.removeCoach}`);
 			const doc = await teamRef.get();
 			var newTeam = {
 				team: null,
 				assistantCoach: false,
 			};
 			teamRef.set(newTeam, { merge: true }).then(() => {
-				console.log('team Created and head coach assigned');
+				console.log('Coach Removed from Team');
 			});
-			res.redirect('/teamAdd');
+			res.redirect('/teamRemove');
 		} else {
 			next();
 		}
