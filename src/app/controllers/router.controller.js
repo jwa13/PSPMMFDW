@@ -174,6 +174,8 @@ const routerController = {
 
 	teamRemove: async (req, res, next) => {
 		try {
+			var players = [];
+			var coaches = [];
 			const UserRef = db.collection('users');
 			const snapshotPlayers = await UserRef.where('player', '!=', false).get();
 			const snapshotCoaches = await UserRef.where('coach', '!=', false).get();

@@ -7,12 +7,11 @@
     <div class="card-body">
       <p>
         Username: {{user.username}}
-        </p>
-      <p
-      >Email: {{user.email}}
+      </p>
+      <p>Email: {{user.email}}
       </p>
       <p>
-        Account Type: 
+        Account Type:
         {{#if user.player}}
         Player
         {{else if user.admin}}
@@ -22,7 +21,7 @@
         {{else if user.parent}}
         Parent
         {{/if}}
-        </p>
+      </p>
       <p>Teams: {{user.team}}</p>
       <p>Member Since: </p>
     </div>
@@ -116,10 +115,14 @@
     </button>
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuTeamOptionsButton">
       <li><a class='dropdown-item' href='/teams' role='button'>Team Viewer</a></li>
-      <li><hr class="dropdown-divider"></li>
+      <li>
+        <hr class="dropdown-divider">
+      </li>
       <li><a class="dropdown-item" href="/teamAdd">Add a Team Member</a></li>
-      <li><hr class="dropdown-divider"></li>
-      <li><a class="dropdown-item" href="/teamOptions">Remove a Team Member</a></li>
+      <li>
+        <hr class="dropdown-divider">
+      </li>
+      <li><a class="dropdown-item" href="/teamRemove">Remove a Team Member</a></li>
     </ul>
   </div>
 
@@ -132,9 +135,13 @@
     </button>
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuTeamOptionsButton">
       <li><a class='dropdown-item' href='/teams' role='button'>Team Viewer</a></li>
-      <li><hr class="dropdown-divider"></li>
+      <li>
+        <hr class="dropdown-divider">
+      </li>
       <li><a class="dropdown-item" href="/teamOptions">Add a Team Member</a></li>
-      <li><hr class="dropdown-divider"></li>
+      <li>
+        <hr class="dropdown-divider">
+      </li>
       <li><a class="dropdown-item" href="/teamRemove">Remove a Team Member</a></li>
     </ul>
   </div>
