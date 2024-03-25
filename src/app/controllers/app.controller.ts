@@ -77,14 +77,36 @@ export class AppController {
 		this.router.post('/admin', processData.processAdmin);
 
 		// Serve the teamsViewer page
-		this.router.get('/teams', middleware.loginCheck, controller.teams);
+		this.router.get(
+			'/teams',
+			middleware.loginCheck,
+			middleware.headCoachLoginCheck,
+			controller.teams
+		);
 		this.router.post('/teams', processData.processHeadCoach);
 
-		this.router.get('/teamAdd', middleware.loginCheck, controller.teamOptions);
+		this.router.get(
+			'/teamAdd',
+			middleware.loginCheck,
+			middleware.headCoachLoginCheck,
+			controller.teamOptions
+		);
 		this.router.post(
 			'/teamAdd',
 			processData.processNewPlayer,
 			processData.processNewCoach
+		);
+
+		this.router.get(
+			'/teamRemove',
+			middleware.loginCheck,
+			middleware.headCoachLoginCheck,
+			controller.teamRemove
+		);
+		this.router.post(
+			'/teamRemove',
+			processData.processRemovePlayer,
+			processData.processRemoveCoach
 		);
 
 		//need to add a router for adding and removing a player or assistant coach to a team
