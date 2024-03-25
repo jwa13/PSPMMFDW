@@ -50,6 +50,8 @@ passport.serializeUser(function (user, cb) {
 			parent: user.parent,
 			admin: user.admin,
 			team: user.team,
+			headCoach: user.headCoach,
+			assistantCoach: user.assistantCoach
 		});
 	});
 });

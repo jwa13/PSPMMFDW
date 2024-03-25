@@ -30,7 +30,7 @@ module.exports = {
 			console.log('head coach login check');
 			next();
 		} else {
-			console.log(req.session);
+			console.log(req.session.passport.user);
 			res.redirect('/');
 		}
 	},
