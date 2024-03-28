@@ -125,7 +125,7 @@ const dataController = {
 		}
 	},
 	//will be hosted on a new view and will only be allowed to work if the user is a player and is not in a team
-	processNewPlayer: async (req, res) => {
+	processNewPlayer: async (req, res, next) => {
 		if (req.body.newPlayer) {
 			const teamRef = db.collection('users').doc(`${req.body.newPlayer}`);
 			const doc = await teamRef.get();
@@ -142,7 +142,7 @@ const dataController = {
 		}
 	},
 	//will be hosted on a new view and will only be allowed to work if the user is an assistant coach and is not on a team
-	processNewCoach: async (req, res) => {
+	processNewCoach: async (req, res, next) => {
 		if (req.body.newCoach) {
 			const teamRef = db.collection('users').doc(`${req.body.newCoach}`);
 			const doc = await teamRef.get();
@@ -159,7 +159,7 @@ const dataController = {
 		}
 	},
 
-	processRemovePlayer: async (req, res) => {
+	processRemovePlayer: async (req, res, next) => {
 		if (req.body.removePlayer) {
 			const teamRef = db.collection('users').doc(`${req.body.removePlayer}`);
 			const doc = await teamRef.get();
@@ -179,7 +179,7 @@ const dataController = {
 		}
 	},
 	//will be hosted on a new view and will only be allowed to work if the user is an assistant coach and is not on a team
-	processRemoveCoach: async (req, res) => {
+	processRemoveCoach: async (req, res, next) => {
 		if (req.body.removeCoach) {
 			const teamRef = db.collection('users').doc(`${req.body.removeCoach}`);
 			const doc = await teamRef.get();
