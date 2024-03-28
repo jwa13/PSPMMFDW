@@ -7,6 +7,7 @@ const {
 	getFirestore,
 	Timestamp,
 	FieldValue,
+	deleteField,
 	Filter,
 } = require('firebase-admin/firestore');
 const firebaseConfig = {

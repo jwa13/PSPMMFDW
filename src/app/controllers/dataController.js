@@ -190,7 +190,7 @@ const dataController = {
 					assistantCoach: false,
 				};
 			}
-			teamRef.set(newTeam, { merge: true }).then(() => {
+			teamRef.update(newTeam).then(() => {
 				console.log('Coach Removed from Team');
 			});
 			res.redirect('/teamRemove');
