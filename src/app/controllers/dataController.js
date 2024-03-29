@@ -2,10 +2,10 @@ import db from '../firebase';
 require('./passport');
 
 const dataController = {
-	processPitching: async(req, res) => {
-		console.log(req.body)
+	processPitching: async (req, res) => {
+		console.log(req.body);
 		const currentDate = Date();
-		const evalRef = db.collection('evaluations')
+		const evalRef = db.collection('evaluations');
 		evalRef.add({
 			coach: req.body.coachName,
 			userId: req.body.selectedPlayer,
@@ -13,15 +13,15 @@ const dataController = {
 			pulldownVelo: req.body.pulldownVelo,
 			comments: req.body.comments,
 			date: currentDate,
-			pitching: true
+			pitching: true,
 		});
 		res.redirect('/');
 	},
 
 	processHitting: async (req, res) => {
-		console.log(req.body)
+		console.log(req.body);
 		const currentDate = Date();
-		const evalRef = db.collection('evaluations')
+		const evalRef = db.collection('evaluations');
 		evalRef.add({
 			coach: req.body.coachName,
 			userId: req.body.selectedPlayer,
@@ -29,15 +29,15 @@ const dataController = {
 			exitVeloToss: req.body.exitVeloToss,
 			comments: req.body.comments,
 			date: currentDate,
-			hitting: true
+			hitting: true,
 		});
 		res.redirect('/');
 	},
 
 	processStrength: async (req, res) => {
-		console.log(req.body)
+		console.log(req.body);
 		const currentDate = Date();
-		const evalRef = db.collection('evaluations')
+		const evalRef = db.collection('evaluations');
 		evalRef.add({
 			coach: req.body.coachName,
 			userId: req.body.selectedPlayer,
@@ -46,7 +46,7 @@ const dataController = {
 			deadlift: req.body.deadlift,
 			comments: req.body.comments,
 			date: currentDate,
-			hitting: true
+			hitting: true,
 		});
 	},
 
@@ -125,7 +125,7 @@ const dataController = {
 		}
 	},
 	//will be hosted on a new view and will only be allowed to work if the user is a player and is not in a team
-	processNewPlayer: async (req, res) => {
+	processNewPlayer: async (req, res, next) => {
 		if (req.body.newPlayer) {
 			const teamRef = db.collection('users').doc(`${req.body.newPlayer}`);
 			const doc = await teamRef.get();
@@ -142,7 +142,7 @@ const dataController = {
 		}
 	},
 	//will be hosted on a new view and will only be allowed to work if the user is an assistant coach and is not on a team
-	processNewCoach: async (req, res) => {
+	processNewCoach: async (req, res, next) => {
 		if (req.body.newCoach) {
 			const teamRef = db.collection('users').doc(`${req.body.newCoach}`);
 			const doc = await teamRef.get();
@@ -159,7 +159,45 @@ const dataController = {
 		}
 	},
 
-	// make processPlayer
+	processRemovePlayer: async (req, res, next) => {
+		if (req.body.removePlayer) {
+			const teamRef = db.collection('users').doc(`${req.body.removePlayer}`);
+			const doc = await teamRef.get();
+			var newTeam = {};
+			if (doc.data().team == req.session.passport.user.team) {
+				newTeam = {
+					team: null,
+				};
+			}
+			teamRef.set(newTeam, { merge: true }).then(() => {
+				console.log(newTeam);
+				console.log('Player Removed from Team');
+			});
+			res.redirect('/teamRemove');
+		} else {
+			next();
+		}
+	},
+	//will be hosted on a new view and will only be allowed to work if the user is an assistant coach and is not on a team
+	processRemoveCoach: async (req, res, next) => {
+		if (req.body.removeCoach) {
+			const teamRef = db.collection('users').doc(`${req.body.removeCoach}`);
+			const doc = await teamRef.get();
+			var newTeam = {};
+			if (doc.data().team == req.session.passport.user.team) {
+				newTeam = {
+					team: null,
+					assistantCoach: false,
+				};
+			}
+			teamRef.update(newTeam).then(() => {
+				console.log('Coach Removed from Team');
+			});
+			res.redirect('/teamRemove');
+		} else {
+			next();
+		}
+	},
 };
 
 export default dataController;

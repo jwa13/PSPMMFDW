@@ -6,14 +6,16 @@ const routerController = {
 	home: async (req, res) => {
 		try {
 			// Render the "home" template as HTML
-			req.session.viewed = true;
+
 			if (req.session.passport) {
+				console.log(req.session.passport.user);
 				res.render('home', {
 					user: req.session.passport.user,
 				});
 			} else {
 				res.render('home');
 			}
+
 			console.log('home middleware working');
 		} catch (err) {
 			console.log(err);
@@ -170,6 +172,40 @@ const routerController = {
 		}
 	},
 
+	teamRemove: async (req, res, next) => {
+		try {
+			var players = [];
+			var coaches = [];
+			const UserRef = db.collection('users');
+			const snapshotPlayers = await UserRef.where('player', '!=', false).get();
+			const snapshotCoaches = await UserRef.where('coach', '!=', false).get();
+			if (snapshotPlayers.empty) {
+				console.log('No matching documents.');
+			}
+			snapshotPlayers.forEach((doc) => {
+				if (doc.data().team == req.session.passport.user.team) {
+					players.push(doc.data());
+				}
+			});
+			if (snapshotCoaches.empty) {
+				console.log('No matching documents.');
+			}
+			snapshotCoaches.forEach((doc) => {
+				if (doc.data().team == req.session.passport.user.team) {
+					coaches.push(doc.data());
+				}
+			});
+			// console.log(players);
+			console.log(coaches);
+			res.render('teamRemove', {
+				players: players,
+				coaches: coaches,
+			});
+		} catch (err) {
+			console.log(err);
+		}
+	},
+
 	google: (req, res, next) => {
 		console.log('Google route working');
 		console.log('google middleware working');
@@ -204,7 +240,7 @@ const routerController = {
 			res.render('pitchingEval', {
 				user: req.session.passport.user,
 				currentDate: currentDate,
-				players: req.session.players
+				players: req.session.players,
 			});
 			console.log('pitchingEval middleware working');
 		} catch (err) {
@@ -223,7 +259,7 @@ const routerController = {
 			res.render('hittingEval', {
 				user: req.session.passport.user,
 				currentDate: currentDate,
-				players: req.session.players
+				players: req.session.players,
 			});
 			console.log('hittingEval middleware working');
 		} catch (err) {
@@ -242,7 +278,7 @@ const routerController = {
 			res.render('strengthEval', {
 				user: req.session.passport.user,
 				currentDate: currentDate,
-				players: req.session.players
+				players: req.session.players,
 			});
 			console.log('strengthEval middleware working');
 		} catch (err) {
