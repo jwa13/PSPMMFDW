@@ -297,6 +297,7 @@ const routerController = {
 			res.render('workout', {
 				user: req.session.passport.user,
 				currentDate: currentDate,
+				players: req.session.players
 			});
 			console.log('workout middleware working');
 		} catch (err) {

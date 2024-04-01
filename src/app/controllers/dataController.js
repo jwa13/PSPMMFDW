@@ -48,30 +48,21 @@ const dataController = {
 			date: currentDate,
 			hitting: true,
 		});
+		res.redirect('/');
 	},
 
 	processWorkout: async (req, res) => {
 		console.log(req.body);
-		var userEval = '';
-		const evalRef = db
-			.collection('evaluations')
-			.doc(`${req.body.coachName}`)
-			.collection(`${req.body.playerName}`)
-			.doc('PitchingEval');
-		const doc = await evalRef.get();
-		console.log('Doc for Pitching Eval working');
-		userEval = {
-			teamName: req.body.teamName,
-			playerName: req.body.playerName,
+		const workoutRef = db.collection('workouts')
+		workoutRef.add({
+			coach: req.body.coachName,
+			userId: req.body.selectedPlayer,
+			exercise: req.body.exercise,
 			sets: req.body.sets,
 			reps: req.body.reps,
 			weight: req.body.weight,
 			comments: req.body.comments,
-			exampleVideo: req.body.exampleVideo,
-			date: req.body.date,
-		};
-		evalRef.set(userEval).then(() => {
-			console.log('user created');
+			video: req.body.exampleVideo
 		});
 		res.redirect('/');
 	},

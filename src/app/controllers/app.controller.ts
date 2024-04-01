@@ -47,7 +47,7 @@ export class AppController {
 		);
 		this.router.post('/strengthEval', processData.processStrength);
 
-		this.router.get('/workout', controller.workout);
+		this.router.get('/workout', evaluationMiddleware.getAllPlayers, controller.workout);
 		this.router.post('/workout', processData.processWorkout);
 
 		// Serve the calendar page
