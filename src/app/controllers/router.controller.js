@@ -11,6 +11,7 @@ const routerController = {
 				console.log(req.session.passport.user);
 				res.render('home', {
 					user: req.session.passport.user,
+					evaluations: req.session.evaluations
 				});
 			} else {
 				res.render('home');

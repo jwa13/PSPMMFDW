@@ -5,22 +5,100 @@
 			<div className='col-10 col-md-4 card  text-center'>
 				<h1 class='user-select-none fs-1'>This is the Pipeline Sports
 					Performance Member Management and Facility Data Warehouse</h1>
-				<p class='user-select-all'>NEED A WALKTHROUGH FOR HOW TO USE APP</p>
 
 				{{! Form should only displayed when coach is logged in }}
 				{{#if user.coach}}
-					<a class='btn btn-primary' href='/pitchingEval' role='button'>
-						Create Pitching Evaluation
-					</a>
-					<a class='btn btn-primary' href='/hittingEval' role='button'>
-						Create Hitting Evaluation
-					</a>
-					<a class='btn btn-primary' href='/strengthEval' role='button'>
-						Create Strength Evaluation
-					</a>
-					<a class='btn btn-primary' href='/workout' role='button'>
-						Create Workout
-					</a>
+				<a class='btn btn-primary' href='/pitchingEval' role='button'>
+					Create Pitching Evaluation
+				</a>
+				<a class='btn btn-primary' href='/hittingEval' role='button'>
+					Create Hitting Evaluation
+				</a>
+				<a class='btn btn-primary' href='/strengthEval' role='button'>
+					Create Strength Evaluation
+				</a>
+				<a class='btn btn-primary' href='/workout' role='button'>
+					Create Workout
+				</a>
+				{{/if}}
+
+				{{#if user.player}}
+				<div class="accordion" id="homeEvalAccordion">
+					<div class="accordion-item">
+						<h3 class="accordion-header">
+							<button class="accordion-button" type="button" data-bs-toggle="collapse"
+								data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+								Most Recent Evaluation
+							</button>
+						</h3>
+						<div id="collapseOne" class="accordion-collapse collapse"
+							data-bs-parent="#accordionExample">
+							<div class="accordion-body">
+								{{#each evaluations}}
+								{{#if this.data.pitching}}
+								<div class="card" id="eval-card">
+									<div class="card-header">
+										<h3 class="card-title">Pitching Evaluation</h3>
+									</div>
+									<div class="card-body">
+										<h4>Coach: </h4>
+										<p>{{this.data.coach}}</p>
+										<h4>Date: </h4>
+										<p>{{this.data.date}}</p>
+										<h4>Mound Velocity: </h4>
+										<p>{{this.data.moundVelo}}</p>
+										<h4>Pulldown Velocity: </h4>
+										<p>{{this.data.pulldownVelo}}</p>
+										<h4>Comments: </h4>
+										<p>{{this.data.comments}}</p>
+									</div>
+								</div>
+								{{/if}}
+								{{#if this.data.hitting}}
+								<div class="card" id="eval-card">
+									<div class="card-header">
+										<h3 class="card-title">Hitting Evaluation</h3>
+									</div>
+									<div class="card-body">
+										<h4>Coach: </h4>
+										<p>{{this.data.coach}}</p>
+										<h4>Date: </h4>
+										<p>{{this.data.date}}</p>
+										<h4>Tee Exit Velocity: </h4>
+										<p>{{this.data.exitVeloTee}}</p>
+										<h4>Front Toss Exit Velocity: </h4>
+										<p>{{this.data.exitVeloToss}}</p>
+										<h4>Comments: </h4>
+										<p>{{this.data.comments}}</p>
+									</div>
+								</div>
+								{{/if}}
+								{{#if this.data.strength}}
+								<div class="card" id="eval-card">
+									<div class="card-header">
+										<h3 class="card-title">Strength Evaluation</h3>
+									</div>
+									<div class="card-body">
+										<h4>Coach: </h4>
+										<p>{{this.data.coach}}</p>
+										<h4>Date: </h4>
+										<p>{{this.data.date}}</p>
+										<h4>Bench Max: </h4>
+										<p>{{this.data.bench}}</p>
+										<h4>Squat Max: </h4>
+										<p>{{this.data.squat}}</p>
+										<h4>Deadlift Max: </h4>
+										<p>{{this.data.deadlift}}</p>
+										<h4>Comments: </h4>
+										<p>{{this.data.comments}}</p>
+									</div>
+								</div>
+								{{/if}}
+								{{/each}}
+							</div>
+						</div>
+					</div>
+				</div>
 				{{/if}}
 			</div>
 		</div>
