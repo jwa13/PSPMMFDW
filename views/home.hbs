@@ -34,6 +34,11 @@
 						<div id="collapseOne" class="accordion-collapse collapse"
 							data-bs-parent="#accordionExample">
 							<div class="accordion-body">
+								{{#unless evaluations}}
+								<p>At this time, you have not recieved any evaluations.
+									Please schedule an evaluation with PSP!
+								</p>
+								{{/unless}}
 								{{#each evaluations}}
 								{{#if this.data.pitching}}
 								<div class="card" id="eval-card">
