@@ -1,10 +1,11 @@
-# Project Title
+# Pipeline Sports Performance Member Management and Facility Data Warehouse
 
 Simple overview of use/purpose.
 
 ## Description
 
-An in-depth paragraph about your project and overview of use.
+The Pipeline Sports Performance Member Management and Facility Data Warehouse web application is focused on creating software that improves the workflow of coaches and provides useful information to members. This document details the technical side of the application, including security, testing, use cases, our development process, requirements, development, and deployment. It is important to mention that our team’s approach is slightly more long sighted due to the expected future of the application being a out-in-the-world piece of software that will need to be maintained. 
+
 
 ## Getting Started
 
@@ -22,7 +23,8 @@ An in-depth paragraph about your project and overview of use.
 * How to run the program
 * Step-by-step bullets
 ```
-code blocks for commands
+npm run dev
+npm start
 ```
 
 ## Help
@@ -36,8 +38,11 @@ command to run if program contains helper info
 
 Contributors names and contact info
 
-ex. Dominique Pizzie  
-ex. [@DomPizzie](https://twitter.com/dompizzie)
+Jack Anderson
+Cam Ball
+Daniel Miller
+Yongfeng Ye
+Oliver Norris
 
 ## Version History
 
