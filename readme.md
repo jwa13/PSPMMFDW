@@ -38,11 +38,16 @@ command to run if program contains helper info
 
 Contributors names and contact info
 
-Jack Anderson
-Cam Ball
-Daniel Miller
-Yongfeng Ye
-Oliver Norris
+-Jack Anderson
+
+-Cam Ball
+
+-Daniel Miller
+
+-Yongfeng Ye
+
+-Oliver Norris
+
 
 ## Version History
 
