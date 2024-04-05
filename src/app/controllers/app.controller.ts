@@ -7,6 +7,10 @@ import hbs from '../middleware/handlebars.middleware';
 import profileMiddleware from '../middleware/profile.middleware';
 import processData from './dataController';
 import evaluationMiddleware from '../middleware/evaluation.middleware';
+import { Calendar } from '@fullcalendar/core';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import listPlugin from '@fullcalendar/list';
 
 require('./passport');
 
@@ -47,7 +51,11 @@ export class AppController {
 		);
 		this.router.post('/strengthEval', processData.processStrength);
 
-		this.router.get('/workout', evaluationMiddleware.getAllPlayers, controller.workout);
+		this.router.get(
+			'/workout',
+			evaluationMiddleware.getAllPlayers,
+			controller.workout
+		);
 		this.router.post('/workout', processData.processWorkout);
 
 		// Serve the calendar page

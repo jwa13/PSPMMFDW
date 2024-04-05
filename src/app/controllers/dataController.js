@@ -189,6 +189,7 @@ const dataController = {
 			next();
 		}
 	},
+
 };
 
 export default dataController;
