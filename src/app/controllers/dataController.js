@@ -61,8 +61,9 @@ const dataController = {
 			sets: req.body.sets,
 			reps: req.body.reps,
 			weight: req.body.weight,
-			comments: req.body.comments,
-			video: req.body.exampleVideo
+			comments: req.body.commentsWorkout,
+			video: req.body.exampleVideo,
+			completed: false
 		});
 		res.redirect('/');
 	},
