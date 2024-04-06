@@ -7,14 +7,15 @@ const routerController = {
 		try {
 			// Render the "home" template as HTML
 
-			req.session.viewed = true;
 			if (req.session.passport) {
+				console.log(req.session.passport.user);
 				res.render('home', {
 					user: req.session.passport.user,
 				});
 			} else {
 				res.render('home');
 			}
+
 			console.log('home middleware working');
 		} catch (err) {
 			console.log(err);
@@ -83,30 +84,123 @@ const routerController = {
 	teams: async (req, res, next) => {
 		try {
 			var teams = [];
-			var temp = [];
+			var tempTeams = [];
+			var players = [];
+			var playersAssigned = [];
 			const UserRef = db.collection('users');
-			const snapshot = await UserRef.where('team', '!=', null).get();
-			if (snapshot.empty) {
+			const snapshotPlayer = await UserRef.where('player', '!=', false).get();
+			const snapshotCoach = await UserRef.where('headCoach', '!=', false).get();
+			if (snapshotPlayer.empty) {
 				console.log('No matching documents.');
 			}
-
-			snapshot.forEach((doc) => {
-				temp.push(doc.data().team);
-				// need to compare teams within players to seperate players based on team
+			snapshotPlayer.forEach((doc) => {
+				if (doc.data().team == null) {
+					players.push(doc.data());
+				} else {
+					playersAssigned.push(doc.data());
+				}
 			});
 
-			for (let i = 0; i < temp.length; i++) {
-				if (temp[i] != temp[i - 1]) {
-					teams.push(temp[i]);
+			if (snapshotCoach.empty) {
+				console.log('No matching documents.');
+			}
+			snapshotCoach.forEach((doc) => {
+				if (doc.data().team) {
+					tempTeams.push(doc.data().team);
+				}
+			});
+			console.log(playersAssigned);
+
+			let duplicate;
+			for (let i = 0; i < tempTeams.length; i++) {
+				duplicate = false;
+				for (let j = 0; j < teams.length; j++) {
+					if (tempTeams[i] === teams[j]) {
+						duplicate = true;
+					}
+				}
+				if (!duplicate) {
+					teams.push(tempTeams[i]);
 				}
 			}
-			console.log(teams);
+
+			console.log(teams.sort());
+
 			// Render the "teamsViewer" template as HTML
 			res.render('teamsViewer', {
-				teams: temp,
-				// players: teams,
+				teams: teams.sort(),
+				players: playersAssigned,
 			});
+
 			console.log('teams viewer middleware working');
+		} catch (err) {
+			console.log(err);
+		}
+	},
+
+	teamOptions: async (req, res, next) => {
+		try {
+			var players = [];
+			var coaches = [];
+			const UserRef = db.collection('users');
+			const snapshotPlayers = await UserRef.where('player', '!=', false).get();
+			const snapshotCoaches = await UserRef.where('coach', '!=', false).get();
+			if (snapshotPlayers.empty) {
+				console.log('No matching documents.');
+			}
+			snapshotPlayers.forEach((doc) => {
+				if (doc.data().team == null) {
+					players.push(doc.data());
+				}
+			});
+			if (snapshotCoaches.empty) {
+				console.log('No matching documents.');
+			}
+			snapshotCoaches.forEach((doc) => {
+				if (doc.data().team == null) {
+					coaches.push(doc.data());
+				}
+			});
+			// console.log(players);
+			console.log(coaches);
+			res.render('teamOptions', {
+				players: players,
+				coaches: coaches,
+			});
+		} catch (err) {
+			console.log(err);
+		}
+	},
+
+	teamRemove: async (req, res, next) => {
+		try {
+			var players = [];
+			var coaches = [];
+			const UserRef = db.collection('users');
+			const snapshotPlayers = await UserRef.where('player', '!=', false).get();
+			const snapshotCoaches = await UserRef.where('coach', '!=', false).get();
+			if (snapshotPlayers.empty) {
+				console.log('No matching documents.');
+			}
+			snapshotPlayers.forEach((doc) => {
+				if (doc.data().team == req.session.passport.user.team) {
+					players.push(doc.data());
+				}
+			});
+			if (snapshotCoaches.empty) {
+				console.log('No matching documents.');
+			}
+			snapshotCoaches.forEach((doc) => {
+				if (doc.data().team == req.session.passport.user.team) {
+					coaches.push(doc.data());
+				}
+			});
+			// console.log(players);
+			console.log(coaches);
+			res.render('teamRemove', {
+				players: players,
+				coaches: coaches,
+			});
 		} catch (err) {
 			console.log(err);
 		}
@@ -132,7 +226,6 @@ const routerController = {
 	// Delete this route and handlebars template, using buttons and modals instead
 	evaluation: (req, res, next) => {
 		console.log('Evaluation route working');
-		console.log(req.session.passport.user.username);
 		res.render('evaluation');
 	},
 
@@ -147,6 +240,7 @@ const routerController = {
 			res.render('pitchingEval', {
 				user: req.session.passport.user,
 				currentDate: currentDate,
+				players: req.session.players,
 			});
 			console.log('pitchingEval middleware working');
 		} catch (err) {
@@ -165,6 +259,7 @@ const routerController = {
 			res.render('hittingEval', {
 				user: req.session.passport.user,
 				currentDate: currentDate,
+				players: req.session.players,
 			});
 			console.log('hittingEval middleware working');
 		} catch (err) {
@@ -183,6 +278,7 @@ const routerController = {
 			res.render('strengthEval', {
 				user: req.session.passport.user,
 				currentDate: currentDate,
+				players: req.session.players,
 			});
 			console.log('strengthEval middleware working');
 		} catch (err) {
@@ -201,6 +297,7 @@ const routerController = {
 			res.render('workout', {
 				user: req.session.passport.user,
 				currentDate: currentDate,
+				players: req.session.players
 			});
 			console.log('workout middleware working');
 		} catch (err) {
@@ -209,10 +306,12 @@ const routerController = {
 	},
 
 	logout: (req, res, next) => {
-		req.logout(function(err) {
-			if (err) { return next(err); }
+		req.logout(function (err) {
+			if (err) {
+				return next(err);
+			}
 			res.redirect('/login');
-		  });
+		});
 	},
 };
 

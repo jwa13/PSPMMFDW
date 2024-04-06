@@ -2,7 +2,7 @@
 import { Application } from 'express';
 import { engine } from 'express-handlebars';
 
-export const HandlebarsMiddleware = {
+const HandlebarsMiddleware = {
 	setup(app: Application) {
 		// set up handlebars view engine, register w/ express
 		app.engine(
@@ -10,9 +10,12 @@ export const HandlebarsMiddleware = {
 			engine({
 				extname: '.hbs',
 				defaultLayout: 'main',
+				helpers: require('./helpers').helpers,
 			})
 		);
 		app.set('view engine', '.hbs');
 		app.set('views', './views');
 	},
 };
+
+export default HandlebarsMiddleware;
