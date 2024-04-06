@@ -4,7 +4,6 @@
     <div class="card-header">
       My Info
     </div>
-<<<<<<< HEAD
     <div class="card-body profile-info">
       <p>Username: {{user.username}}</p>
       <p>Email: {{user.email}}</p>
@@ -32,28 +31,6 @@
           </div>
         </form>
       </div>
-=======
-    <div class="card-body">
-      <p>
-        Username: {{user.username}}
-      </p>
-      <p>Email: {{user.email}}
-      </p>
-      <p>
-        Account Type:
-        {{#if user.player}}
-        Player
-        {{else if user.admin}}
-        Admin
-        {{else if user.coach}}
-        Coach
-        {{else if user.parent}}
-        Parent
-        {{/if}}
-      </p>
-      <p>Teams: {{user.team}}</p>
-      <p>Member Since: </p>
->>>>>>> main
     </div>
   </div>
   {{#if user.player}}
