@@ -1,7 +1,161 @@
 import { describe, expect, it } from '@jest/globals';
 import dataController from '../../../src/app/controllers/dataController';
+import db from '../firebase';
+import { passWithNoTests } from '../../../jest.config';
 
-const currentDate = Date();
+//Puts date in as a string instead of timestamp for some reason.
+
+describe("Data Controller", () => {
+    it("should process pitching data correctly", async () => {
+        const req = {
+            body: {
+            coachName: "Coach Oliver",
+            selectedPlayer: "Player Test",
+            moundVelo: 90,
+            pulldownVelo: 85,
+            comments: "Good pitching",
+            },
+        };
+        const res = {
+            redirect: jest.fn(),
+        };
+
+        const id = await dataController.processPitching(req, res);
+        const evalRef = db.collection("evaluations");
+        const querySnapshot = await evalRef.doc(id).get();
+        const addedDoc = querySnapshot.data();
+        //console.log(addedDoc);
+        
+        expect(addedDoc).toEqual({
+            coach: req.body.coachName,
+            userId: req.body.selectedPlayer,
+            moundVelo: req.body.moundVelo,
+            pulldownVelo: req.body.pulldownVelo,
+            comments: req.body.comments,
+            date: addedDoc.date,
+            pitching: true,
+        });
+
+        //const docToDelete = evalRef.doc(id);
+        //await docToDelete.delete();
+      
+    });
+
+    it("should process hitting data correctly", async () => {
+        const req = {
+          body: {
+            coachName: "Coach Oliver",
+            selectedPlayer: "Player Test",
+            exitVeloTee: 90,
+            exitVeloToss: 85,
+            comments: "Good hitting",
+          },
+        };
+        const res = {
+          redirect: jest.fn(),
+        };
+        
+        const id = await dataController.processHitting(req, res);
+        
+        const evalRef = db.collection("evaluations");
+        const querySnapshot = await evalRef.doc(id).get();
+        const addedDoc = querySnapshot.data();
+        
+        
+        expect(addedDoc).toEqual({
+          coach: req.body.coachName,
+          userId: req.body.selectedPlayer,
+          exitVeloTee: req.body.exitVeloTee,
+          exitVeloToss: req.body.exitVeloToss,
+          comments: req.body.comments,
+          date: addedDoc.date,
+          hitting: true,
+        });
+
+        //const docToDelete = evalRef.doc(id);
+        //await docToDelete.delete();
+    });
+
+    it("should process strength data correctly", async () => {
+        const req = {
+          body: {
+            coachName: "Coach Oliver",
+            selectedPlayer: "Player Test",
+            squat: 215,
+            bench: 190,
+            deadlift: 290,
+            comments: "Good strength",
+          },
+        };
+        const res = {
+          redirect: jest.fn(),
+        };
+        
+        const id = await dataController.processStrength(req, res);
+        
+        const evalRef = db.collection("evaluations");
+        const querySnapshot = await evalRef.doc(id).get();
+        const addedDoc = querySnapshot.data();
+        
+        
+        expect(addedDoc).toEqual({
+          coach: req.body.coachName,
+          userId: req.body.selectedPlayer,
+          squat: req.body.squat,
+          bench: req.body.bench,
+          deadlift: req.body.deadlift,
+          comments: req.body.comments,
+          date: addedDoc.date,
+          strength: true,
+        });
+
+        //const docToDelete = evalRef.doc(id);
+        //await docToDelete.delete();
+    });
+
+    it("should process workout data correctly", async () => {
+        const req = {
+            body: {
+            coachName: "Coach Oliver",
+            selectedPlayer: "Player Test",
+            exercise: ['bench press', 'squat'],
+            sets: ['5', '8'],
+            reps: ['5', '4'],
+            weight: ['205', '185'],
+            comments: ['Do this workout.', 'You can do it'],
+            exampleVideo: ['youtube.url/bench', 'youtube.url/squat']
+            },
+        };
+        const res = {
+            redirect: jest.fn(),
+        };
+            
+        const id = await dataController.processWorkout(req, res);
+            
+        const workoutRef = db.collection("workouts");
+        const querySnapshot = await workoutRef.doc(id).get();
+        const addedDoc = querySnapshot.data();
+        console.log(addedDoc);
+        console.log(req);    
+            
+        expect(addedDoc).toEqual({
+            coach: req.body.coachName,
+            userId: req.body.selectedPlayer,
+            exercise: req.body.exercise,
+            sets: req.body.sets,
+            reps: req.body.reps,
+            weight: req.body.weight,
+            comments: req.body.comments,
+            video: req.body.exampleVideo
+        });
+        
+        //const docToDelete = workoutRef.doc(id);
+        //await docToDelete.delete();
+    });
+});
+
+//const currentDate = Date();
+/*
 
 interface PitchingMockData {
     [evalID: string]: {
@@ -52,24 +206,11 @@ interface WorkoutMockData {
     };
 }
 
-
-const PitchingMockData: PitchingMockData = {
-    'yFPi5lAIvwJWRWkCDXT0': {      //
-        coach: 'Pitching Coach',
-        comments: 'Work on pitching.',
-        date: currentDate,  //
-        moundVelo: 88,
-        pitching: true,
-        pulldownVelo: 90,
-        userId: '111015587133119133740' //
-    },
-};
-
-const HittingMockData: HittingMockData = {
+const hittingMockData: HittingMockData = {
     'ErIskiaLUkmuyv1YGYNF': {
         coach: 'Hitting Coach',
         comments: 'Work on form',
-        date: currentDate,
+        date: Date(),
         exitVeloTee: 76,
         exitVeloToss: 81,
         hitting: true,
@@ -77,12 +218,12 @@ const HittingMockData: HittingMockData = {
     }
 };
 
-const StrengthMockData: StrengthMockData = {
+const strengthMockData: StrengthMockData = {
     'QwIskiaLUkmuyv1YGYNF': {
         bench: 190,
         coach: 'Strength Coach',
         comments: 'Work on bench.',
-        date: currentDate,
+        date: Date(),
         deadlift: 305,
         squat: 230,
         strength: true,
@@ -90,7 +231,7 @@ const StrengthMockData: StrengthMockData = {
     }
 };
 
-const WorkoutMockData: WorkoutMockData = {
+const workoutMockData: WorkoutMockData = {
     'UoIskiaLUkmuyv1YGYNF': {
         coach: 'Workout Coach',
         comments: ['Do this workout.', 'You can do it'],
@@ -103,16 +244,28 @@ const WorkoutMockData: WorkoutMockData = {
     }
 };
 
+const pitchingMockData: PitchingMockData = {
+    'yFPi5lAIvwJWRWkCDXT0': {      //
+        coach: 'Pitching Coach',
+        comments: 'Work on pitching.',
+        date: Date(),  //
+        moundVelo: 88,
+        pitching: true,
+        pulldownVelo: 90,
+        userId: '111015587133119133740' //
+    }
+};
+
 
 // Setup for mock Firebase database
-jest.mock('../../../src/app/firebase.ts', () => {
+jest.mock('src/app/firebase.ts', () => {
     return {
         collection: jest.fn().mockReturnThis(),
         doc: jest.fn().mockImplementation((evalId) => {
             return {
                 get: jest.fn().mockResolvedValue({ // this need to be better defined
-                    exists: PitchingMockData[evalId] !== undefined, 
-                    data: () => PitchingMockData[evalId]
+                    exists: pitchingMockData[evalId] !== undefined, 
+                    data: () => pitchingMockData[evalId]
                 }),
                 set: jest.fn().mockResolvedValue(true), //userdata is passed with isfalsey propery
                 delete: jest.fn().mockResolvedValue(true), //userdata is passed with isfalsey propery
@@ -127,24 +280,25 @@ jest.mock('../../../src/app/firebase.ts', () => {
 describe('dataController.processPitching', () => {
     //no way to remove or pull down an evaluation so this test adds one
     it('should add a pitching evaluation to the database and redirect', async () => {
-        const req = PitchingMockData;
+        const req = pitchingMockData;
         const res = {
             redirect: jest.fn()
         };
         const pitchingData = await dataController.processPitching(req, res);
         expect(res.redirect).toHaveBeenCalledWith('/');
-        expect(pitchingData).toEqual((PitchingMockData['yFPi5lAIvwJWRWkCDXT0']));
+        expect(pitchingData).toEqual((pitchingMockData['yFPi5lAIvwJWRWkCDXT0']));
     });
 });
-/*
+
+
 jest.mock('../../../src/app/firebase.ts', () => {
     return {
         collection: jest.fn().mockReturnThis(),
         doc: jest.fn().mockImplementation((evalId) => {
             return {
                 get: jest.fn().mockResolvedValue({ // this need to be better defined
-                    exists: HittingMockData[evalId] !== undefined, 
-                    data: () => HittingMockData[evalId]
+                    exists: hittingMockData[evalId] !== undefined, 
+                    data: () => hittingMockData[evalId]
                 }),
                 set: jest.fn().mockResolvedValue(true), //userdata is passed with isfalsey propery
                 delete: jest.fn().mockResolvedValue(true), //userdata is passed with isfalsey propery
@@ -157,7 +311,7 @@ jest.mock('../../../src/app/firebase.ts', () => {
 describe('dataController.processHitting', () => {
      //no way to remove or pull down an evaluation so this test adds one
      it('should add a hitting evaluation to the database and redirect', async () => {
-        const req = HittingMockData;
+        const req = hittingMockData;
         const res = {
             redirect: jest.fn()
         };
@@ -166,14 +320,15 @@ describe('dataController.processHitting', () => {
     });
 });
 
+
 jest.mock('../../../src/app/firebase.ts', () => {
     return {
         collection: jest.fn().mockReturnThis(),
         doc: jest.fn().mockImplementation((evalId) => {
             return {
                 get: jest.fn().mockResolvedValue({ // this need to be better defined
-                    exists: StrengthMockData[evalId] !== undefined, 
-                    data: () => StrengthMockData[evalId]
+                    exists: strengthMockData[evalId] !== undefined, 
+                    data: () => strengthMockData[evalId]
                 }),
                 set: jest.fn().mockResolvedValue(true), //userdata is passed with isfalsey propery
                 delete: jest.fn().mockResolvedValue(true), //userdata is passed with isfalsey propery
@@ -186,7 +341,7 @@ jest.mock('../../../src/app/firebase.ts', () => {
 describe('dataController.procesStrength', () => {
     //no way to remove or pull down an evaluation so this test adds one
     it('should add a strength evaluation to the database and redirect', async () => {
-       const req = StrengthMockData;
+       const req = strengthMockData;
        const res = {
            redirect: jest.fn()
        };
@@ -201,8 +356,8 @@ jest.mock('../../../src/app/firebase.ts', () => {
         doc: jest.fn().mockImplementation((workoutId) => {
             return {
                 get: jest.fn().mockResolvedValue({ // this need to be better defined
-                    exists: WorkoutMockData[workoutId] !== undefined, 
-                    data: () => WorkoutMockData[workoutId]
+                    exists: workoutMockData[workoutId] !== undefined, 
+                    data: () => workoutMockData[workoutId]
                 }),
                 set: jest.fn().mockResolvedValue(true), //userdata is passed with isfalsey propery
                 delete: jest.fn().mockResolvedValue(true), //userdata is passed with isfalsey propery
@@ -215,7 +370,7 @@ jest.mock('../../../src/app/firebase.ts', () => {
 describe('dataController.procesWorkout', () => {
     //no way to remove or pull down an evaluation so this test adds one
     it('should add a workout to the database and redirect', async () => {
-       const req = WorkoutMockData;
+       const req = workoutMockData;
        const res = {
            redirect: jest.fn()
        };

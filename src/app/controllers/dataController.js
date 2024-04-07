@@ -4,9 +4,9 @@ require('./passport');
 const dataController = {
 	processPitching: async (req, res) => {
 		console.log(req.body);
-		  
+		const currentDate = Date(); 
 		const evalRef = db.collection('evaluations');
-		evalRef.add({
+		const doc = await evalRef.add({
 			coach: req.body.coachName,
 			userId: req.body.selectedPlayer,
 			moundVelo: req.body.moundVelo,
@@ -16,14 +16,14 @@ const dataController = {
 			pitching: true,
 		});
 		res.redirect('/');
-		return evalRef;
+		return doc.id;
 	},
 
 	processHitting: async (req, res) => {
 		console.log(req.body);
 		const currentDate = Date();
 		const evalRef = db.collection('evaluations');
-		evalRef.add({
+		const doc = await evalRef.add({
 			coach: req.body.coachName,
 			userId: req.body.selectedPlayer,
 			exitVeloTee: req.body.exitVeloTee,
@@ -33,13 +33,14 @@ const dataController = {
 			hitting: true,
 		});
 		res.redirect('/');
+		return doc.id;
 	},
 
 	processStrength: async (req, res) => {
 		console.log(req.body);
 		const currentDate = Date();
 		const evalRef = db.collection('evaluations');
-		evalRef.add({
+		const doc = await evalRef.add({
 			coach: req.body.coachName,
 			userId: req.body.selectedPlayer,
 			squat: req.body.squat,
@@ -47,15 +48,16 @@ const dataController = {
 			deadlift: req.body.deadlift,
 			comments: req.body.comments,
 			date: currentDate,
-			hitting: true,
+			strength: true,
 		});
 		res.redirect('/');
+		return doc.id;
 	},
 
 	processWorkout: async (req, res) => {
 		console.log(req.body);
 		const workoutRef = db.collection('workouts')
-		workoutRef.add({
+		const doc = await workoutRef.add({
 			coach: req.body.coachName,
 			userId: req.body.selectedPlayer,
 			exercise: req.body.exercise,
@@ -66,6 +68,7 @@ const dataController = {
 			video: req.body.exampleVideo
 		});
 		res.redirect('/');
+		return doc.id;
 	},
 
 	processAdmin: async (req, res) => {
