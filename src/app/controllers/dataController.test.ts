@@ -1,11 +1,11 @@
 import { describe, expect, it } from '@jest/globals';
 import dataController from '../../../src/app/controllers/dataController';
 import db from '../firebase';
-import { passWithNoTests } from '../../../jest.config';
 
-//Puts date in as a string instead of timestamp for some reason.
+//test file that uses real DB but deletes tests docs afterwards
+//When the process is called it puts date in DB as a string instead of timestamp for some reason.
 
-describe("Data Controller", () => {
+describe("Data Controller Process Tester", () => {
     it("should process pitching data correctly", async () => {
         const req = {
             body: {
@@ -24,7 +24,6 @@ describe("Data Controller", () => {
         const evalRef = db.collection("evaluations");
         const querySnapshot = await evalRef.doc(id).get();
         const addedDoc = querySnapshot.data();
-        //console.log(addedDoc);
         
         expect(addedDoc).toEqual({
             coach: req.body.coachName,
@@ -36,19 +35,19 @@ describe("Data Controller", () => {
             pitching: true,
         });
 
-        //const docToDelete = evalRef.doc(id);
-        //await docToDelete.delete();
+        const docToDelete = evalRef.doc(id);
+        await docToDelete.delete();
       
     });
 
     it("should process hitting data correctly", async () => {
         const req = {
           body: {
-            coachName: "Coach Oliver",
-            selectedPlayer: "Player Test",
+            coachName: "Test Coach",
+            selectedPlayer: "Test Player",
             exitVeloTee: 90,
             exitVeloToss: 85,
-            comments: "Good hitting",
+            comments: "npm test ran. This is a test evaluation.",
           },
         };
         const res = {
@@ -72,19 +71,19 @@ describe("Data Controller", () => {
           hitting: true,
         });
 
-        //const docToDelete = evalRef.doc(id);
-        //await docToDelete.delete();
+        const docToDelete = evalRef.doc(id);
+        await docToDelete.delete();
     });
 
     it("should process strength data correctly", async () => {
         const req = {
           body: {
-            coachName: "Coach Oliver",
-            selectedPlayer: "Player Test",
+            coachName: "Test Coach",
+            selectedPlayer: "Test Player",
             squat: 215,
             bench: 190,
             deadlift: 290,
-            comments: "Good strength",
+            comments: "npm test ran. This is a test evaluation.",
           },
         };
         const res = {
@@ -109,20 +108,20 @@ describe("Data Controller", () => {
           strength: true,
         });
 
-        //const docToDelete = evalRef.doc(id);
-        //await docToDelete.delete();
+        const docToDelete = evalRef.doc(id);
+        await docToDelete.delete();
     });
 
     it("should process workout data correctly", async () => {
         const req = {
             body: {
-            coachName: "Coach Oliver",
-            selectedPlayer: "Player Test",
+            coachName: "Test Coach",
+            selectedPlayer: "Test Player",
             exercise: ['bench press', 'squat'],
             sets: ['5', '8'],
             reps: ['5', '4'],
             weight: ['205', '185'],
-            comments: ['Do this workout.', 'You can do it'],
+            comments: ['npm test ran.', 'This is a test workout.'],
             exampleVideo: ['youtube.url/bench', 'youtube.url/squat']
             },
         };
@@ -149,8 +148,8 @@ describe("Data Controller", () => {
             video: req.body.exampleVideo
         });
         
-        //const docToDelete = workoutRef.doc(id);
-        //await docToDelete.delete();
+        const docToDelete = workoutRef.doc(id);
+        await docToDelete.delete();
     });
 });
 
