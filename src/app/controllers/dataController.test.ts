@@ -223,3 +223,4 @@ describe('dataController.procesWorkout', () => {
        expect(res.redirect).toHaveBeenCalledWith('/');
    });
 });
+*/
