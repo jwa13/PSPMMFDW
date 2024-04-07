@@ -4,7 +4,7 @@ import db from '../firebase';
 
 //test file that uses real DB but deletes tests docs afterwards
 //When the process is called it puts date in DB as a string instead of timestamp for some reason.
-
+/*
 describe("Data Controller Process Tester", () => {
     it("should process pitching data correctly", async () => {
         const req = {
@@ -152,12 +152,13 @@ describe("Data Controller Process Tester", () => {
         await docToDelete.delete();
     });
 });
+*/
+const currentDate = Date();
 
-//const currentDate = Date();
-/*
 
 interface PitchingMockData {
-    [evalID: string]: {
+    [evalId: string]: {
+        evalId: string,
         coach: string;
         comments: string;
         date: string;
@@ -244,7 +245,8 @@ const workoutMockData: WorkoutMockData = {
 };
 
 const pitchingMockData: PitchingMockData = {
-    'yFPi5lAIvwJWRWkCDXT0': {      //
+    'yFPi5lAIvwJWRWkCDXT0': {  
+        evalId: 'yFPi5lAIvwJWRWkCDXT0',    
         coach: 'Pitching Coach',
         comments: 'Work on pitching.',
         date: Date(),  //
@@ -289,7 +291,7 @@ describe('dataController.processPitching', () => {
     });
 });
 
-
+/*
 jest.mock('../../../src/app/firebase.ts', () => {
     return {
         collection: jest.fn().mockReturnThis(),
