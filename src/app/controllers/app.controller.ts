@@ -3,8 +3,10 @@ import { pino } from 'pino';
 import passport from 'passport';
 import controller from './router.controller';
 import middleware from '../middleware/middleware';
+import hbs from '../middleware/handlebars.middleware';
 import profileMiddleware from '../middleware/profile.middleware';
 import processData from './dataController';
+import evaluationMiddleware from '../middleware/evaluation.middleware';
 
 require('./passport');
 
@@ -24,16 +26,28 @@ export class AppController {
 		// Serve the home page
 		this.router.get('/', controller.home);
 
-		this.router.get('/pitchingEval', controller.pitchingEval);
+		this.router.get(
+			'/pitchingEval',
+			evaluationMiddleware.getAllPlayers,
+			controller.pitchingEval
+		);
 		this.router.post('/pitchingEval', processData.processPitching);
 
-		this.router.get('/hittingEval', controller.hittingEval);
+		this.router.get(
+			'/hittingEval',
+			evaluationMiddleware.getAllPlayers,
+			controller.hittingEval
+		);
 		this.router.post('/hittingEval', processData.processHitting);
 
-		this.router.get('/strengthEval', controller.strengthEval);
+		this.router.get(
+			'/strengthEval',
+			evaluationMiddleware.getAllPlayers,
+			controller.strengthEval
+		);
 		this.router.post('/strengthEval', processData.processStrength);
 
-		this.router.get('/workout', controller.workout);
+		this.router.get('/workout', evaluationMiddleware.getAllPlayers, controller.workout);
 		this.router.post('/workout', processData.processWorkout);
 
 		// Serve the calendar page
@@ -51,15 +65,51 @@ export class AppController {
 		this.router.get('/login', controller.login);
 
 		// auth logout
-		this.router.get('/logout', middleware.loginCheck, controller.home);
+		this.router.get('/logout', controller.logout);
 
 		// Serve the admin page
-		this.router.get('/admin', middleware.loginCheck, middleware.adminLoginCheck, controller.admin);
+		this.router.get(
+			'/admin',
+			middleware.loginCheck,
+			middleware.adminLoginCheck,
+			controller.admin
+		);
 		this.router.post('/admin', processData.processAdmin);
 
 		// Serve the teamsViewer page
-		this.router.get('/teams', middleware.loginCheck, controller.teams);
-		this.router.post('/teams');
+		this.router.get(
+			'/teams',
+			middleware.loginCheck,
+			middleware.headCoachLoginCheck,
+			controller.teams
+		);
+		this.router.post('/teams', processData.processHeadCoach);
+
+		this.router.get(
+			'/teamAdd',
+			middleware.loginCheck,
+			middleware.headCoachLoginCheck,
+			controller.teamOptions
+		);
+		this.router.post(
+			'/teamAdd',
+			processData.processNewPlayer,
+			processData.processNewCoach
+		);
+
+		this.router.get(
+			'/teamRemove',
+			middleware.loginCheck,
+			// middleware.headCoachLoginCheck,
+			controller.teamRemove
+		);
+		this.router.post(
+			'/teamRemove',
+			processData.processRemovePlayer,
+			processData.processRemoveCoach
+		);
+
+		//need to add a router for adding and removing a player or assistant coach to a team
 
 		this.router.get(
 			'/google',

@@ -6,7 +6,6 @@ module.exports = {
 		if (req.session.passport) {
 			let user = req.session.passport.user;
 			console.log('login check');
-			console.log(user);
 			next();
 		} else {
 			console.log(req.session);
@@ -25,6 +24,17 @@ module.exports = {
 		}
 	},
 
+	headCoachLoginCheck: (req, res, next) => {
+		//console.log(req.body);
+		if (req.session.passport.user.headCoach) {
+			console.log('head coach login check');
+			next();
+		} else {
+			console.log(req.session.passport.user);
+			res.redirect('/');
+		}
+	},
+
 	// check if we need
 	populateFormData: (req, res, next) => {
 		res.locals.pitchingActive = req.path === '/pitchingEval';
@@ -32,7 +42,6 @@ module.exports = {
 		res.locals.strengthActive = req.path === '/strengthEval';
 		res.locals.workoutActive = req.path === '/workout';
 		res.locals.user = req.session.passport.user;
-		console.log(res.locals);
 		next();
 	},
 
