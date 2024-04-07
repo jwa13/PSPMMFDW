@@ -4,7 +4,7 @@ require('./passport');
 const dataController = {
 	processPitching: async (req, res) => {
 		console.log(req.body);
-		const currentDate = Date();
+		  
 		const evalRef = db.collection('evaluations');
 		evalRef.add({
 			coach: req.body.coachName,
@@ -16,6 +16,7 @@ const dataController = {
 			pitching: true,
 		});
 		res.redirect('/');
+		return evalRef;
 	},
 
 	processHitting: async (req, res) => {
