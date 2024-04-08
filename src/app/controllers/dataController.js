@@ -63,7 +63,8 @@ const dataController = {
 			weight: req.body.weight,
 			comments: req.body.commentsWorkout,
 			video: req.body.exampleVideo,
-			completed: false
+			completed: false,
+			coachId: req.body.coachId
 		});
 		res.redirect('/');
 	},
