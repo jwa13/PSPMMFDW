@@ -53,7 +53,7 @@ const dataController = {
 
 	processWorkout: async (req, res) => {
 		console.log(req.body);
-		const workoutRef = db.collection('workouts')
+		const workoutRef = db.collection('workouts');
 		workoutRef.add({
 			coach: req.body.coachName,
 			userId: req.body.selectedPlayer,
@@ -62,7 +62,7 @@ const dataController = {
 			reps: req.body.reps,
 			weight: req.body.weight,
 			comments: req.body.comments,
-			video: req.body.exampleVideo
+			video: req.body.exampleVideo,
 		});
 		res.redirect('/');
 	},
@@ -190,34 +190,37 @@ const dataController = {
 		}
 	},
 
-	processCreateCalendar: () => {
-		document.addEventListener('DOMContentLoaded', function() {
-			var calendarEl = document.getElementById('calendar');
-			calendar = new FullCalendar.Calendar(calendarEl, {
-			  headerToolbar: {
-				  start: 'dayGridMonth,timeGridWeek,timeGridDay',
-				  center: 'title',
-				  end: 'prevYear,prev,next,nextYear',
-			  },
-			  footerToolbar: {
-				  start: 'custom1',
-				  center: '',
-				  end: 'prev,next',
-			  },
-			  customButtons: {
-				  custom1: {
-					  text: 'Schedule an Appointment',
-					  click: function () {
-						  alert('clicked custom button 1!');
-					  },
-				  },
-			  },
-			}); 
-			addevent();
-			calendar.render();
-	  });
-	}
+	processAddEventFCallendar: (res, req, next) => {
+		calendar.addEvent({
+			start: res.body.startDate,
+			end: res.body.endDate,
+			title: res.body.eventTitle,
+		});
+	},
 
+	processAddEventGCalendar: (res, req, next) => {},
+
+	processEventSort: async (res, req, next) => {
+		var events = [];
+		const calendar = google.calendar({ version: 'v3', auth });
+		const res = await calendar.events.list({
+			calendarId: 'primary',
+			timeMin: new Date().toISOString(),
+			maxResults: 10,
+			singleEvents: true,
+			orderBy: 'startTime',
+		});
+		const events = res.data.items;
+		if (!events || events.length === 0) {
+			console.log('No upcoming events found.');
+			return;
+		}
+		console.log('Upcoming 10 events:');
+		events.map((event, i) => {
+			const start = event.start.dateTime || event.start.date;
+			console.log(`${start} - ${event.summary}`);
+		});
+	},
 };
 
 export default dataController;
