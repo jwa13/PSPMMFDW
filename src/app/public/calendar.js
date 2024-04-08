@@ -29,6 +29,16 @@ document.addEventListener('DOMContentLoaded', function () {
 				},
 			},
 		},
+		eventContent: function (arg) {
+			// Check if the event's title is "Test"
+			if (arg.event.title === "Test") {
+				// Return the default content for events with the title "Test"
+				return { html: arg.event.title };
+			} else {
+				// Prevent rendering of events not matching the title "Test"
+				return null; // Or you could return false
+			}
+		},
 	});
 	calendar.render();
 });

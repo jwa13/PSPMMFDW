@@ -60,3 +60,4 @@ keys.js
 
 # local extension files to ignore
 *.prettierignore
+/.vs
