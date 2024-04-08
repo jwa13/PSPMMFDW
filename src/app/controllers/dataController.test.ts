@@ -259,15 +259,12 @@ const pitchingMockData: PitchingMockData = {
 
 
 // Setup for mock Firebase database
-jest.mock('src/app/firebase.ts', () => {
+jest.mock('../../../src/app/firebase.ts', () => {
     return {
         collection: jest.fn().mockReturnThis(),
         doc: jest.fn().mockImplementation((evalId) => {
             return {
-                get: jest.fn().mockResolvedValue({ // this need to be better defined
-                    exists: pitchingMockData[evalId] !== undefined, 
-                    data: () => pitchingMockData[evalId]
-                }),
+                get: jest.fn().mockResolvedValue(true),
                 set: jest.fn().mockResolvedValue(true), //userdata is passed with isfalsey propery
                 delete: jest.fn().mockResolvedValue(true), //userdata is passed with isfalsey propery
                 update: jest.fn().mockResolvedValue(true), //userdata is passed with isfalsey propery
