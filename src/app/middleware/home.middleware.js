@@ -19,7 +19,7 @@ module.exports = {
                     .toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric'});
             });
             req.session.evaluations = evaluations;
-            console.log(req.session.evaluations);
+            // console.log(req.session.evaluations);
             next();
         } else {
             next();
@@ -43,11 +43,11 @@ module.exports = {
                     .toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric'});
             });
             req.session.workouts = workouts;
-            console.log(req.session.workouts);
+            // console.log(req.session.workouts);
             next();
         } else if(req.session.passport.user.coach) {
             // Get Incomplete Workouts
-            const snapshot = await db.collection('workouts')
+            let snapshot = await db.collection('workouts')
             .where('coachId', '==', req.session.passport.user.id)
             .where('completed', '==', false)
             .get();

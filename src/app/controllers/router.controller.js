@@ -7,7 +7,7 @@ const routerController = {
 		try {
 			// Render the "home" template as HTML
 			if (req.session.passport) {
-				console.log(req.session.passport.user);
+				// console.log(req.session.passport.user);
 				res.render('home', {
 					user: req.session.passport.user,
 					evaluations: req.session.evaluations,

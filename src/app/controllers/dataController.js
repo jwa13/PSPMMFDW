@@ -67,7 +67,8 @@ const dataController = {
 			video: req.body.exampleVideo,
 			completed: false,
 			coachId: req.body.coachId,
-			dateCreated: dateCreated
+			dateCreated: dateCreated,
+			playerName: req.body.playerName
 		});
 		res.redirect('/');
 	},

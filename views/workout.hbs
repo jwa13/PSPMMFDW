@@ -10,7 +10,7 @@
 							<label for='coachName' class='form-label'>Coach</label>
 							<input type='text' class='form-control' name='coachName' value='{{user.username}}'
 								readonly='true' />
-							<input type="hidden" name="coachId" value="{{user.id}}"/>
+							<input type="hidden" name="coachId" value="{{user.id}}" />
 						</div>
 						<div class='mb-3'>
 							<label for='playerName' class='form-label'>Player</label>
@@ -23,26 +23,30 @@
 								<div class='dropdown-menu' aria-labelledby='dropdownMenuButton'>
 									{{#each players}}
 									<button class="dropdown-item select-player" type="button"
-										onclick="selectPlayer('{{this.id}}')">{{this.name}} <hidden hidden="true">
-											{{this.id}}</hidden></button>
+										onclick="selectPlayer('{{this.id}}', '{{this.name}}')">
+										{{this.name}}
+										<span style="display:none">{{this.id}}</span>
+									</button>
 									{{/each}}
 								</div>
 							</div>
 							<input type="hidden" id="selectedPlayerInput" name="selectedPlayer" required="true">
-							<script>function selectPlayer(playerId) {
+							<input type="hidden" id="selectedPlayerName" name="playerName">
+							<script>function selectPlayer(playerId, playerName) {
 									document.getElementById('selectedPlayerInput').value = playerId;
+									document.getElementById('selectedPlayerName').value = playerName;
 								}
 							</script>
 						</div>
 						<div class='mb-3'>
 							<label for='exercise' class='form-label'>Exercise</label>
-							<input type='text' class='form-label' name='exercise' required="true"/>
+							<input type='text' class='form-label' name='exercise' required="true" />
 						</div>
 						<div class='mb-3'>
 							<label for='sets' class='form-label'>Total Sets for Exercise</label>
-							<input type='number' class='form-control' name='sets' required="true"/>
+							<input type='number' class='form-control' name='sets' required="true" />
 							<label for='reps' class='form-label'>Total Reps per Set</label>
-							<input type='number' class='form-control' name='reps' required="true"/>
+							<input type='number' class='form-control' name='reps' required="true" />
 							<label for='weight' class='form-label'>Weight per Exercise</label>
 							<input type='number' class='form-control' name='weight' />
 						</div>
@@ -66,14 +70,14 @@
 
 </div>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const addExerciseBtn = document.getElementById('addExerciseBtn');
-        const exerciseFieldsContainer = document.getElementById('exerciseFields');
+	document.addEventListener('DOMContentLoaded', function () {
+		const addExerciseBtn = document.getElementById('addExerciseBtn');
+		const exerciseFieldsContainer = document.getElementById('exerciseFields');
 		const workoutForm = document.getElementById('workoutForm');
 
-        addExerciseBtn.addEventListener('click', function() {
-            const exerciseField = document.createElement('div');
-            exerciseField.innerHTML = `
+		addExerciseBtn.addEventListener('click', function () {
+			const exerciseField = document.createElement('div');
+			exerciseField.innerHTML = `
                 <div class='mb-3'>
                     <label for='exercise' class='form-label'>Exercise</label>
                     <input type='text' class='form-label' name='exercise' />
@@ -91,15 +95,15 @@
 					<input type='text' class='form-control' name='exampleVideo' />
                 </div>
             `;
-            exerciseFieldsContainer.appendChild(exerciseField);
-        });
-
-		workoutForm.addEventListener('submit', function(event) {
-        	const selectedPlayer = document.getElementById('selectedPlayerInput').value;
-        	if (!selectedPlayer) {
-            	event.preventDefault();
-            	alert('Please select a player.');
-        	}
+			exerciseFieldsContainer.appendChild(exerciseField);
 		});
-    });
+
+		workoutForm.addEventListener('submit', function (event) {
+			const selectedPlayer = document.getElementById('selectedPlayerInput').value;
+			if (!selectedPlayer) {
+				event.preventDefault();
+				alert('Please select a player.');
+			}
+		});
+	});
 </script>
