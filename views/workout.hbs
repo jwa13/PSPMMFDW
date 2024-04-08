@@ -53,8 +53,11 @@
 								for Exercise</label>
 							<input type='text' class='form-control' name='exampleVideo' />
 						</div>
+						<div id="exerciseFields">
+						</div>
 						<input type='submit' class='btn btn-primary'></input>
 					</form>
+					<button id="addExerciseBtn">Add Exercise</button>
 					{{/if}}
 				</div>
 			</div>
@@ -62,3 +65,32 @@
 	</div>
 
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const addExerciseBtn = document.getElementById('addExerciseBtn');
+        const exerciseFieldsContainer = document.getElementById('exerciseFields');
+
+        addExerciseBtn.addEventListener('click', function() {
+            const exerciseField = document.createElement('div');
+            exerciseField.innerHTML = `
+                <div class='mb-3'>
+                    <label for='exercise' class='form-label'>Exercise</label>
+                    <input type='text' class='form-label' name='exercise' />
+                </div>
+                <div class='mb-3'>
+                    <label for='sets' class='form-label'>Total Sets for Exercise</label>
+                    <input type='number' class='form-control' name='sets' />
+                    <label for='reps' class='form-label'>Total Reps per Set</label>
+                    <input type='number' class='form-control' name='reps' />
+                    <label for='weight' class='form-label'>Weight per Exercise</label>
+                    <input type='number' class='form-control' name='weight' />
+					<label for='comments' class='form-label'>Comments</label>
+					<input type='text' class='form-control' name='commentsWorkout' />
+					<label for='exampleVideo' class='form-label'>Example video for Exercise</label>
+					<input type='text' class='form-control' name='exampleVideo' />
+                </div>
+            `;
+            exerciseFieldsContainer.appendChild(exerciseField);
+        });
+    });
+</script>

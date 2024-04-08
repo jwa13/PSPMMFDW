@@ -11,6 +11,7 @@ passport.use(
 			callbackURL: '/google/callback',
 		},
 		async function (accessToken, refreshToken, profile, cb) {
+			const currentDate = new Date();
 			const userRef = db.collection('users').doc(`${profile._json.email}`);
 			console.log('User Ref working');
 			const doc = await userRef.get();
@@ -22,6 +23,7 @@ passport.use(
 					name: profile._json.name,
 					email: profile._json.email,
 					team: null,
+					dateJoined: currentDate
 				};
 				userRef.set(User).then(() => {
 					console.log('user created');
@@ -51,7 +53,8 @@ passport.serializeUser(function (user, cb) {
 			admin: user.admin,
 			team: user.team,
 			headCoach: user.headCoach,
-			assistantCoach: user.assistantCoach
+			assistantCoach: user.assistantCoach,
+			dateJoined: user.dateJoined
 		});
 	});
 });

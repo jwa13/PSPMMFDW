@@ -28,3 +28,13 @@ h3.card-title {
 #homeEvalAccordion {
   margin-top: 10px;
 }
+
+.profile-info {
+  position: relative;
+}
+
+#edit-profile {
+  position: absolute;
+  bottom: 15px;
+  right: 25px;
+}
