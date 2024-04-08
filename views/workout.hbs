@@ -5,7 +5,7 @@
 				<div className='col-10 col-md-4 card  text-center'>
 					{{#if user.coach}}
 					<h1 class='title fs-5' name='workoutLabel'>Workout Plan Creation</h1>
-					<form action='/workout' method='POST'>
+					<form id="workoutForm" action='/workout' method='POST'>
 						<div class='mb-3'>
 							<label for='coachName' class='form-label'>Coach</label>
 							<input type='text' class='form-control' name='coachName' value='{{user.username}}'
@@ -36,13 +36,13 @@
 						</div>
 						<div class='mb-3'>
 							<label for='exercise' class='form-label'>Exercise</label>
-							<input type='text' class='form-label' name='exercise' />
+							<input type='text' class='form-label' name='exercise' required="true"/>
 						</div>
 						<div class='mb-3'>
 							<label for='sets' class='form-label'>Total Sets for Exercise</label>
-							<input type='number' class='form-control' name='sets' />
+							<input type='number' class='form-control' name='sets' required="true"/>
 							<label for='reps' class='form-label'>Total Reps per Set</label>
-							<input type='number' class='form-control' name='reps' />
+							<input type='number' class='form-control' name='reps' required="true"/>
 							<label for='weight' class='form-label'>Weight per Exercise</label>
 							<input type='number' class='form-control' name='weight' />
 						</div>
@@ -69,6 +69,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         const addExerciseBtn = document.getElementById('addExerciseBtn');
         const exerciseFieldsContainer = document.getElementById('exerciseFields');
+		const workoutForm = document.getElementById('workoutForm');
 
         addExerciseBtn.addEventListener('click', function() {
             const exerciseField = document.createElement('div');
@@ -92,5 +93,13 @@
             `;
             exerciseFieldsContainer.appendChild(exerciseField);
         });
+
+		workoutForm.addEventListener('submit', function(event) {
+        	const selectedPlayer = document.getElementById('selectedPlayerInput').value;
+        	if (!selectedPlayer) {
+            	event.preventDefault();
+            	alert('Please select a player.');
+        	}
+		});
     });
 </script>

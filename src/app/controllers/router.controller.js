@@ -6,12 +6,14 @@ const routerController = {
 	home: async (req, res) => {
 		try {
 			// Render the "home" template as HTML
-
 			if (req.session.passport) {
 				console.log(req.session.passport.user);
 				res.render('home', {
 					user: req.session.passport.user,
-					evaluations: req.session.evaluations
+					evaluations: req.session.evaluations,
+					workouts: req.session.workouts,
+					incompleteWorkouts: req.session.incompleteWorkouts,
+					completedWorkouts: req.session.completedWorkouts
 				});
 			} else {
 				res.render('home');

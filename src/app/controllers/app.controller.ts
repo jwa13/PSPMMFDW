@@ -7,7 +7,7 @@ import hbs from '../middleware/handlebars.middleware';
 import profileMiddleware from '../middleware/profile.middleware';
 import processData from './dataController';
 import evaluationMiddleware from '../middleware/evaluation.middleware';
-import homeMiddleware from '../middleware/home.middleware';
+const { evalGetter, workoutGetter } = require('../middleware/home.middleware');
 
 require('./passport');
 
@@ -25,7 +25,9 @@ export class AppController {
 		this.router.use(middleware.flashMessages);
 
 		// Serve the home page
-		this.router.get('/', middleware.loginCheck, homeMiddleware.evalGetter, controller.home);
+		this.router.get('/', middleware.loginCheck, evalGetter,
+			workoutGetter,
+			controller.home);
 
 		this.router.get(
 			'/pitchingEval',

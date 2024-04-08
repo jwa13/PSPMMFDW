@@ -1,10 +1,11 @@
 import db from '../firebase';
+import { Timestamp } from 'firebase-admin/firestore';
 require('./passport');
 
 const dataController = {
 	processPitching: async (req, res) => {
-		console.log(req.body);
-		const currentDate = Date();
+		// console.log(req.body);
+		const date = Timestamp.fromDate(new Date());
 		const evalRef = db.collection('evaluations');
 		evalRef.add({
 			coach: req.body.coachName,
@@ -12,15 +13,15 @@ const dataController = {
 			moundVelo: req.body.moundVelo,
 			pulldownVelo: req.body.pulldownVelo,
 			comments: req.body.comments,
-			date: currentDate,
+			date: date,
 			pitching: true,
 		});
 		res.redirect('/');
 	},
 
 	processHitting: async (req, res) => {
-		console.log(req.body);
-		const currentDate = Date();
+		// console.log(req.body);
+		const date = Timestamp.fromDate(new Date());
 		const evalRef = db.collection('evaluations');
 		evalRef.add({
 			coach: req.body.coachName,
@@ -28,15 +29,15 @@ const dataController = {
 			exitVeloTee: req.body.exitVeloTee,
 			exitVeloToss: req.body.exitVeloToss,
 			comments: req.body.comments,
-			date: currentDate,
+			date: date,
 			hitting: true,
 		});
 		res.redirect('/');
 	},
 
 	processStrength: async (req, res) => {
-		console.log(req.body);
-		const currentDate = Date();
+		// console.log(req.body);
+		const date = Timestamp.fromDate(new Date());
 		const evalRef = db.collection('evaluations');
 		evalRef.add({
 			coach: req.body.coachName,
@@ -45,14 +46,15 @@ const dataController = {
 			bench: req.body.bench,
 			deadlift: req.body.deadlift,
 			comments: req.body.comments,
-			date: currentDate,
+			date: date,
 			hitting: true,
 		});
 		res.redirect('/');
 	},
 
 	processWorkout: async (req, res) => {
-		console.log(req.body);
+		// console.log(req.body);
+		const dateCreated = Timestamp.fromDate(new Date());
 		const workoutRef = db.collection('workouts')
 		workoutRef.add({
 			coach: req.body.coachName,
@@ -64,7 +66,8 @@ const dataController = {
 			comments: req.body.commentsWorkout,
 			video: req.body.exampleVideo,
 			completed: false,
-			coachId: req.body.coachId
+			coachId: req.body.coachId,
+			dateCreated: dateCreated
 		});
 		res.redirect('/');
 	},
