@@ -26,7 +26,18 @@ document.addEventListener('DOMContentLoaded', function() {
 					alert('clicked custom button 1!');
 				},
 			},
-		},
+		  },
+		  eventContent: function (arg) {
+			  // Check if the event's title is "Test"
+			  if (arg.event.title === "Test") {
+				  // Return the default content for events with the title "Test"
+				  console.log(arg.event.title);
+				  return { html: arg.event };
+			  } else {
+				  // Prevent rendering of events not matching the title "Test"
+				  return null; // Or you could return false
+			  }
+		  }
       }); 
       calendar.render();
 });
