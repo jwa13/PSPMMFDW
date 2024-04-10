@@ -6,7 +6,7 @@
   "scripts": {
     "build": "rm -rf dist && npx tsc && cp -r views dist && mkdir -p dist/app/public && cp -r views dist/app/public",
     "test": "jest",
-    "start": "node ./dist/main.js",
+    "start": "node ./dist/src/main.js",
     "dev": "nodemon ./src/main.ts"
   },
   "author": "Your Name Here",
