@@ -4,7 +4,7 @@
   "description": "A short description of your app. Change the description as needed.",
   "main": "main.ts",
   "scripts": {
-    "build": "rm -rf dist && npx tsc && cp -r views dist && mkdir -p dist/app/public",
+    "build": "rm -rf dist && npx tsc && cp -r views dist && mkdir -p dist/app/public && cp -r views dist/app/public",
     "test": "jest",
     "start": "node ./dist/src/main.js",
     "dev": "nodemon ./src/main.ts"
