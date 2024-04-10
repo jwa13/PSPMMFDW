@@ -308,6 +308,10 @@ const routerController = {
 		}
 	},
 
+	workoutView: (req, res, next) => {
+		res.render('workoutView');
+	},
+
 	logout: (req, res, next) => {
 		req.logout(function (err) {
 			if (err) {

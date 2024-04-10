@@ -53,6 +53,9 @@ export class AppController {
 		this.router.get('/workout', evaluationMiddleware.getAllPlayers, controller.workout);
 		this.router.post('/workout', processData.processWorkout);
 
+		// Serve the workout viewing page (this is the player version)
+		this.router.get('/workoutView', controller.workoutView);
+
 		// Serve the calendar page
 		this.router.get('/calendar', controller.calendar);
 
