@@ -3,14 +3,16 @@ import { pino } from 'pino';
 import passport from 'passport';
 import controller from './router.controller';
 import middleware from '../middleware/middleware';
-import hbs from '../middleware/handlebars.middleware';
 import profileMiddleware from '../middleware/profile.middleware';
 import processData from './dataController';
 import evaluationMiddleware from '../middleware/evaluation.middleware';
-import { Calendar } from '@fullcalendar/core';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import listPlugin from '@fullcalendar/list';
+const { google } = require('googleapis');
+const auth = new google.auth.GoogleAuth({
+	keyFile: 'src/app/controllers/pspmmfdw-6586b-5b850d44ee32.json',
+	scopes: ['https://www.googleapis.com/auth/calendar.readonly'],
+});
+
+const calendar = google.calendar({ version: 'v3', auth });
 
 require('./passport');
 
@@ -60,6 +62,28 @@ export class AppController {
 
 		// Serve the calendar page
 		this.router.get('/calendar', controller.calendar);
+
+		this.router.get('/events', async (req, res) => {
+			try {
+				// Specify the calendar ID for which you want to retrieve events
+				const calendarId =
+					'c_3f89c65c96906b0e35da55a80a8ecd7ba5babdd9d54f4fdaddb1da6230766718@group.calendar.google.com';
+
+				// Fetch events from the calendar
+				const response = await calendar.events.list({
+					calendarId,
+					timeMin: new Date().toISOString(),
+					singleEvents: true,
+					orderBy: 'startTime',
+				});
+
+				const events = response.data.items;
+				res.json(events);
+			} catch (error) {
+				console.error('Error fetching events:', error);
+				res.status(500).json({ error: 'Internal Server Error' });
+			}
+		});
 
 		// Serve the profile page
 		this.router.get(
