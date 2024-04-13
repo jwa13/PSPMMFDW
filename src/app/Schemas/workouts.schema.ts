@@ -13,9 +13,9 @@ const workout_1 = {
         'coach': { 'type': 'string' },
         'comments': { 'type': 'array', 'items': { 'type': 'string' } },
         'exercise': { 'type': 'array', 'items': { 'type': 'string' } },
-        'reps': { 'type': 'array', 'items': { 'type': 'string' } },
-        'sets': { 'type': 'array', 'items': { 'type': 'string' } },
-        'userId': { 'type': 'string' },
+        'reps': { 'type': 'array', 'items': { 'type': 'number' } },
+        'sets': { 'type': 'array', 'items': { 'type': 'number' } },
+        'userId': { 'type': 'number' },
         'video': { 'type': 'array', 'items': { 'type': 'string' } },
         'weight': { 'type': 'array', 'items': { 'type': 'string' } }
     },

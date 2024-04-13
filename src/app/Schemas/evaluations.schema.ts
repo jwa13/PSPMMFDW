@@ -1,3 +1,5 @@
+
+//OLD .js need to => .ts likw user.schema
 const Ajv = require('ajv');
 const addFormats = require('ajv-formats');
 
