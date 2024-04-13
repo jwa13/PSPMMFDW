@@ -63,6 +63,8 @@ export class AppController {
 		// Serve the calendar page
 		this.router.get('/calendar', controller.calendar);
 
+		this.router.get('/schedule', controller.schedule);
+
 		this.router.get('/events', async (req, res) => {
 			try {
 				// Specify the calendar ID for which you want to retrieve events

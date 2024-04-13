@@ -32,6 +32,65 @@ const routerController = {
 		}
 	},
 
+	schedule: async (req, res) => {
+		try {
+			var teams = [];
+			var tempTeams = [];
+			var players = [];
+			var coaches = [];
+			const UserRef = db.collection('users');
+			const snapshotPlayer = await UserRef.where('player', '!=', false).get();
+			const snapshotHeadCoach = await UserRef.where('headCoach', '!=', false).get();
+			const snapshotCoach = await UserRef.where('coach', '!=', false).get();
+			if (snapshotPlayer.empty) {
+				console.log('No matching documents for players.');
+			}
+			snapshotPlayer.forEach((doc) => {
+				players.push(doc.data());
+			});
+
+			if (snapshotHeadCoach.empty) {
+				console.log('No matching documents for head coaches.');
+			}
+			snapshotHeadCoach.forEach((doc) => {
+				if (doc.data().team) {
+					tempTeams.push(doc.data().team);
+				}
+			});
+
+			if (snapshotCoach.empty) {
+				console.log('No matching documents for coaches.');
+			}
+			snapshotCoach.forEach((doc) => {
+				coaches.push(doc.data());
+			});
+
+			let duplicate;
+			for (let i = 0; i < tempTeams.length; i++) {
+				duplicate = false;
+				for (let j = 0; j < teams.length; j++) {
+					if (tempTeams[i] === teams[j]) {
+						duplicate = true;
+					}
+				}
+				if (!duplicate) {
+					teams.push(tempTeams[i]);
+				}
+			}
+			// Render the "schedule" template as HTML
+			res.render('schedule', {
+				user: req.session.passport.user,
+				players: players,
+				coaches: coaches,
+				teams: teams.sort()
+			});
+			console.log('schedule middleware working');
+		} catch (err) {
+			this.log.error(err);
+		}
+	},
+
+
 	profile: (req, res) => {
 		try {
 			// Render the "profile" template as HTML
@@ -236,7 +295,6 @@ const routerController = {
 			let month = date.getMonth() + 1;
 			let year = date.getFullYear();
 			let currentDate = `${month}-${day}-${year}`;
-			// Render the "calendar" template as HTML
 			res.render('pitchingEval', {
 				user: req.session.passport.user,
 				currentDate: currentDate,
