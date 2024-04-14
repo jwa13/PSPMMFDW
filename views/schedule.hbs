@@ -1,1 +1,88 @@
-<div></div>
+<div>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuTeamOrPlayer"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            Who is in the event?
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuTeamOptionsButton">
+            <li><a class='dropdown-item' role='button'>Team</a></li>
+            <li>
+                <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" role='button'>Coach</a></li>
+            <li>
+                <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" role='button'>Trainer</a></li>
+            <li>
+                <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" role='button'>Player</a></li>
+            <li>
+                <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" role='button'>Parent</a></li>
+        </ul>
+    </div>
+</div>
+<div>
+    <div className='container container-fluid'>
+        <div className='row'>
+            <div className='col-10 col-md-4 card text-center'>
+                <form action='/schedule' method='POST'>
+                    {{!-- need if statement based on dropdown menu above --}}
+                    <div class='mb-3'>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuTeam"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Choose the Player you would like to assign to the Event.
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuTeamOptionsButton">
+                                {{#each players}}
+                                <li><a class='dropdown-item' role='button'>{{{this.name}}}</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class='mb-3'>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuTeam"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Choose the Coach you would like to assign to the Event.
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuTeamOptionsButton">
+                                {{#each coaches}}
+                                <li><a class='dropdown-item' role='button'>{{{this.name}}}</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class='mb-3'>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuTeam"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Choose the Team you would like to assign to the Event.
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuTeamOptionsButton">
+                                {{#each teams}}
+                                <li><a class='dropdown-item' role='button'>{{{this}}}</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                    </div>
+                    <input type='submit' class='btn btn-primary'></input>
+                </form>
+            </div>
+            <a class='btn btn-primary' href='/profile' role='button'>Back</a>
+        </div>
+    </div>
+</div>

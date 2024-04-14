@@ -86,7 +86,7 @@ const routerController = {
 			});
 			console.log('schedule middleware working');
 		} catch (err) {
-			this.log.error(err);
+			console.log(err);
 		}
 	},
 
