@@ -9,7 +9,7 @@ module.exports = {
 			next();
 		} else {
 			console.log(req.session);
-			res.redirect('/');
+			res.redirect('/login');
 		}
 	},
 

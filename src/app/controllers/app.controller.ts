@@ -63,11 +63,12 @@ export class AppController {
 		// Serve the calendar page
 		this.router.get('/calendar', controller.calendar);
 
-		this.router.get('/schedule', controller.schedule);
+		this.router.get('/schedule', middleware.loginCheck, controller.schedule);
+		this.router.post('/schedule', processData.processAddEventGCalendar);
 
 		this.router.get('/events', async (req, res) => {
 			try {
-				// Specify the calendar ID for which you want to retrieve events
+				// NEEDS TO BE PROCESS ENV VARIABLE
 				const calendarId =
 					'c_3f89c65c96906b0e35da55a80a8ecd7ba5babdd9d54f4fdaddb1da6230766718@group.calendar.google.com';
 

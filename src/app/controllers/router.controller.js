@@ -32,15 +32,46 @@ const routerController = {
 		}
 	},
 
+	//NEED TO ADD
+	//ATTENDEE = NULL MEANS PUBLIC EVENT
+	// IF ATTENDEES INCLUDES USER OR ATTENDEE = null
+	// 	FILTER EVENTS
+	events: async (req, res) => {
+		try {
+			// Specify the calendar ID for which you want to retrieve events
+			const calendarId =
+				'c_3f89c65c96906b0e35da55a80a8ecd7ba5babdd9d54f4fdaddb1da6230766718@group.calendar.google.com';
+
+			// Fetch events from the calendar
+			const response = await calendar.events.list({
+				calendarId,
+				timeMin: new Date().toISOString(),
+				singleEvents: true,
+				orderBy: 'startTime',
+			});
+
+			const events = response.data.items;
+			res.json(events);
+		} catch (error) {
+			console.error('Error fetching events:', error);
+			res.status(500).json({ error: 'Internal Server Error' });
+		}
+	},
+
 	schedule: async (req, res) => {
 		try {
+			console.log(req.session.passport.user);
 			var teams = [];
 			var tempTeams = [];
 			var players = [];
 			var coaches = [];
 			const UserRef = db.collection('users');
 			const snapshotPlayer = await UserRef.where('player', '!=', false).get();
-			const snapshotHeadCoach = await UserRef.where('headCoach', '!=', false).get();
+			const snapshotHeadCoach = await UserRef.where(
+				'headCoach',
+				'!=',
+				false
+			).get();
 			const snapshotCoach = await UserRef.where('coach', '!=', false).get();
 			if (snapshotPlayer.empty) {
 				console.log('No matching documents for players.');
@@ -82,14 +113,13 @@ const routerController = {
 				user: req.session.passport.user,
 				players: players,
 				coaches: coaches,
-				teams: teams.sort()
+				teams: teams.sort(),
 			});
 			console.log('schedule middleware working');
 		} catch (err) {
 			console.log(err);
 		}
 	},
-
 
 	profile: (req, res) => {
 		try {
@@ -355,7 +385,7 @@ const routerController = {
 			res.render('workout', {
 				user: req.session.passport.user,
 				currentDate: currentDate,
-				players: req.session.players
+				players: req.session.players,
 			});
 			console.log('workout middleware working');
 		} catch (err) {
