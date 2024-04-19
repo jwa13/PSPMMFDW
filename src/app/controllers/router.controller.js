@@ -15,7 +15,7 @@ const routerController = {
 			} else {
 				res.render('home');
 			}
-
+			console.log(process.env.GOOGLE_CLIENT_ID)
 			console.log('home middleware working');
 		} catch (err) {
 			console.log(err);

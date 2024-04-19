@@ -33,3 +33,14 @@ h3.card-title {
   max-width: 1100px;
   margin: 0 auto;
 }
+
+.profile-info {
+  position: relative;
+}
+
+#edit-profile {
+  position: absolute;
+  bottom: 15px;
+  right: 25px;
+
+}

@@ -3,7 +3,7 @@ import express, { Application } from 'express';
 import { pino } from 'pino';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
-import keys from './controllers/keys';
+// import keys from './controllers/keys';
 import bodyParser from 'body-parser';
 
 // Import our code (controllers and middleware)
@@ -38,7 +38,7 @@ class App {
 		this.app.use(cookieParser());
 		this.app.use(
 			session({
-				secret: keys.session.secret,
+				secret: process.env.SESSION_SECRET || 'backupSecrets',
 				saveUninitialized: false,
 				resave: false,
 				cookie: {
