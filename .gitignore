@@ -57,3 +57,7 @@ $RECYCLE.BIN/
 
 # Specific files to ignore
 keys.js
+
+# local extension files to ignore
+*.prettierignore
+/.vs

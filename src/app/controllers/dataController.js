@@ -1,5 +1,10 @@
 import db from '../firebase';
 require('./passport');
+const { google } = require('googleapis');
+const auth = new google.auth.GoogleAuth({
+	keyFile: 'src/app/controllers/pspmmfdw-6586b-5b850d44ee32.json',
+	scopes: ['https://www.googleapis.com/auth/calendar.readonly'],
+});
 
 const dataController = {
 	processPitching: async (req, res) => {
@@ -53,7 +58,7 @@ const dataController = {
 
 	processWorkout: async (req, res) => {
 		console.log(req.body);
-		const workoutRef = db.collection('workouts')
+		const workoutRef = db.collection('workouts');
 		workoutRef.add({
 			coach: req.body.coachName,
 			userId: req.body.selectedPlayer,
@@ -190,6 +195,48 @@ const dataController = {
 			next();
 		}
 	},
+
+	processEvents: async (req, res) => {
+		const calendar = google.calendar({ version: 'v3', auth });
+		try {
+			var events = [];
+
+			// NEEDS TO BE PROCESS ENV VARIABLE
+			const calendarId =
+				'c_3f89c65c96906b0e35da55a80a8ecd7ba5babdd9d54f4fdaddb1da6230766718@group.calendar.google.com';
+
+			// Fetch events from the calendar
+			const response = await calendar.events.list({
+				calendarId,
+				timeMin: new Date().toISOString(),
+				singleEvents: true,
+				orderBy: 'startTime',
+			});
+			const temp = response.data.items;
+			console.log(temp[0].attendees[0].email);
+			for (let i = 0; i < temp.length; i++) {
+				if (temp[i].attendees) {
+					for (let j = 0; j < temp[i].attendees.length; j++) {
+						if (
+							temp[i].attendees[j].email === req.session.passport.user.email
+						) {
+							events.push(temp[i]);
+						}
+					}
+				} else {
+					events.push(temp[i]);
+				}
+			}
+
+			console.log(events);
+			res.json(events);
+		} catch (error) {
+			console.error('Error fetching events:', error);
+			res.status(500).json({ error: 'Internal Server Error' });
+		}
+	},
+
+	processAddEventGCalendar: (res, req, next) => {},
 };
 
 export default dataController;

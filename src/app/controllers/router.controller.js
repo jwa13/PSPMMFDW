@@ -15,7 +15,7 @@ const routerController = {
 			} else {
 				res.render('home');
 			}
-
+			console.log(process.env.GOOGLE_CLIENT_ID)
 			console.log('home middleware working');
 		} catch (err) {
 			console.log(err);
@@ -29,6 +29,95 @@ const routerController = {
 			console.log('calendar middleware working');
 		} catch (err) {
 			this.log.error(err);
+		}
+	},
+
+	//NEED TO ADD
+	//ATTENDEE = NULL MEANS PUBLIC EVENT
+	// IF ATTENDEES INCLUDES USER OR ATTENDEE = null
+	// 	FILTER EVENTS
+	events: async (req, res) => {
+		try {
+			// Specify the calendar ID for which you want to retrieve events
+			const calendarId =
+				'c_3f89c65c96906b0e35da55a80a8ecd7ba5babdd9d54f4fdaddb1da6230766718@group.calendar.google.com';
+
+			// Fetch events from the calendar
+			const response = await calendar.events.list({
+				calendarId,
+				timeMin: new Date().toISOString(),
+				singleEvents: true,
+				orderBy: 'startTime',
+			});
+
+			const events = response.data.items;
+			res.json(events);
+		} catch (error) {
+			console.error('Error fetching events:', error);
+			res.status(500).json({ error: 'Internal Server Error' });
+		}
+	},
+
+	schedule: async (req, res) => {
+		try {
+			console.log(req.session.passport.user);
+			var teams = [];
+			var tempTeams = [];
+			var players = [];
+			var coaches = [];
+			const UserRef = db.collection('users');
+			const snapshotPlayer = await UserRef.where('player', '!=', false).get();
+			const snapshotHeadCoach = await UserRef.where(
+				'headCoach',
+				'!=',
+				false
+			).get();
+			const snapshotCoach = await UserRef.where('coach', '!=', false).get();
+			if (snapshotPlayer.empty) {
+				console.log('No matching documents for players.');
+			}
+			snapshotPlayer.forEach((doc) => {
+				players.push(doc.data());
+			});
+
+			if (snapshotHeadCoach.empty) {
+				console.log('No matching documents for head coaches.');
+			}
+			snapshotHeadCoach.forEach((doc) => {
+				if (doc.data().team) {
+					tempTeams.push(doc.data().team);
+				}
+			});
+
+			if (snapshotCoach.empty) {
+				console.log('No matching documents for coaches.');
+			}
+			snapshotCoach.forEach((doc) => {
+				coaches.push(doc.data());
+			});
+
+			let duplicate;
+			for (let i = 0; i < tempTeams.length; i++) {
+				duplicate = false;
+				for (let j = 0; j < teams.length; j++) {
+					if (tempTeams[i] === teams[j]) {
+						duplicate = true;
+					}
+				}
+				if (!duplicate) {
+					teams.push(tempTeams[i]);
+				}
+			}
+			// Render the "schedule" template as HTML
+			res.render('schedule', {
+				user: req.session.passport.user,
+				players: players,
+				coaches: coaches,
+				teams: teams.sort(),
+			});
+			console.log('schedule middleware working');
+		} catch (err) {
+			console.log(err);
 		}
 	},
 
@@ -236,7 +325,6 @@ const routerController = {
 			let month = date.getMonth() + 1;
 			let year = date.getFullYear();
 			let currentDate = `${month}-${day}-${year}`;
-			// Render the "calendar" template as HTML
 			res.render('pitchingEval', {
 				user: req.session.passport.user,
 				currentDate: currentDate,
@@ -297,7 +385,7 @@ const routerController = {
 			res.render('workout', {
 				user: req.session.passport.user,
 				currentDate: currentDate,
-				players: req.session.players
+				players: req.session.players,
 			});
 			console.log('workout middleware working');
 		} catch (err) {
