@@ -9,13 +9,13 @@
 				</div>
 
 				<form action='/hittingEval' method='POST'></form>
-					<div className='row gx-8 mt-3'>
-						<div class='col-3'>
+					<div class='row gx-8 mt-3'>
+						<div class='col-3' id="coachInputField">
 							<label for='coachName' class='form-label' style="font-size: 16px"><b>Coach</b></label>
 							<input type='text' class='form-control' name='coachName' value='{{user.username}}'
 								readonly='true' aria-describedby="passwordHelpBlock"/>
 						</div>
-						<div class="col-3">
+						<div class="col-3" id="DateInputField">
 							<label for='date' class='form-label' style="font-size: 16px"><b>Date</b></label>
 							<input type='text' class='form-control' name='date' readonly='true' value='{{currentDate}}'
 							aria-describedby="passwordHelpBlock" />
@@ -23,7 +23,7 @@
 					</div>
 
 
-					<div class='row gx-10 mt-3'>
+					<div class='row gx-15 mt-3'>
 						<div class="col-2">
 							<label for='playerName' class='form-label' style="font-size: 16px"><b>Player</b></label>
 							<div class='dropdown'>
@@ -66,15 +66,16 @@
 							<textarea type='text' class='form-control' name='comments' required="true" rows="3" aria-describedby="passwordHelpBlock"/></textarea>
 						</div>
 					</div>
-				</form>
+
 					<div class="row gx-3 mt-3">
 						<div class="col-1">
 							<a class='btn btn-primary' href='/' role='button'>Back</a>
 						</div>
 						<div class="col-1">
-							<input type='submit' class='btn btn-primary'></input>						
+							<input type='submit' class='btn btn-primary'></input>
 						</div>
 					</div>
+				</form>					
 			{{/if}}			
 		</div>
 	</div>
