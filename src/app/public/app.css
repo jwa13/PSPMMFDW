@@ -34,6 +34,11 @@ h3.card-title {
   margin: 0 auto;
 }
 
+.accordion {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 .profile-info {
   position: relative;
 }

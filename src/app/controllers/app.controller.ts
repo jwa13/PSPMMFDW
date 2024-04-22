@@ -13,6 +13,7 @@ const auth = new google.auth.GoogleAuth({
 });
 
 const gmail = google.gmail({ version: 'v1', auth });
+const { evalGetter, workoutGetter } = require('../middleware/home.middleware');
 
 require('./passport');
 
@@ -30,7 +31,9 @@ export class AppController {
 		this.router.use(middleware.flashMessages);
 
 		// Serve the home page
-		this.router.get('/', controller.home);
+		this.router.get('/', middleware.loginCheck, evalGetter,
+			workoutGetter,
+			controller.home);
 
 		this.router.get(
 			'/pitchingEval',
