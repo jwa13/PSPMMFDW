@@ -1,18 +1,30 @@
 <div>
 	<div>
 		<div className='container container-fluname'>
-			<div className='row'>
-				<div className='col-10 col-md-4 card  text-center'>
-					{{#if user.coach}}
-					<h1 class='title fs-5' name='StrengthLabel'>Stength Evaluation</h1>
-					<form action='/strengthEval' method='POST'>
-						<div class='mb-3'>
-							<label for='coachName' class='form-label'>Coach</label>
+			{{#if user.coach}}			
+				<div className='row' id="Header row">
+					<div class="col-6" text-align="center" style="border-bottom-style:solid; border-bottom-color:black; border-bottom-width:6px">
+						<h1 class='title fs-1' name='StrengthLabel'>Stength Evaluation</h1>		
+					</div>	
+				</div>
+
+				<form action='/strengthEval' method='POST'>
+					<div class='row gx-8 mt-3'>
+						<div class="col-3" id="CoachInputField">
+							<label for='coachName' class='form-label' style="font-size: 16px"><b>Coach</b></label>
 							<input type='text' class='form-control' name='coachName' value='{{user.username}}'
-								readonly='true' />
+								readonly='true' aria-describedby="passwordHelpBlock" />
 						</div>
-						<div class='mb-3'>
-							<label for='playerName' class='form-label'>Player</label>
+						<div class="col-3" id="DateInputField">
+							<label for='date' class='form-label' style="font-size: 16px"><b>Date</b></label>
+							<input type='text' class='form-control' name='date' readonly='true'
+								value='{{currentDate}}'aria-describedby="passwordHelpBlock" />
+						</div>
+					</div>
+
+					<div class='row gx-10 mt-3'>
+						<div class="col-2">
+							<label for='playerName' class='form-label' style="font-size: 16px"><b>Player</b></label>
 							<div class='dropdown'>
 								<button class='btn btn-secondary dropdown-toggle' type='button'
 									name='dropdownPlayerButton' data-bs-toggle='dropdown' aria-haspopup='true'
@@ -33,32 +45,42 @@
 								}
 							</script>
 						</div>
-						<div class='mb-3'>
-							<label for='squat' class='form-label'>Squat</label>
-							<input type='number' class='form-label' name='squat' max='999' min='0' required="true"/>
+
+						<div class="col-5">
+							<div class="row row-cols-1">
+								<div class="col-3">
+									<label for='squat' class='form-label' style="font-size: 16px"><b>Squat</b></label>
+									<input type='number' class='form-label' name='squat' max='999' min='0' required="true"/>
+								</div>
+								<div class="col-3">
+									<label for='bench' class='form-label' style="font-size: 16px"><b>Bench</b></label>
+									<input type='number' class='form-label' name='bench' max='999' min='0' required="true"/>
+								</div>
+								<div class="col-3">
+									<label for='deadlift' class='form-label' style="font-size: 16px"><b>Deadlift</b></label>
+									<input type='number' class='form-label' name='deadlift' max='999' min='0' required="true"/>
+								</div>
+							</div>
 						</div>
-						<div class='mb-3'>
-							<label for='bench' class='form-label'>Bench</label>
-							<input type='number' class='form-label' name='bench' max='999' min='0' required="true"/>
+					</div>	
+
+					<div class="row mt-3">
+						<div class="col-6">
+							<label for='comments' class='form-label' style="font-size: 16px"><b>Comments</b></label>
+							<textarea class='form-control' name='comments' required="true" rows="3" aria-describedby="passwordHelpBlock"></textarea>
 						</div>
-						<div class='mb-3'>
-							<label for='deadlift' class='form-label'>Deadlift</label>
-							<input type='number' class='form-label' name='deadlift' max='999' min='0' required="true"/>
+					</div>
+
+					<div class="row gx-3 mt-3">
+						<div class="col-1">
+							<a class='btn btn-primary' href='/home' role='button'>Back</a>
 						</div>
-						<div class='mb-3'>
-							<label for='comments' class='form-label'>Comments</label>
-							<input type='text' class='form-control' name='comments' required="true"/>
+						<div class="col-1">
+							<input type='submit' class='btn btn-primary'></input>
 						</div>
-						<div class='mb-3'>
-							<label for='date' class='form-label'>Date</label>
-							<input type='text' class='form-control' name='date' readonly='true'
-								value='{{currentDate}}' />
-						</div>
-						<input type='submit' class='btn btn-primary'></input>
+					</div>
 					</form>
-					{{/if}}
-				</div>
-			</div>
+			{{/if}}
 		</div>
 	</div>
 </div>

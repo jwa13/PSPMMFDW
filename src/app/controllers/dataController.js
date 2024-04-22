@@ -1,10 +1,16 @@
 import db from '../firebase';
+import { Timestamp } from 'firebase-admin/firestore';
 require('./passport');
+const { google } = require('googleapis');
+const auth = new google.auth.GoogleAuth({
+	keyFile: 'src/app/controllers/pspmmfdw-6586b-5b850d44ee32.json',
+	scopes: ['https://www.googleapis.com/auth/calendar.readonly'],
+});
 
 const dataController = {
 	processPitching: async (req, res) => {
-		console.log(req.body);
-		const currentDate = Date();
+		// console.log(req.body);
+		const date = Timestamp.fromDate(new Date());
 		const evalRef = db.collection('evaluations');
 		evalRef.add({
 			coach: req.body.coachName,
@@ -12,15 +18,15 @@ const dataController = {
 			moundVelo: req.body.moundVelo,
 			pulldownVelo: req.body.pulldownVelo,
 			comments: req.body.comments,
-			date: currentDate,
+			date: date,
 			pitching: true,
 		});
 		res.redirect('/');
 	},
 
 	processHitting: async (req, res) => {
-		console.log(req.body);
-		const currentDate = Date();
+		// console.log(req.body);
+		const date = Timestamp.fromDate(new Date());
 		const evalRef = db.collection('evaluations');
 		evalRef.add({
 			coach: req.body.coachName,
@@ -28,15 +34,15 @@ const dataController = {
 			exitVeloTee: req.body.exitVeloTee,
 			exitVeloToss: req.body.exitVeloToss,
 			comments: req.body.comments,
-			date: currentDate,
+			date: date,
 			hitting: true,
 		});
 		res.redirect('/');
 	},
 
 	processStrength: async (req, res) => {
-		console.log(req.body);
-		const currentDate = Date();
+		// console.log(req.body);
+		const date = Timestamp.fromDate(new Date());
 		const evalRef = db.collection('evaluations');
 		evalRef.add({
 			coach: req.body.coachName,
@@ -45,14 +51,15 @@ const dataController = {
 			bench: req.body.bench,
 			deadlift: req.body.deadlift,
 			comments: req.body.comments,
-			date: currentDate,
+			date: date,
 			hitting: true,
 		});
 		res.redirect('/');
 	},
 
 	processWorkout: async (req, res) => {
-		console.log(req.body);
+		// console.log(req.body);
+		const dateCreated = Timestamp.fromDate(new Date());
 		const workoutRef = db.collection('workouts')
 		workoutRef.add({
 			coach: req.body.coachName,
@@ -63,7 +70,10 @@ const dataController = {
 			weight: req.body.weight,
 			comments: req.body.commentsWorkout,
 			video: req.body.exampleVideo,
-			completed: false
+			completed: false,
+			coachId: req.body.coachId,
+			dateCreated: dateCreated,
+			playerName: req.body.playerName
 		});
 		res.redirect('/');
 	},
@@ -190,6 +200,48 @@ const dataController = {
 			next();
 		}
 	},
+
+	processEvents: async (req, res) => {
+		const calendar = google.calendar({ version: 'v3', auth });
+		try {
+			var events = [];
+
+			// NEEDS TO BE PROCESS ENV VARIABLE
+			const calendarId =
+				'c_3f89c65c96906b0e35da55a80a8ecd7ba5babdd9d54f4fdaddb1da6230766718@group.calendar.google.com';
+
+			// Fetch events from the calendar
+			const response = await calendar.events.list({
+				calendarId,
+				timeMin: new Date().toISOString(),
+				singleEvents: true,
+				orderBy: 'startTime',
+			});
+			const temp = response.data.items;
+			console.log(temp[0].attendees[0].email);
+			for (let i = 0; i < temp.length; i++) {
+				if (temp[i].attendees) {
+					for (let j = 0; j < temp[i].attendees.length; j++) {
+						if (
+							temp[i].attendees[j].email === req.session.passport.user.email
+						) {
+							events.push(temp[i]);
+						}
+					}
+				} else {
+					events.push(temp[i]);
+				}
+			}
+
+			console.log(events);
+			res.json(events);
+		} catch (error) {
+			console.error('Error fetching events:', error);
+			res.status(500).json({ error: 'Internal Server Error' });
+		}
+	},
+
+	processAddEventGCalendar: (res, req, next) => {},
 };
 
 export default dataController;
