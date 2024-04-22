@@ -18,7 +18,7 @@ const profileMiddleware = {
                     .toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric'});
             });
             req.session.evaluations = evaluations;
-            console.log(req.session.evaluations);
+            // console.log(req.session.evaluations);
             next();
         } else {
             next();
