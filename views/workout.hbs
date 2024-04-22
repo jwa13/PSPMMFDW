@@ -1,60 +1,92 @@
 <div>
 	<div>
 		<div className='container container-fluname'>
+		{{#if user.coach}}	
+			<div className="row">
+				<div class="col-6" text-align="center" style="border-bottom-style:solid; border-bottom-color:black; border-bottom-width:6px">
+					<h1 class='title fs-1' name='StrengthLabel'>Workout Plan Creation</h1>		
+				</div>	
+			</div>		
+
+			<form action='/workout' method='POST'>
+				<div class='row gx-8 mt-3'>
+					<div class="col-2">
+						<label for='coachName' class='form-label' style="font-size: 16px"><b>Coach</b></label>
+						<input type='text' class='form-control' name='coachName' value='{{user.username}}'
+							readonly='true' aria-describedby="passwordHelpBlock"/>
+					</div>
+					<div class="col-3 ms-3">
+						<label for='playerName' class='form-label' style="font-size: 16px"><b>Player</b></label>
+						<div class='dropdown'>
+							<button class='btn btn-secondary dropdown-toggle' type='button'
+								name='dropdownPlayerButton' data-bs-toggle='dropdown' aria-haspopup='true'
+								aria-expanded='false'>
+								Choose a Player
+							</button>
+							<div class='dropdown-menu' aria-labelledby='dropdownMenuButton'>
+								{{#each players}}
+								<button class="dropdown-item select-player" type="button"
+									onclick="selectPlayer('{{this.id}}')">{{this.name}} <hidden hidden="true">
+										{{this.id}}</hidden></button>
+								{{/each}}
+							</div>
+						</div>
+						<input type="hidden" id="selectedPlayerInput" name="selectedPlayer" required="true">
+						<script>function selectPlayer(playerId) {
+								document.getElementById('selectedPlayerInput').value = playerId;
+							}
+						</script>
+					</div>
+				</div>
+
+				<div class='row gx-10 mt-3'>
+					<div class="col-2">
+						<label for='exercise' class='form-label' style="font-size: 16px"><b>Exercise</b></label>
+						<input type='text' class='form-label' name='exercise' aria-describedby="passwordHelpBlock"/>
+					</div>					
+					<div class="col-2 ms-3">
+						<div class="row row-cols-1">
+							<div class="col">
+								<label for='sets' class='form-label' style="font-size: 16px"><b>Total Sets for Exercise</b></label>
+								<input type='number' class='form-control' name='sets' />
+							</div>
+							<div class="col mt-3">
+								<label for='reps' class='form-label' style="font-size: 16px"><b>Total Reps per Set</b></label>
+								<input type='number' class='form-control' name='reps' />
+							</div>
+							<div>
+								<label for='weight' class='form-label' style="font-size: 16px"><b>Weight per Exercise</b></label>
+								<input type='number' class='form-control' name='weight' />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row mt-3">
+					<div class="col-6">
+						<label for='comments' class='form-label'><b>Comments</b></label>
+						<textarea type='text' class='form-control' name='commentsWorkout' aria-describedby="passwordHelpBlock"></textarea>
+					</div>
+				</div>
+				<div class="row mt-3">
+					<div class="col-6">
+						<label for='exampleVideo' class='form-label'><b>Video for Exercise</b></label>
+						<input type='text' class='form-control' name='exampleVideo' />
+					</div>
+				</div>
+				<div class="row mt-3">
+					<div class="col-1">
+						<input type='submit' class='btn btn-primary'></input>
+					</div>
+				</div>
+			</form>	
+
 			<div className='row'>
 				<div className='col-10 col-md-4 card  text-center'>
-					{{#if user.coach}}
-					<h1 class='title fs-5' name='workoutLabel'>Workout Plan Creation</h1>
 					<form action='/workout' method='POST'>
 						<div class='mb-3'>
-							<label for='coachName' class='form-label'>Coach</label>
-							<input type='text' class='form-control' name='coachName' value='{{user.username}}'
-								readonly='true' />
-						</div>
-						<div class='mb-3'>
-							<label for='playerName' class='form-label'>Player</label>
-							<div class='dropdown'>
-								<button class='btn btn-secondary dropdown-toggle' type='button'
-									name='dropdownPlayerButton' data-bs-toggle='dropdown' aria-haspopup='true'
-									aria-expanded='false'>
-									Choose a Player
-								</button>
-								<div class='dropdown-menu' aria-labelledby='dropdownMenuButton'>
-									{{#each players}}
-									<button class="dropdown-item select-player" type="button"
-										onclick="selectPlayer('{{this.id}}')">{{this.name}} <hidden hidden="true">
-											{{this.id}}</hidden></button>
-									{{/each}}
-								</div>
-							</div>
-							<input type="hidden" id="selectedPlayerInput" name="selectedPlayer" required="true">
-							<script>function selectPlayer(playerId) {
-									document.getElementById('selectedPlayerInput').value = playerId;
-								}
-							</script>
-						</div>
-						<div class='mb-3'>
-							<label for='exercise' class='form-label'>Exercise</label>
-							<input type='text' class='form-label' name='exercise' />
-						</div>
-						<div class='mb-3'>
-							<label for='sets' class='form-label'>Total Sets for Exercise</label>
-							<input type='number' class='form-control' name='sets' />
-							<label for='reps' class='form-label'>Total Reps per Set</label>
-							<input type='number' class='form-control' name='reps' />
-							<label for='weight' class='form-label'>Weight per Exercise</label>
-							<input type='number' class='form-control' name='weight' />
-						</div>
-						<div class='mb-3'>
-							<label for='comments' class='form-label'>Comments</label>
-							<input type='text' class='form-control' name='commentsWorkout' />
-							<label for='exampleVideo' class='form-label'>Example video
-								for Exercise</label>
-							<input type='text' class='form-control' name='exampleVideo' />
 						</div>
 						<div id="exerciseFields">
 						</div>
-						<input type='submit' class='btn btn-primary'></input>
 					</form>
 					<button id="addExerciseBtn">Add Exercise</button>
 					{{/if}}

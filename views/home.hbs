@@ -1,20 +1,20 @@
 <div>
 	<div className='container container-fluid'>
-		<div class='row mt-2 gx-2 w-75 ' style="border-bottom-style:solid; border-bottom-color:black; border-bottom-width:6px">
+		<div class='row mt-2 gx-2 w-75' style="border-bottom-style:solid; border-bottom-color:black; border-bottom-width:6px">
 			<div class='col-3'>
-				<img src="/image/logo.png" alt="logo">
+				<img src="image/logo.png" alt="logo">
 			</div>
 			<div class="col-6 text-left">
-				<h1 class='user-select-none fs-2' style="font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif">This is the Pipeline Sports
+				<h1 class='user-select-none fs-2' algin="left" style="font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif">This is the Pipeline Sports
 				Performance Member Management and Facility Data Warehouse</h1>
 			</div>
 		</div>		
 
 		{{! Form should only displayed when coach is logged in }}
 		{{#if user.coach}}
-		<div class="row w-75">
-			<div class="col-6 mt-3 justify-content-center">
-				<div class="card w-50">
+		<div class="row row-cols-2 w-75 mt-5" style="border-style:ridge; border-color:rgb(218, 203, 203); border-width:2px">
+			<div class="col-6 mt-3">
+				<div class="card">
 					<div class="card-header bg-primary text-white text-center"><h6>Create Pitching Evaluation</h6></div>
 					<div class="card-body justify-content-center">
 						<h1><a class='btn btn-primary' href='/pitchingEval' role='button'>
@@ -24,7 +24,7 @@
 				</div>
 			</div>
 			<div class="col-6 mt-3">
-				<div class="card w-50 align-self-center">
+				<div class="card">
 					<div class="card-header bg-primary text-white text-center"><h6>Create Hitting Evaluation</h1></div>
 					<div class="card-body">
 						<h1><a class='btn btn-primary' href='/hittingEval' role='button'>
@@ -34,7 +34,7 @@
 				</div>				
 			</div>
 			<div class="col-6 mt-5 ">
-				<div class="card w-50">
+				<div class="card">
 					<div class="card-header bg-primary text-white text-center"><h6>Create Strength Evaluation</h6></div>
 					<div class="card-body">
 						<h1><a class='btn btn-primary' href='/strengthEval' role='button'>
@@ -45,7 +45,7 @@
 			</div>
 
 			<div class="col-6 mt-5">
-				<div class="card w-50 align-self-center">
+				<div class="card">
 					<div class="card-header bg-primary text-white text-center"><h6>Create Workout</h6></div>
 					<div class="card-body">
 						<h1><a class='btn btn-primary' href='/Workout' role='button'>

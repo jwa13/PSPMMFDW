@@ -1,50 +1,64 @@
 <div>
     <div className='container container-fluid'>
-        <div className='row'>
-            <div className='col-10 col-md-4 card text-center'>
+        <div class="row gx-10">
+            <div class="col-5">
+                <h3>List of Players on the Team</h6>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each players}}                        
+                            <tr>
+                                <td>{{this.name}}</td>
+                                <td>{{this.email}}</td>                       
+                            </tr>
+                        {{/each}}     
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-5">
+                <h3>List of Coaches on the Team</h3>
+                <table class="table">
+                     <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                        </tr>
+                    </thead>    
+                    <tbody>
+                        {{#each coaches}}                        
+                            <tr>
+                                <td>{{this.name}}</td>
+                                <td>{{this.email}}</td>
+                            </tr>
+                        {{/each}}                            
+                    </tbody>               
+                </table>                
+            </div>
+        </div>
+
+        <div class="row gx-10 mt-5">
+            <div class="col-5">
                 <form action='/teamRemove' method='POST'>
-                    <div class='mb-3'>
-                        <label for='removePlayer' class='form-label'>Enter the email of the player you would like to
-                            remove.</label>
+                   <div class='mb-3'>
+                        <label for='removePlayer' class='form-label'><b>Enter the email of the player you would like to
+                            remove</b></label>
                         <input type='text' class='form-control' name='removePlayer' placeholder="example@mail.com" />
                     </div>
-                    <div class='mb-3'>
-                        <label for='removeCoach' class='form-label'>Enter the email of the coach you would like to
-                            remove.</label>
-                        <input type='text' class='form-control' name='removeCoach' placeholder="example@mail.com" />
-                    </div>
-                    <input type='submit' class='btn btn-primary'></input>
-                    <div class='mb-3'>
-                        <h1>List of Players on the Team</h1>
-                        <ul class="list-group players_list text-center">
-                            {{#each players}}
-                            <li class="list-group-item">
-                                <!-- Button trigger modal -->
-                                {{!-- need button to give name of team in order to display appropriate team based
-                                players --}}
-                                <div class='mb-3'>
-                                    {{this.name}}
-                                </div>
-                            </li>
-                            {{/each}}
-                        </ul>
-                        <h1>List of Coaches on the Team</h1>
-                        <ul class="list-group players_list text-center">
-                            {{#each coaches}}
-                            <li class="list-group-item">
-                                <!-- Button trigger modal -->
-                                {{!-- need button to give name of team in order to display appropriate team based
-                                players --}}
-                                <div class='mb-3'>
-                                    {{this.name}}
-                                </div>
-                            </li>
-                            {{/each}}
-                        </ul>
-                    </div>
+                </form>                    
+            </div>
+            <div class="col-5">
+                <form action='/teamRemove' method='POST'>
+                    <label for='removeCoach' class='form-label'><b>Enter the email of the coach you would like to
+                        remove</b></label>
+                    <input type='text' class='form-control' name='removeCoach' placeholder="example@mail.com" />
                 </form>
             </div>
-            <a class='btn btn-primary' href='/profile' role='button'>Back</a>
         </div>
+        <a class='btn btn-primary' href='/profile' role='button'>Back</a>
     </div>
 </div>

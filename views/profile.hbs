@@ -1,6 +1,8 @@
 <div>
-  <h1>{{ user.username }}'s Profile</h1>
-  <div class="card" id="my-info">
+  <div class="row w-50">
+    <h1>{{ user.username }}'s Profile</h1> 
+  </div>
+  <div class="card w-50" id="my-info">
     <div class="card-header">
       My Info
     </div>
@@ -34,7 +36,7 @@
     </div>
   </div>
   {{#if user.player}}
-  <div class="accordion" id="accordionExample">
+  <div class="accordion w-50" id="accordionExample">
     <div class="accordion-item">
       <h3 class="accordion-header">
         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
@@ -112,26 +114,30 @@
   {{/if}}
 
   {{#if user.admin}}
-  <a class='btn btn-primary' href='/admin' role='button'>
-    admin button
-  </a>
-  <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuTeamOptions"
-      data-bs-toggle="dropdown" aria-expanded="false">
-      Team Options
-    </button>
-    <ul class="dropdown-menu" aria-labelledby="dropdownMenuTeamOptionsButton">
-      <li><a class='dropdown-item' href='/teams' role='button'>Team Viewer</a></li>
-      <li>
-        <hr class="dropdown-divider">
-      </li>
-      <li><a class="dropdown-item" href="/teamAdd">Add a Team Member</a></li>
-      <li>
-        <hr class="dropdown-divider">
-      </li>
-      <li><a class="dropdown-item" href="/teamRemove">Remove a Team Member</a></li>
-    </ul>
-  </div>
+  <div class="row">
+    <div class="col-2">
+      <a class='btn btn-primary' href='/admin' role='button'>admin button</a>
+    </div>
+    <div class="col-1">
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuTeamOptions"
+        data-bs-toggle="dropdown" aria-expanded="false">Team Options</button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuTeamOptionsButton">
+          <li><a class='dropdown-item' href='/teams' role='button'>Team Viewer</a></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" href="/teamAdd">Add a Team Member</a></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" href="/teamRemove">Remove a Team Member</a></li>
+       </ul>
+     </div>
+    </div>
+  </div> 
+
+
 
 
   {{else user.coach}}
