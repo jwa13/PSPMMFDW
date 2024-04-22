@@ -11,7 +11,7 @@ const {
 	Filter,
 } = require('firebase-admin/firestore');
 const firebaseConfig = {
-	credential: applicationDefault(),
+	credential: 'src//app/controllers/pspmmfdw-6586b-5b850d44ee32.json',
 	apiKey: 'AIzaSyC2EVM2_4lOG83k3kf_2XkylX-hOLc7Pfc',
 	authDomain: 'pspmmfdw-6586b.firebaseapp.com',
 	projectId: 'pspmmfdw-6586b',
