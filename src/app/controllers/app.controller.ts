@@ -3,10 +3,16 @@ import { pino } from 'pino';
 import passport from 'passport';
 import controller from './router.controller';
 import middleware from '../middleware/middleware';
-import hbs from '../middleware/handlebars.middleware';
 import profileMiddleware from '../middleware/profile.middleware';
 import processData from './dataController';
 import evaluationMiddleware from '../middleware/evaluation.middleware';
+const { google } = require('googleapis');
+const auth = new google.auth.GoogleAuth({
+	keyFile: 'src/app/controllers/pspmmfdw-6586b-5b850d44ee32.json',
+	scopes: ['https://www.googleapis.com/auth/calendar.readonly'],
+});
+
+const gmail = google.gmail({ version: 'v1', auth });
 const { evalGetter, workoutGetter } = require('../middleware/home.middleware');
 
 require('./passport');
@@ -50,7 +56,11 @@ export class AppController {
 		);
 		this.router.post('/strengthEval', processData.processStrength);
 
-		this.router.get('/workout', evaluationMiddleware.getAllPlayers, controller.workout);
+		this.router.get(
+			'/workout',
+			evaluationMiddleware.getAllPlayers,
+			controller.workout
+		);
 		this.router.post('/workout', processData.processWorkout);
 
 		// Serve the workout viewing page (this is the player version)
@@ -58,6 +68,11 @@ export class AppController {
 
 		// Serve the calendar page
 		this.router.get('/calendar', controller.calendar);
+
+		this.router.get('/schedule', middleware.loginCheck, controller.schedule);
+		this.router.post('/schedule', processData.processAddEventGCalendar);
+
+		this.router.get('/events', processData.processEvents);
 
 		// Serve the profile page
 		this.router.get(
