@@ -6,6 +6,7 @@ const auth = new google.auth.GoogleAuth({
 	keyFile: 'src/app/controllers/pspmmfdw-6586b-5b850d44ee32.json',
 	scopes: ['https://www.googleapis.com/auth/calendar.readonly'],
 });
+const uuid = require('uuid');
 
 const dataController = {
 	processPitching: async (req, res) => {
@@ -61,6 +62,7 @@ const dataController = {
 		// console.log(req.body);
 		const dateCreated = Timestamp.fromDate(new Date());
 		const workoutRef = db.collection('workouts')
+		const workoutID = uuid.v4();
 		workoutRef.add({
 			coach: req.body.coachName,
 			userId: req.body.selectedPlayer,
@@ -73,7 +75,8 @@ const dataController = {
 			completed: false,
 			coachId: req.body.coachId,
 			dateCreated: dateCreated,
-			playerName: req.body.playerName
+			playerName: req.body.playerName,
+			id: workoutID
 		});
 		res.redirect('/');
 	},

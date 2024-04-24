@@ -6,6 +6,7 @@ import middleware from '../middleware/middleware';
 import profileMiddleware from '../middleware/profile.middleware';
 import processData from './dataController';
 import evaluationMiddleware from '../middleware/evaluation.middleware';
+import workoutMiddleware from '../middleware/workout.middleware';
 const { google } = require('googleapis');
 const auth = new google.auth.GoogleAuth({
 	keyFile: 'src/app/controllers/pspmmfdw-6586b-5b850d44ee32.json',
@@ -64,7 +65,7 @@ export class AppController {
 		this.router.post('/workout', processData.processWorkout);
 
 		// Serve the workout viewing page (this is the player version)
-		this.router.get('/workoutView', controller.workoutView);
+		this.router.get('/workoutView', middleware.workoutCheck, workoutMiddleware.activeWorkout, controller.workoutView);
 
 		// Serve the calendar page
 		this.router.get('/calendar', controller.calendar);
