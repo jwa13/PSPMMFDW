@@ -1,0 +1,36 @@
+{{#each activeWorkout}}
+    <h1>Hi {{this.data.playerName}}</h1>
+    <h2>Workout Assigned By {{this.data.coach}}</h2>
+    <p>Date Created: {{this.data.dateCreated}}</p>
+    {{#each this.data.exercises}}
+        <p id="{{@index}}">Exercise: {{this.exercise}}</p>
+        <p id="{{@index}}">Sets: {{this.sets}}</p>
+        <p id="{{@index}}">Reps: {{this.reps}}</p>
+        <p id="{{@index}}">Weight: {{this.weight}}</p>
+        <p id="{{@index}}">Comments: {{this.comments}}</p>
+        <p id="{{@index}}">Video: {{this.video}}</p>
+    {{/each}}
+{{/each}}
+
+<script>
+    const hiddenElements = []
+    const allElementsWithId = document.querySelectorAll('[id]');
+    let largestValue = 0;
+    allElementsWithId.forEach(element => {
+        const idNumber = parseFloat(element.id);
+        if(!isNaN(idNumber) && idNumber > largestValue) {
+            largestValue = idNumber;
+        }
+    })
+    for(let i = 1; i <= largestValue; i++) {
+        const selector = `[id^="${i}"]`;
+        const elements = document.querySelectorAll(selector);
+        hiddenElements.push(...elements);
+    }
+    hiddenElements.forEach(element => {
+        element.style.display = "none";
+    });
+
+    let currentExercise = 1;
+
+</script>
