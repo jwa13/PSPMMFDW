@@ -73,16 +73,28 @@ const dataController = {
 			completed: false,
 			exercises: []
 		}
-		for(let i = 0; i < req.body.exercise.length; i++) {
+		if(typeof req.body.exercise == 'string') {
 			restructuredData.exercises.push({
-				exercise: req.body.exercise[i],
-				sets: req.body.sets[i],
-				reps: req.body.reps[i],
-				weight: req.body.weight[i],
-				comments: req.body.commentsWorkout[i],
-				video: req.body.exampleVideo[i]
-			});
+				exercise: req.body.exercise,
+				sets: req.body.sets,
+				reps: req.body.reps,
+				weight: req.body.weight,
+				comments: req.body.commentsWorkout,
+				video: req.body.exampleVideo
+			})
+		} else {
+			for(let i = 0; i < req.body.exercise.length; i++) {
+				restructuredData.exercises.push({
+					exercise: req.body.exercise[i],
+					sets: req.body.sets[i],
+					reps: req.body.reps[i],
+					weight: req.body.weight[i],
+					comments: req.body.commentsWorkout[i],
+					video: req.body.exampleVideo[i]
+				});
+			}
 		}
+		
 		workoutRef.add(restructuredData);
 		res.redirect('/');
 	},
