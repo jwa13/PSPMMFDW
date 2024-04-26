@@ -63,6 +63,7 @@ const dataController = {
 		const dateCreated = Timestamp.fromDate(new Date());
 		const workoutRef = db.collection('workouts')
 		const workoutID = uuid.v4();
+		let videoId = "";
 		const restructuredData = {
 			coach: req.body.coachName,
 			userId: req.body.selectedPlayer,
@@ -74,27 +75,34 @@ const dataController = {
 			exercises: []
 		}
 		if(typeof req.body.exercise == 'string') {
+			videoId = extractId(req.body.exampleVideo);
 			restructuredData.exercises.push({
 				exercise: req.body.exercise,
 				sets: req.body.sets,
 				reps: req.body.reps,
 				weight: req.body.weight,
 				comments: req.body.commentsWorkout,
-				video: req.body.exampleVideo
+				video: videoId
 			})
 		} else {
-			for(let i = 0; i < req.body.exercise.length; i++) {
+			for(let i = 0; i < req.body.exercise.length; i++) { 
+				videoId = extractId(req.body.exampleVideo[i]);
 				restructuredData.exercises.push({
 					exercise: req.body.exercise[i],
 					sets: req.body.sets[i],
 					reps: req.body.reps[i],
 					weight: req.body.weight[i],
 					comments: req.body.commentsWorkout[i],
-					video: req.body.exampleVideo[i]
+					video: videoId
 				});
 			}
 		}
 		
+		function extractId(url) {
+			let match = url.match(/[?&]v=([^&]+)/);
+    		return match ? match[1] : null;
+		}
+
 		workoutRef.add(restructuredData);
 		res.redirect('/');
 	},
