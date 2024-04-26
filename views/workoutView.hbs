@@ -10,6 +10,7 @@
         <p id="{{@index}}">Comments: {{this.comments}}</p>
         <p id="{{@index}}">Video: {{this.video}}</p>
     {{/each}}
+<button id="next-exercise">Next</button>
 {{/each}}
 
 <script>
@@ -18,11 +19,11 @@
     let largestValue = 0;
     allElementsWithId.forEach(element => {
         const idNumber = parseFloat(element.id);
-        if(!isNaN(idNumber) && idNumber > largestValue) {
+        if (!isNaN(idNumber) && idNumber > largestValue) {
             largestValue = idNumber;
         }
     })
-    for(let i = 1; i <= largestValue; i++) {
+    for (let i = 1; i <= largestValue; i++) {
         const selector = `[id^="${i}"]`;
         const elements = document.querySelectorAll(selector);
         hiddenElements.push(...elements);
@@ -31,6 +32,29 @@
         element.style.display = "none";
     });
 
+    const unhiddenElements = [];
     let currentExercise = 1;
-
+    document.addEventListener('DOMContentLoaded', function () {
+        const nextButton = document.getElementById('next-exercise');
+        nextButton.addEventListener('click', function () {
+            for (let i = 0; i <= largestValue; i++) {
+                if(i != currentExercise) {
+                    const selector = `[id^="${i}"]`;
+                    const elements = document.querySelectorAll(selector);
+                    hiddenElements.push(...elements);
+                } else {
+                    const selector = `[id^="${i}"]`;
+                    const elements = document.querySelectorAll(selector);
+                    unhiddenElements.push(...elements);
+                }
+                hiddenElements.forEach(element => {
+                element.style.display = "none";
+                });
+                unhiddenElements.forEach(element => {
+                    element.style.display = "";
+                });
+            }
+            currentExercise += 1;
+        });
+    });
 </script>
