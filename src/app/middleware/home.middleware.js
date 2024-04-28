@@ -14,10 +14,12 @@ module.exports = {
                     data: doc.data()
                 });
             });
-            evaluations.forEach(item => {
-                item.data.date = item.data.date.toDate()
-                    .toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric'});
-            });
+            if(evaluations.length > 0) {
+                evaluations.forEach(item => {
+                    item.data.date = item.data.date.toDate()
+                        .toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric'});
+                });
+            }
             req.session.evaluations = evaluations;
             // console.log(req.session.evaluations);
             next();
@@ -38,10 +40,13 @@ module.exports = {
                     data:doc.data()
                 });
             });
-            workouts.forEach(item => {
-                item.data.dateCreated = item.data.dateCreated.toDate()
-                    .toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric'});
-            });
+            console.log(workouts);
+            if(workouts.length > 0) {
+                workouts.forEach(item => {
+                    item.data.dateCreated = item.data.dateCreated.toDate()
+                        .toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric'});
+                });
+            }
             req.session.workouts = workouts;
             // console.log(req.session.workouts);
             next();
@@ -57,10 +62,12 @@ module.exports = {
                     data:doc.data()
                 });
             });
-            incompleteWorkouts.forEach(item => {
-                item.data.dateCreated = item.data.dateCreated.toDate()
-                    .toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric'});
-            });
+            if(incompleteWorkouts.length > 0) {
+                incompleteWorkouts.forEach(item => {
+                    item.data.dateCreated = item.data.dateCreated.toDate()
+                        .toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric'});
+                });
+            }
             req.session.incompleteWorkouts = incompleteWorkouts;
             
             // Get Completed Workouts
@@ -74,10 +81,12 @@ module.exports = {
                     data:doc.data()
                 });
             });
-            completedWorkouts.forEach(item => {
-                item.data.dateCreated = item.data.dateCreated.toDate()
-                    .toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric'});
-            });
+            if(completedWorkouts.length > 0) {
+                completedWorkouts.forEach(item => {
+                    item.data.dateCreated = item.data.dateCreated.toDate()
+                        .toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric'});
+                });
+            }
             req.session.completedWorkouts = completedWorkouts;
             next();
         } else {

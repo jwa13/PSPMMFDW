@@ -6,6 +6,7 @@ const auth = new google.auth.GoogleAuth({
 	keyFile: 'src/app/controllers/pspmmfdw-6586b-5b850d44ee32.json',
 	scopes: ['https://www.googleapis.com/auth/calendar.readonly'],
 });
+const uuid = require('uuid');
 
 const dataController = {
 	processPitching: async (req, res) => {
@@ -61,20 +62,48 @@ const dataController = {
 		// console.log(req.body);
 		const dateCreated = Timestamp.fromDate(new Date());
 		const workoutRef = db.collection('workouts')
-		workoutRef.add({
+		const workoutID = uuid.v4();
+		let videoId = "";
+		const restructuredData = {
 			coach: req.body.coachName,
 			userId: req.body.selectedPlayer,
-			exercise: req.body.exercise,
-			sets: req.body.sets,
-			reps: req.body.reps,
-			weight: req.body.weight,
-			comments: req.body.commentsWorkout,
-			video: req.body.exampleVideo,
-			completed: false,
 			coachId: req.body.coachId,
 			dateCreated: dateCreated,
-			playerName: req.body.playerName
-		});
+			playerName: req.body.playerName,
+			id: workoutID,
+			completed: false,
+			exercises: []
+		}
+		if(typeof req.body.exercise == 'string') {
+			videoId = extractId(req.body.exampleVideo);
+			restructuredData.exercises.push({
+				exercise: req.body.exercise,
+				sets: req.body.sets,
+				reps: req.body.reps,
+				weight: req.body.weight,
+				comments: req.body.commentsWorkout,
+				video: videoId
+			})
+		} else {
+			for(let i = 0; i < req.body.exercise.length; i++) { 
+				videoId = extractId(req.body.exampleVideo[i]);
+				restructuredData.exercises.push({
+					exercise: req.body.exercise[i],
+					sets: req.body.sets[i],
+					reps: req.body.reps[i],
+					weight: req.body.weight[i],
+					comments: req.body.commentsWorkout[i],
+					video: videoId
+				});
+			}
+		}
+		
+		function extractId(url) {
+			let match = url.match(/[?&]v=([^&]+)/);
+    		return match ? match[1] : null;
+		}
+
+		workoutRef.add(restructuredData);
 		res.redirect('/');
 	},
 
