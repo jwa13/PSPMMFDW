@@ -52,12 +52,4 @@ module.exports = {
 		delete req.session.flash;
 		next();
 	},
-
-	workoutCheck: (req, res, next)  => {
-		if(req.query.w) {
-			next();
-		} else {
-			res.redirect('/');
-		}
-	},
 };
