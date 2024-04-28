@@ -396,6 +396,13 @@ const routerController = {
 		}
 	},
 
+	workoutView: (req, res, next) => {
+		console.log(req.session.activeWorkout);
+		res.render('workoutView', {
+			activeWorkout: req.session.activeWorkout, 
+		});
+	},
+
 	logout: (req, res, next) => {
 		req.logout(function (err) {
 			if (err) {
