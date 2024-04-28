@@ -42,22 +42,33 @@ interface EvaluationSchema {
 const evaluationSchema: JSONSchemaType<EvaluationSchema> = {
     type: 'object',
     properties: {
-        coach: { type: 'string', minLength: 1, errorMessage: "Coach's name must be provided." },
+        coach: {
+            type: 'string', minLength: 2, maxLength: 50, errorMessage: {
+                minLength: 'Name must be at least 2 characters long.',
+                maxLength: 'Name must not exceed 50 characters.'
+            }
+        },
+        userId: {
+            type: 'string', pattern: "^[0-9]+$", errorMessage: {
+                pattern: 'Profile ID must be numeric.'
+            }
+        },
         comments: { type: 'string', nullable: true, minLength: 1, errorMessage: "Comments cannot be empty." },
-        date: { type: 'string', format: 'date-time', errorMessage: "Date must be a valid datetime." },
+        date: {
+            type: 'string', format: 'date-time', nullable: true, errorMessage: {
+                format: 'Join Date must be in ISO date-time format.'
+            }
+        },
         moundVelo: { type: 'number', nullable: true, minimum: 0, errorMessage: "Mound velocity must be a non-negative number." },
         pitching: { type: 'boolean', nullable: true, errorMessage: "Pitching must be a boolean value indicating if pitching was evaluated." },
         pulldownVelo: { type: 'number', nullable: true, minimum: 0, errorMessage: "Pulldown velocity must be a non-negative number." },
-        userId: { type: 'string', minLength: 1, errorMessage: "User ID must be provided." }
     },
     required: ['coach', 'date', 'userId'],
     additionalProperties: false,
     errorMessage: {
         required: {
             coach: 'Coach is required.',
-            comments: 'Comments are required.',
             date: 'Date is required.',
-            pitching: 'Pitching evaluation is required.',
             userId: 'User ID is required.'
         }
     }
