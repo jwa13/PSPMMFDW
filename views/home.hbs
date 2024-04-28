@@ -1,56 +1,53 @@
 <div>
 	<div className='container container-fluid'>
-		<div class='row gx-2' style="border-bottom-style:solid; border-bottom-color:black; border-bottom-width:6px">
-			<div class='col-3'>
+		<div class='row mt-2 gx-2 justify-content-center' style="border-bottom-style:solid; border-bottom-color:black; border-bottom-width:6px">
+			<div class='col-12'>
 				<img src="/image/logo.png" alt="logo" style="max-width: 100%;">
-			</div>
-			<div class="col-6 text-left">
-				<h1 class='user-select-none fs-2' algin="left" style="font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif">This is the Pipeline Sports
-				Performance Member Management and Facility Data Warehouse</h1>
+				<h1 class='user-select-none fs-2' style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; margin-top: 0;">Member Management and Facility Data Warehouse</h1>
 			</div>
 		</div>		
 
 		{{! Form should only displayed when coach is logged in }}
 		{{#if user.coach}}
-		<div class="row mt-1 gx-5" >
-			<div class="col-8">
+		<div class="row mt-1 gx-3">
+			<div class="col-12 col-md-6">
 				<div class="row gx-4">
 					<div class="col-6 mt-2">
-						<div class="card">
-							<div class="card-header bg-primary text-white text-center"><h6>Create Pitching Evaluation</h6></div>
+						<div class="card h-100">
+							<div class="card-header bg-dark text-white text-center"><h6>Create Pitching Evaluation</h6></div>
 							<div class="card-body justify-content-center">
-								<h1><a class='btn btn-primary' href='/pitchingEval' role='button'>
+								<h1><a class='btn btn-dark' href='/pitchingEval' role='button'>
 									Pitching Evaluation
 								</a></h1>
 							</div>
 						</div>
 					</div>
 					<div class="col-6 mt-2">
-						<div class="card">
-							<div class="card-header bg-primary text-white text-center"><h6>Create Hitting Evaluation</h1></div>
+						<div class="card h-100">
+							<div class="card-header bg-dark text-white text-center"><h6>Create Hitting Evaluation</h1></div>
 							<div class="card-body">
-								<h1><a class='btn btn-primary' href='/hittingEval' role='button'>
+								<h1><a class='btn btn-dark' href='/hittingEval' role='button'>
 									Hitting Evaluation
 								</a></h1>
 							</div>
 						</div>				
 					</div>
-					<div class="col-6 mt-5">
-						<div class="card">
-							<div class="card-header bg-primary text-white text-center"><h6>Create Strength Evaluation</h6></div>
+					<div class="col-6 mt-2">
+						<div class="card h-100">
+							<div class="card-header bg-dark text-white text-center"><h6>Create Strength Evaluation</h6></div>
 							<div class="card-body">
-								<h1><a class='btn btn-primary' href='/strengthEval' role='button'>
+								<h1><a class='btn btn-dark' href='/strengthEval' role='button'>
 									Strength Evaluation
 								</a></h1>
 							</div>
 						</div>
 					</div>
-					<div class="col-6 mt-5">
-						<div class="card">
-							<div class="card-header bg-primary text-white text-center"><h6>Create Workout</h6></div>
+					<div class="col-6 mt-2">
+						<div class="card h-100">
+							<div class="card-header bg-dark text-white text-center"><h6>Create Workout Form</h6></div>
 							<div class="card-body">
-								<h1><a class='btn btn-primary' href='/Workout' role='button'>
-									Workout         
+								<h1><a class='btn btn-dark' href='/Workout' role='button'>
+									Workout Form  
 								</a></h1>
 							</div>
 						</div>
@@ -58,63 +55,69 @@
 				</div>
 			</div>
 
-			<div class="col-3 ms-5">
-				<div class="accordion" id="incompleteWorkoutAccordion">
-					<div class="accordion-item">
-						<h3 class="accordion-header">
-							<button class="accordion-button" type="button" data-bs-toggle="collapse"
-								data-bs-target="#collapseIncompleteWorkout" aria-expanded="true"
-								aria-controls="collapseIncompleteWorkout">
-								Players Incomplete Workouts
-							</button>
-						</h3>
-						<div id="collapseIncompleteWorkout" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-							<div class="accordion-body">
-								{{#each incompleteWorkouts}}
-								<div class="card" id="eval-card">
-									<div class="card-header">
-										<h3 class="card-title">{{this.data.playerName}}</h3>
-									</div>
-									<div class="card-body">
-										<h4>{{this.data.dateCreated}}</h4>
+			<div class="col-12 col-md-6 mt-2">
+				<div class="row">
+					<div class="col-12 col-md-6">
+						<div class="accordion" id="incompleteWorkoutAccordion">
+							<div class="accordion-item">
+								<h3 class="accordion-header">
+									<button class="accordion-button" type="button" data-bs-toggle="collapse"
+										data-bs-target="#collapseIncompleteWorkout" aria-expanded="true"
+										aria-controls="collapseIncompleteWorkout">
+										Players Incomplete Workouts
+									</button>
+								</h3>
+								<div id="collapseIncompleteWorkout" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+									<div class="accordion-body">
+										{{#each incompleteWorkouts}}
+										<div class="card" id="eval-card">
+											<div class="card-header">
+												<h3 class="card-title">{{this.data.playerName}}</h3>
+											</div>
+											<div class="card-body">
+												<h4>{{this.data.dateCreated}}</h4>
+											</div>
+										</div>
+										{{/each}}
 									</div>
 								</div>
-								{{/each}}
 							</div>
 						</div>
+					</div>
+
+					<div class="col-12 col-md-6">
+						<div class="accordion" id="completeWorkoutAccordion">
+							<div class="accordion-item">
+								<h3 class="accordion-header">
+									<button class="accordion-button" type="button" data-bs-toggle="collapse"
+										data-bs-target="#collapseCompleteWorkout" aria-expanded="true" aria-controls="collapseCompleteWorkout">
+										Players Completed Workouts
+									</button>
+								</h3>
+								<div id="collapseCompleteWorkout" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+									<div class="accordion-body">
+										{{#each completedWorkouts}}
+										<div class="card" id="eval-card">
+											<div class="card-header">
+												<h3 class="card-title">{{this.data.playerName}}</h3>
+											</div>
+											<div class="card-body">
+												<h4>{{this.data.dateCreated}}</h4>
+											</div>
+										</div>
+										{{/each}}
+									</div>
+								</div>
+							</div>
+						</div>				
 					</div>
 				</div>
-
-				<div class="accordion" id="completeWorkoutAccordion">
-				<div class="accordion-item">
-						<h3 class="accordion-header">
-							<button class="accordion-button" type="button" data-bs-toggle="collapse"
-								data-bs-target="#collapseCompleteWorkout" aria-expanded="true" aria-controls="collapseCompleteWorkout">
-								Players Completed Workouts
-							</button>
-						</h3>
-						<div id="collapseCompleteWorkout" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-							<div class="accordion-body">
-								{{#each completedWorkouts}}
-								<div class="card" id="eval-card">
-									<div class="card-header">
-										<h3 class="card-title">{{this.data.playerName}}</h3>
-									</div>
-									<div class="card-body">
-										<h4>{{this.data.dateCreated}}</h4>
-									</div>
-								</div>
-								{{/each}}
-							</div>
-						</div>
-					</div>
-				</div>				
 			</div>
 		</div>
 		{{/if}}
 		{{#if user.player}}
 		<div class="row gx-3 mt-3">
-			<div class="col-5 ms-5">
+			<div class="col-12 col-md-5">
 				<div class="accordion" id="homeEvalAccordion">
 					<div class="accordion-item">
 						<h3 class="accordion-header">
@@ -196,7 +199,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-5">
+			<div class="col-12 col-md-5">
 				<div class="accordion" id="homeWorkoutAccordion">
 					<div class="accordion-item">
 						<h3 class="accordion-header">

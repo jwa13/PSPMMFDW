@@ -1,31 +1,24 @@
 <div>
     <div className='container container-fluid'>
-        <div className='row'>
-            <div className='col-10 col-md-4 card  text-center'>
-                <form action='/teams' method='POST'>
-                    <div class='mb-3'>
-                        <label for='newTeam' class='form-label'>Add New Team</label>
-                        <input type='text' class='form-control' name='newTeam' placeholder="New Team" />
-                    </div>
-                    <div class='mb-3'>
-                        <label for='headCoach' class='form-label'>Enter the Email of the Head Coach for New Team</label>
-                        <input type='text' class='form-control' name='headCoach' placeholder="example@mail.com" />
-                    </div>
-                    <input type='submit' class='btn btn-primary'></input>
-                    <div class='mb-3'>
-                        <ul style="list-style-type:none;">
-                            {{#each teams}}
-                            <li>
-                                <!-- Button trigger modal -->
-                                <div class='mb-3'>
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+        <div class='row gx-5 justify-content-center'>
+            <div class="col-12 col-md-7 text-center">
+                <h3>List of Teams</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Team Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       {{#each teams}}                        
+                            <tr>
+                                <td>
+                                    <div class='mb-3'>
+                                    <button type="button" class="btn btn-primary btn-light" data-bs-toggle="modal"
                                         data-bs-target="#{{this}}">
                                         {{this}}
                                     </button>
-                                </div>
-
-                                <!-- Modal -->
-                                <div class="modal fade" id="{{this}}" tabindex="-1" role="dialog"
+                                    <div class="modal fade" id="{{this}}" tabindex="-1" role="dialog"
                                     aria-labelledby="{{this}}Title" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
@@ -57,14 +50,35 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </li>
-                            {{/each}}
-                        </ul>
-                    </div>
-                </form>
+                                </td>                     
+                            </tr>
+                        {{/each}}  
+                    </tbody>
+                </table>
             </div>
-            <a class='btn btn-primary' href='/profile' role='button'>Back</a>
         </div>
+
+        <form action='/teams' method='POST'>
+            <div class="row gx-5">
+                <div class="col-12 col-md-5 mt-2">
+                    <label for='newTeam' class='form-label'><b>Add New Team</b></label>
+                    <input type='text' class='form-control' name='newTeam' placeholder="New Team" />
+                </div>
+
+                <div class="col-12 col-md-5 mt-2">
+                    <label for='headCoach' class='form-label'><b>The Email of the Head Coach for New Team</b></label>
+                    <input type='text' class='form-control' name='headCoach' placeholder="example@mail.com" />                              
+                </div>           
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-auto">
+                    <input type='submit' class='btn btn-primary'></input>
+                </div>
+                <div class="col-auto">
+                    <a class='btn btn-primary' href='/profile' role='button'>Back</a>
+                </div>
+            </div>
+        </form>
     </div>
 </div>

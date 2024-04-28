@@ -1,7 +1,7 @@
 <div>
     <div className='container container-fluid'>
-        <div class="row gx-10">
-            <div class="col-5">
+        <div class="row gx-5">
+            <div class="col-12 col-md-5 text-center">
                 <h3>List of Players on the Team</h6>
                 <table class="table">
                     <thead>
@@ -20,7 +20,8 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-5">
+
+            <div class="col-12 col-md-5 text-center">
                 <h3>List of Coaches on the Team</h3>
                 <table class="table">
                      <thead>
@@ -41,17 +42,15 @@
             </div>
         </div>
 
-        <div class="row gx-10 mt-5">
-            <div class="col-5">
+        <div class="row gx-5">
+            <div class="col-12 col-md-5 mt-3">
                 <form action='/teamRemove' method='POST'>
-                   <div class='mb-3'>
-                        <label for='removePlayer' class='form-label'><b>Enter the email of the player you would like to
-                            remove</b></label>
-                        <input type='text' class='form-control' name='removePlayer' placeholder="example@mail.com" />
-                    </div>
+                    <label for='removePlayer' class='form-label'><b>Enter the email of the player you would like to
+                        remove</b></label>
+                    <input type='text' class='form-control' name='removePlayer' placeholder="example@mail.com" />
                 </form>                    
             </div>
-            <div class="col-5">
+            <div class="col-12 col-md-5 mt-3">
                 <form action='/teamRemove' method='POST'>
                     <label for='removeCoach' class='form-label'><b>Enter the email of the coach you would like to
                         remove</b></label>

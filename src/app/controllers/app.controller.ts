@@ -100,7 +100,7 @@ export class AppController {
 		this.router.get(
 			'/teamRemove',
 			middleware.loginCheck,
-			// middleware.headCoachLoginCheck,
+			middleware.headCoachLoginCheck,
 			controller.teamRemove
 		);
 		this.router.post(

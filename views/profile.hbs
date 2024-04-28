@@ -1,9 +1,9 @@
 <div>
-  <div class="row">
+  <div class="row text-center">
     <h1>{{ user.username }}'s Profile</h1> 
   </div>
   <div class="row">
-    <div class="col-6">
+    <div class="col-12 col-md-6">
       <div class="card" id="my-info">
         <div class="card-header">
           My Info
@@ -40,7 +40,7 @@
     </div>
 
     {{#if user.player}}
-    <div class="col-5 ms-2">
+    <div class="col-12 col-md-5">
       <div class="accordion" id="accordionExample">
         <div class="accordion-item">
           <h3 class="accordion-header">
@@ -122,10 +122,10 @@
  
   {{#if user.admin}}
   <div class="row">
-    <div class="col-2">
+    <div class="col-5 col-md-2">
       <a class='btn btn-primary' href='/admin' role='button'>admin button</a>
     </div>
-    <div class="col-1">
+    <div class="col-5 col-md-1">
       <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuTeamOptions"
         data-bs-toggle="dropdown" aria-expanded="false">Team Options</button>
@@ -146,7 +146,7 @@
 
   {{else user.coach}}
   <div class="row">
-    <div class="col-1">
+    <div class="col-3 col-md-1">
       <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuTeamOptions"
           data-bs-toggle="dropdown" aria-expanded="false">
