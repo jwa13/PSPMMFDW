@@ -61,9 +61,9 @@ const dataController = {
 	processWorkout: async (req, res) => {
 		// console.log(req.body);
 		const dateCreated = Timestamp.fromDate(new Date());
-		const workoutRef = db.collection('workouts')
+		const workoutRef = db.collection('workouts');
 		const workoutID = uuid.v4();
-		let videoId = "";
+		let videoId = '';
 		const restructuredData = {
 			coach: req.body.coachName,
 			userId: req.body.selectedPlayer,
@@ -72,9 +72,9 @@ const dataController = {
 			playerName: req.body.playerName,
 			id: workoutID,
 			completed: false,
-			exercises: []
-		}
-		if(typeof req.body.exercise == 'string') {
+			exercises: [],
+		};
+		if (typeof req.body.exercise == 'string') {
 			videoId = extractId(req.body.exampleVideo);
 			restructuredData.exercises.push({
 				exercise: req.body.exercise,
@@ -82,10 +82,10 @@ const dataController = {
 				reps: req.body.reps,
 				weight: req.body.weight,
 				comments: req.body.commentsWorkout,
-				video: videoId
-			})
+				video: videoId,
+			});
 		} else {
-			for(let i = 0; i < req.body.exercise.length; i++) { 
+			for (let i = 0; i < req.body.exercise.length; i++) {
 				videoId = extractId(req.body.exampleVideo[i]);
 				restructuredData.exercises.push({
 					exercise: req.body.exercise[i],
@@ -93,14 +93,14 @@ const dataController = {
 					reps: req.body.reps[i],
 					weight: req.body.weight[i],
 					comments: req.body.commentsWorkout[i],
-					video: videoId
+					video: videoId,
 				});
 			}
 		}
-		
+
 		function extractId(url) {
 			let match = url.match(/[?&]v=([^&]+)/);
-    		return match ? match[1] : null;
+			return match ? match[1] : null;
 		}
 
 		workoutRef.add(restructuredData);
@@ -242,12 +242,10 @@ const dataController = {
 			// Fetch events from the calendar
 			const response = await calendar.events.list({
 				calendarId,
-				timeMin: new Date().toISOString(),
 				singleEvents: true,
 				orderBy: 'startTime',
 			});
 			const temp = response.data.items;
-			console.log(temp[0].attendees[0].email);
 			for (let i = 0; i < temp.length; i++) {
 				if (temp[i].attendees) {
 					for (let j = 0; j < temp[i].attendees.length; j++) {
@@ -262,7 +260,6 @@ const dataController = {
 				}
 			}
 
-			console.log(events);
 			res.json(events);
 		} catch (error) {
 			console.error('Error fetching events:', error);

@@ -32,9 +32,13 @@ export class AppController {
 		this.router.use(middleware.flashMessages);
 
 		// Serve the home page
-		this.router.get('/', middleware.loginCheck, evalGetter,
+		this.router.get(
+			'/',
+			middleware.loginCheck,
+			evalGetter,
 			workoutGetter,
-			controller.home);
+			controller.home
+		);
 
 		this.router.get(
 			'/pitchingEval',
@@ -65,7 +69,12 @@ export class AppController {
 		this.router.post('/workout', processData.processWorkout);
 
 		// Serve the workout viewing page (this is the player version)
-		this.router.get('/workoutView', middleware.workoutCheck, workoutMiddleware.activeWorkout, controller.workoutView);
+		this.router.get(
+			'/workoutView',
+			middleware.workoutCheck,
+			workoutMiddleware.activeWorkout,
+			controller.workoutView
+		);
 
 		// Serve the calendar page
 		this.router.get('/calendar', controller.calendar);
