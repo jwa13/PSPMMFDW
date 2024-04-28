@@ -1,13 +1,15 @@
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import db from '../firebase.ts';
-// import keys from './keys.js';
+import keys from './keys.js';
 var User = '';
 passport.use(
 	new GoogleStrategy(
 		{
-			clientID: process.env.GOOGLE_CLIENT_ID,
-			clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+			clientID: keys.google.clientID,
+			clientSecret: keys.google.clientSecret,
+			//clientID: process.env.GOOGLE_CLIENT_ID, 
+			//clientSecret: process.env.GOOGLE_CLIENT_SECRET,
 			callbackURL: '/google/callback',
 		},
 		async function (accessToken, refreshToken, profile, cb) {
