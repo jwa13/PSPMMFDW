@@ -1,66 +1,62 @@
 <div class='container container-fluid'>
-	<div class='row mt-2 gx-2 justify-content-center' style="border-bottom: 6px solid black;">
-		<div class='col-12 col-md-3 text-center'>
-			<img src="/image/logo.png" alt="logo" style="max-width: 100%;">
-		</div>
-		<div class="col-12 col-md-6 text-left">
-			<h1 class='user-select-none fs-2'
-				style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif">This is the Pipeline
-				Sports Performance Member Management and Facility Data Warehouse</h1>
-		</div>
-	</div>
+    <div class='row mt-2 gx-2 justify-content-center' style="border-bottom: 6px solid black;">
+        <div class='col-12 col-md-3 text-center'>
+            <img src="/image/logo.png" alt="logo" style="max-width: 100%;">
+            <h1 class='user-select-none fs-2' style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; margin-top: 0;">Member Management and Facility Data Warehouse</h1>
+        </div>
+    </div>
 </div>
 {{! Form should only be displayed when coach is logged in }}
 {{#if user.coach}}
 <div class="row mt-3 justify-content-center">
-	<div class="col-6 mt-3">
-		<div class="card">
-			<div class="card-header bg-primary text-white text-center">
-				<h6>Create Pitching Evaluation</h6>
-			</div>
-			<div class="card-body text-center">
-				<h1><a class='btn btn-primary' href='/pitchingEval' role='button'>
-						Pitching Evaluation
-					</a></h1>
-			</div>
-		</div>
-	</div>
-	<div class="col-6 mt-3">
-		<div class="card">
-			<div class="card-header bg-primary text-white text-center">
-				<h6>Create Hitting Evaluation</h6>
-			</div>
-			<div class="card-body text-center">
-				<h1><a class='btn btn-primary' href='/hittingEval' role='button'>
-						Hitting Evaluation
-					</a></h1>
-			</div>
-		</div>
-	</div>
-	<div class="col-6 mt-5">
-		<div class="card">
-			<div class="card-header bg-primary text-white text-center">
-				<h6>Create Strength Evaluation</h6>
-			</div>
-			<div class="card-body text-center">
-				<h1><a class='btn btn-primary' href='/strengthEval' role='button'>
-						Strength Evaluation
-					</a></h1>
-			</div>
-		</div>
-	</div>
-	<div class="col-6 mt-5">
-		<div class="card">
-			<div class="card-header bg-primary text-white text-center">
-				<h6>Create Workout</h6>
-			</div>
-			<div class="card-body text-center">
-				<h1><a class='btn btn-primary' href='/Workout' role='button'>
-						Workout
-					</a></h1>
-			</div>
-		</div>
-	</div>
+    <div class="col-6 mt-3">
+        <div class="card">
+            <div class="card-header bg-dark text-white text-center">
+                <h6>Create Pitching Evaluation</h6>
+            </div>
+            <div class="card-body text-center">
+                <h1><a class='btn btn-dark' href='/pitchingEval' role='button'>
+                        Pitching Evaluation
+                    </a></h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 mt-3">
+        <div class="card">
+            <div class="card-header bg-dark text-white text-center">
+                <h6>Create Hitting Evaluation</h6>
+            </div>
+            <div class="card-body text-center">
+                <h1><a class='btn btn-dark' href='/hittingEval' role='button'>
+                        Hitting Evaluation
+                    </a></h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 mt-5">
+        <div class="card">
+            <div class="card-header bg-dark text-white text-center">
+                <h6>Create Strength Evaluation</h6>
+            </div>
+            <div class="card-body text-center">
+                <h1><a class='btn btn-dark' href='/strengthEval' role='button'>
+                        Strength Evaluation
+                    </a></h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 mt-5">
+        <div class="card">
+            <div class="card-header bg-dark text-white text-center">
+                <h6>Create Workout</h6>
+            </div>
+            <div class="card-body text-center">
+                <h1><a class='btn btn-dark' href='/Workout' role='button'>
+                        Workout
+                    </a></h1>
+            </div>
+        </div>
+    </div>
 </div>
 {{/if}}
 </div>
