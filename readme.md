@@ -1,6 +1,9 @@
 # Pipeline Sports Performance Member Management and Facility Data Warehouse
 
-Simple overview of use/purpose.
+Submission Structure: Final Report (pdf document that serves as main file),
+README: Information regarding the app,
+User Guide: YouTube video linked below,
+Code Deliverables: This repository and other links in Final Report
 
 ## Description
 
@@ -22,11 +25,12 @@ This application solves that issue and handles everything from detailed performa
 
 Any advice for common problems or issues.
 
-As of currently, the following features are in progress and not currently functional:
+As of lastest update, the following features are in progress and not currently functional:
 - Scheduling an event within the program
-- Account types conflict with some views
-- Hitting and strength evaluation forms are not able to be submitted.
 
+Known Issues:
+- Account type displayed improperly on profile
+- Login/logout on menu displaying incorrectly
 
 ## Authors
 
@@ -44,7 +48,8 @@ Contributors names and contact info
 
 
 ## Version History
-
+* 0.9
+   * Current Release nearing initail delivery
 * 0.2
     * See [commit change]() or See [release history]()
 * 0.1
