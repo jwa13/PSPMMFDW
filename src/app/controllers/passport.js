@@ -37,11 +37,10 @@ passport.use(
                 name: profile._json.name,
                 email: profile._json.email,
                 joinDate: currentDate.toISOString(),
-                team: null,  // Define the default team or pull from other sources if needed
+                team: "Strike Team Brown Thunder",  // Define the default team or pull from other sources if needed
                 parent: false,
-                player: false,
-                assistantCoach: false,
-                headCoach: false,
+                player: true,
+                coach: true,
                 admin: false
             };
 

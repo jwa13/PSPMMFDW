@@ -34,7 +34,7 @@ interface UserSchema {
     parent: boolean;
     player: boolean;
     assistantCoach: boolean;
-    headCoach: boolean;
+    coach: boolean;
     admin: boolean;
 }
 
@@ -71,7 +71,7 @@ const userSchema: JSONSchemaType<UserSchema> = {
         parent: { type: 'boolean', default: false },
         player: { type: 'boolean', default: false },
         assistantCoach: { type: 'boolean', default: false },
-        headCoach: { type: 'boolean', default: false },
+        coach: { type: 'boolean', default: false },
         admin: { type: 'boolean', default: false },
     },
     required: ['name', 'profileId', 'email'],
@@ -98,7 +98,7 @@ const userData = {
     parent: false,
     player: false,
     assistantCoach: true,
-    headCoach: false,
+    coach: false,
     admin: false,
 };
 
