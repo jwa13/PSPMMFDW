@@ -4,35 +4,23 @@ Simple overview of use/purpose.
 
 ## Description
 
-The Pipeline Sports Performance Member Management and Facility Data Warehouse web application is focused on creating software that improves the workflow of coaches and provides useful information to members. This document details the technical side of the application, including security, testing, use cases, our development process, requirements, development, and deployment. It is important to mention that our team’s approach is slightly more long sighted due to the expected future of the application being a out-in-the-world piece of software that will need to be maintained. 
-
+The Pipeline Sports Performance Member Management and Facility Data Warehouse web application is focused on creating software that improves the workflow of coaches and provides useful information to members. This application is intended as a hub for sports performance management, specifically for baseball training. Prior to the creation of this application, our client used a spread of multiple applications and often behind paywalls that drive costs up. This application solves that issue and handles everything from detailed performance evaluations to user based calendars to display appointments, team based events, etc.This application should solve the problem of player and team management and allow for a centralized location for all of the data needed to be documented throughout the facility.
 
 ## Getting Started
 
-### Dependencies
+### User Guide
+* How to use the program
+[![User Guide for PSPMMFDW](https://img.youtube.com/vi/qYkVKwu3e1Q/0.jpg)](https://www.youtube.com/watch?v=qYkVKwu3e1Q)
 
-* Describe any prerequisites, libraries, OS version, etc., needed before installing program.
-
-### Installing
-
-* How/where to download your program
-* Any modifications needed to be made to files/folders
-
-### Executing program
-
-* How to run the program
-* Step-by-step bullets
-```
-npm run dev
-npm start
-```
 
 ## Help
 
 Any advice for common problems or issues.
-```
-command to run if program contains helper info
-```
+As of currently, the following features are in progress:
+- Scheduling an event within the program
+- Account types conflict with some views
+- Hitting and strength evaluation forms are not able to be submitted.
+
 
 ## Authors
 
