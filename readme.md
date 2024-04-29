@@ -17,7 +17,8 @@ The Pipeline Sports Performance Member Management and Facility Data Warehouse we
 ## Help
 
 Any advice for common problems or issues.
-As of currently, the following features are in progress:
+
+As of currently, the following features are in progress and not currently functional:
 - Scheduling an event within the program
 - Account types conflict with some views
 - Hitting and strength evaluation forms are not able to be submitted.
@@ -41,7 +42,6 @@ Contributors names and contact info
 ## Version History
 
 * 0.2
-    * Various bug fixes and optimizations
     * See [commit change]() or See [release history]()
 * 0.1
     * Initial Release
