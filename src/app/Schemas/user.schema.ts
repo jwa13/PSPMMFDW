@@ -86,7 +86,7 @@ const userSchema: JSONSchemaType<UserSchema> = {
     }
 };
 
-const validateUser = ajv.compile(userSchema);
+export const validateUser = ajv.compile(userSchema);
 
 // Validate user data
 const userData = {
