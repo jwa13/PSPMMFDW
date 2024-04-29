@@ -53,7 +53,7 @@ const dataController = {
 			deadlift: req.body.deadlift,
 			comments: req.body.comments,
 			date: date,
-			hitting: true,
+			strength: true,
 		});
 		res.redirect('/');
 	},
