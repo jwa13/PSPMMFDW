@@ -4,7 +4,11 @@ Simple overview of use/purpose.
 
 ## Description
 
-The Pipeline Sports Performance Member Management and Facility Data Warehouse web application is focused on creating software that improves the workflow of coaches and provides useful information to members. This application is intended as a hub for sports performance management, specifically for baseball training. Prior to the creation of this application, our client used a spread of multiple applications and often behind paywalls that drive costs up. This application solves that issue and handles everything from detailed performance evaluations to user based calendars to display appointments, team based events, etc.This application should solve the problem of player and team management and allow for a centralized location for all of the data needed to be documented throughout the facility.
+The Pipeline Sports Performance Member Management and Facility Data Warehouse web application is focused on creating software that improves the workflow of coaches and provides useful information to members. 
+
+This application is intended as a hub for sports performance management, specifically for baseball training. Prior to the creation of this application, our client used a spread of multiple applications and often behind paywalls that drive costs up. 
+
+This application solves that issue and handles everything from detailed performance evaluations to user based calendars to display appointments, team based events, etc.This application should solve the problem of player and team management and allow for a centralized location for all of the data needed to be documented throughout the facility.
 
 ## Getting Started
 
