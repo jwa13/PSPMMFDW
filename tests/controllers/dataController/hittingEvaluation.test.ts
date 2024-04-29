@@ -5,7 +5,7 @@ import dbController from '../../../src/app/controllers/db.controller';
 const id = '102649053160928139704';
 
 interface HittingMockData {
-    [userId: string]: {
+    [evalId: string]: {
         coach: string;
         comments: string;
         date: string;
@@ -17,7 +17,7 @@ interface HittingMockData {
 }
 
 const hittingMockData: HittingMockData = {
-    '102649053160928139704': {
+    'ErIskiaLUkmuyv1YGYNF': {
         coach: 'Hitting Coach',
         comments: 'Work on form',
         date: Date(),
@@ -29,13 +29,24 @@ const hittingMockData: HittingMockData = {
 };
 
 jest.mock('../../../src/app/firebase.ts', () => {
+    const hittingMockData: HittingMockData = {
+        'ErIskiaLUkmuyv1YGYNF': {
+            coach: 'Hitting Coach',
+            comments: 'Work on form',
+            date: Date(),
+            exitVeloTee: 76,
+            exitVeloToss: 81,
+            hitting: true,
+            userId: id
+        }
+    };
     return {
         collection: jest.fn().mockReturnThis(),
-        doc: jest.fn().mockImplementation((userId) => {
+        doc: jest.fn().mockImplementation((evalId) => {
             return {
                 get: jest.fn().mockResolvedValue({ // this need to be better defined
-                    exists: hittingMockData[userId] !== undefined, 
-                    data: () => hittingMockData[userId]
+                    exists: hittingMockData[evalId] !== undefined, 
+                    data: () => hittingMockData[evalId]
                 }),
                 set: jest.fn().mockResolvedValue(true), //userdata is passed with isfalsey propery
                 delete: jest.fn().mockResolvedValue(true), //userdata is passed with isfalsey propery

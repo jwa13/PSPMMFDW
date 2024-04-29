@@ -31,6 +31,18 @@ const workoutMockData: WorkoutMockData = {
 
 
 jest.mock('../../../src/app/firebase.ts', () => {
+    const workoutMockData: WorkoutMockData = {
+        'UoIskiaLUkmuyv1YGYNF': {
+            coach: 'Workout Coach',
+            comments: ['Do this workout.', 'You can do it'],
+            exercise: ['bench press', 'squat'],
+            reps: ['5', '8'],
+            sets: ['5', '4'],
+            userId: '502649053160928139704',
+            video: ['youtube.url/bench', 'youtube.url/squat'],
+            weight: ['205', '185']
+        }
+    };
     return {
         collection: jest.fn().mockReturnThis(),
         doc: jest.fn().mockImplementation((workoutId) => {

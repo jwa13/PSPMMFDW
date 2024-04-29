@@ -31,6 +31,18 @@ const strengthMockData: StrengthMockData = {
 
 
 jest.mock('../../../src/app/firebase.ts', () => {
+    const strengthMockData: StrengthMockData = {
+        'QwIskiaLUkmuyv1YGYNF': {
+            bench: 190,
+            coach: 'Strength Coach',
+            comments: 'Work on bench.',
+            date: Date(),
+            deadlift: 305,
+            squat: 230,
+            strength: true,
+            userId: '211015587133119133740'
+        }
+    };
     return {
         collection: jest.fn().mockReturnThis(),
         doc: jest.fn().mockImplementation((evalId) => {

@@ -4,7 +4,7 @@ import dbController from '../../../src/app/controllers/db.controller';
 
 
 interface PitchingMockData {
-    [evaluations: string]: {
+    [evalId: string]: {
         coach: string;
         comments: string;
         date: string;
@@ -29,13 +29,24 @@ const pitchingMockData: PitchingMockData = {
 
 
 jest.mock('../../../src/app/firebase.ts', () => {
+    const pitchingMockData: PitchingMockData = {
+        'yFPi5lAIvwJWRWkCDXT0': {     
+            coach: 'Pitching Coach',
+            comments: 'Work on pitching.',
+            date: Date(),  //
+            moundVelo: 88,
+            pitching: true,
+            pulldownVelo: 90,
+            userId: '111015587133119133740' //
+        }
+    };
     return {
         collection: jest.fn().mockReturnThis(),
-        doc: jest.fn().mockImplementation((evaluations) => {
+        doc: jest.fn().mockImplementation((evalId) => {
             return {
                 get: jest.fn().mockResolvedValue({ // this need to be better defined
-                    exists: pitchingMockData[evaluations] !== undefined, 
-                    data: () => pitchingMockData[evaluations]
+                    exists: pitchingMockData[evalId] !== undefined, 
+                    data: () => pitchingMockData[evalId]
                 }),
                 set: jest.fn().mockResolvedValue(true), //userdata is passed with isfalsey propery
                 delete: jest.fn().mockResolvedValue(true), //userdata is passed with isfalsey propery
